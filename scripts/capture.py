@@ -39,9 +39,11 @@ def capture(workspace, output):
             page.goto(url)
             page.locator("#accounts tr").first.wait_for()
             page.screenshot(path=output / "pipeline-overview.png")
+            page.set_viewport_size({"width": 1440, "height": 1320})
             page.locator('[data-view="workspace"]').click()
             page.locator("#receipt").filter(has_text="READ-BACK VERIFIED").wait_for()
             page.screenshot(path=output / "account-workbench.png")
+            page.set_viewport_size({"width": 1440, "height": 1120})
             page.locator('[data-view="recovery"]').click()
             page.locator("#reconciliation").filter(has_text="safe_to_resume").wait_for()
             page.screenshot(path=output / "execution-recovery.png")
@@ -85,6 +87,7 @@ def capture(workspace, output):
         assert source_hashes() == bound_sources, "source_changed_during_capture"
         result = {"captured_at": datetime.now(timezone.utc).isoformat(), "method": "actual Chromium / local UI and APIs",
                   "desktop_viewport": {"width": 1440, "height": 1120}, "mobile_viewport": {"width": 390, "height": 844},
+                  "account_workbench_viewport": {"width": 1440, "height": 1320},
                   "screenshots_before_interaction": True, "no_page_overflow": mobile_checks, "page_errors": errors,
                   "browser_flow": ["prepare", "exact_approval", "real_lost_ack", "independent_receipt_recovery",
                                    "positive_reply", "qualified_meeting", "accepted_opportunity", "inbound_service_route"],
@@ -92,7 +95,7 @@ def capture(workspace, output):
                   "inference": "not_executed", "native_vendors": "not_executed",
                   "source_sha256": bound_sources,
                   "image_sha256": {x.name: hashlib.sha256(x.read_bytes()).hexdigest() for x in output.glob("*.png")}}
-        (output / "provenance.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        (output / "provenance.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
         return result
     finally:
         server.should_exit = True

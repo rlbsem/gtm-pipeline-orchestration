@@ -24,7 +24,7 @@ def lock():
             if requirement.marker is None or any(requirement.marker.evaluate(env) for env in environments):
                 pending.append(requirement.name)
     Path("requirements.lock").write_text("# Exact dependency closure; Python 3.12 / Windows and Linux.\n" +
-                                        "\n".join(f"{k}=={v}" for k, v in sorted(found.items())) + "\n")
+                                        "\n".join(f"{k}=={v}" for k, v in sorted(found.items())) + "\n", newline="\n")
 
 
 if __name__ == "__main__":

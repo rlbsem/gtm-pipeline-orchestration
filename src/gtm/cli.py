@@ -57,6 +57,9 @@ def main():
             result = {"measurement": measure(engine, FINISH), "reconciliation": reconcile(engine, worker.client),
                       "actions": engine.rows("actions"), "routes": engine.rows("routes"),
                       "audit_valid": engine.audit_valid(), "http_requests": destination.request_counts(),
+                      "source_records": engine.rows("sources"), "qualification_decisions": engine.rows("decisions"),
+                      "feedback": engine.rows("feedback"), "account_records": engine.rows("accounts"),
+                      "audit": engine.rows("audit"), "receiver_requests": destination.request_log(),
                       "fresh_inference": "not_executed", "native_vendors": "not_executed"}
             (Path(args.workspace) / "demo.json").write_text(json.dumps(result, indent=2) + "\n")
             print(json.dumps({"accounts": len(engine.rows("accounts")), "arms": result["measurement"]["arms"],

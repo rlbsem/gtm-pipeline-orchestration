@@ -48,14 +48,15 @@ def checks():
 
 def source_hashes():
     return {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in files() if p.relative_to(ROOT).parts[0] in {"src", "web", "tests", "scripts", ".github"}}
+            for p in files() if p.relative_to(ROOT).parts[0] in {"src", "web", "tests", "scripts", ".github"}
+            or p.relative_to(ROOT).as_posix() in TOP - {"README.md", "LICENSE"}}
 
 
 def manifest(write=False):
     expected = {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in files()}
     path = ROOT / "package-manifest.json"
     if write:
-        path.write_text(json.dumps(expected, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        path.write_text(json.dumps(expected, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     elif json.loads(path.read_text()) != expected:
         raise ValueError("package_manifest_mismatch")
     return expected

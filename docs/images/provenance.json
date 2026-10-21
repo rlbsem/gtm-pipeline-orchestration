@@ -1,0 +1,84 @@
+{
+  "captured_at": "2026-10-21T02:04:15.498140+00:00",
+  "method": "actual Chromium / local UI and APIs",
+  "desktop_viewport": {
+    "width": 1440,
+    "height": 1120
+  },
+  "mobile_viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "account_workbench_viewport": {
+    "width": 1440,
+    "height": 1320
+  },
+  "screenshots_before_interaction": true,
+  "no_page_overflow": {
+    "overview": true,
+    "workspace": true,
+    "inbound": true,
+    "recovery": true
+  },
+  "page_errors": [],
+  "browser_flow": [
+    "prepare",
+    "exact_approval",
+    "real_lost_ack",
+    "independent_receipt_recovery",
+    "positive_reply",
+    "qualified_meeting",
+    "accepted_opportunity",
+    "inbound_service_route"
+  ],
+  "new_action_attempts": 1,
+  "new_action_status": "reconciled",
+  "inference": "not_executed",
+  "native_vendors": "not_executed",
+  "source_sha256": {
+    ".dockerignore": "762c1349fc7c3e1afd322052433cfdf352c3cc624c42819122d24b8e15ff973f",
+    ".gitattributes": "93699a1108fd9da226b06f84ee12e317f4ea4d2f18a8fd05260443fd1bf2faef",
+    ".github/workflows/verify.yml": "b4770d19bf8729bc5962b35b8cb5fd0133b4fadb0cd3f0030605642c2fbaddbe",
+    ".gitignore": "71e12bd1b099e246c2a3b10fcc384e61b1f5dadf7e925a54d162a19448ef3b0d",
+    "compose.yml": "12b60e4d883c53859d5e4283eb9ed14fb3b4a42097911981721cc12c51575665",
+    "Dockerfile": "fb98201033dc7e91b94ce812b569db8e5fc64b4d8c79cb2f26a3d4bcfac83809",
+    "pyproject.toml": "f5cf27b9df02662827937a59a77b24ba064e5e5de7fdc57985d800a7f6ad3d50",
+    "requirements.lock": "f6786f40ef4e82693b3b91b7fc3a591b6d68725afdeb723a3bbe13fcdb2f4d95",
+    "requirements.txt": "893ff6ae6831dd41daa296a1e046ea522b487847bd02c45f64334fc0890363a7",
+    "scripts/capture.py": "adae62e993415b326485b8394745fb44504b4ae5f0dc35455cb768138c1a5191",
+    "scripts/check_evidence.py": "1f038ddb67884d25d8a9d498c3fcb559334c81a771cc39d8e5a87aac148759cb",
+    "scripts/lock.py": "481c881b670a297817902efad5d75f90e7f4795945d7a1145e1e1332b28e5445",
+    "scripts/publication.py": "6586e382ededddbfbe6f585fe2b434f7390f561c8568c0bfdeabf056a935d50d",
+    "scripts/verify.py": "64aeb4c012e7431338ca6c688cf23770ad285b3a99ad6a1e5e3c14b4d307b56c",
+    "src/gtm/__init__.py": "182abe06ec4fec1849ea7160382f0b4e4461b17c9a3c649d5ff62d5320a259ac",
+    "src/gtm/adapters.py": "daf415a8966cd03900132ead946fd02834652cb3dfa7d5ba61f4943ebdc25886",
+    "src/gtm/advice.py": "b4104fb0cd6bd9af7b3495260b509f3d0e530bb1712748ba4b01fd249bf49333",
+    "src/gtm/api.py": "847f7eb9472f4609ef469357324767b48bddaf8254e4dab0de872a9673925b9c",
+    "src/gtm/cli.py": "0e9526bd70df70a9c2db4feb44a84d7d750a02e66ec48e68b435b4bb897467c5",
+    "src/gtm/contracts.py": "10973a886a5f0d8adc426155624ae1536877f38d39976869b84339d3666c3914",
+    "src/gtm/destination.py": "7a7c98f56510be03b4ad75ff998e2cf14cab66c4d9b44ffcb7828e73ccc9ba5a",
+    "src/gtm/engine.py": "c31ffe81a63fd6f7e203097d1b7a34b8ea906abda8e1b7a9195c3bd9954c9208",
+    "src/gtm/fixtures.py": "b356a1c2a17360729d3b0a147a72dcbf3eaf8cf021f52f25a20a3dd8b384ea1d",
+    "src/gtm/measurement.py": "4a616d6ee0e14fb50f009858f4961c911f50d76495ed4abf0f58813344128dd1",
+    "src/gtm/pipeline.sql": "91f929cfe3abd5f728f6faba7207b2a6595b519e6a0efb161cc03f404592df92",
+    "src/gtm/policy.json": "ac8b8dde160296b37fd1e384cba9fa409372d3bdc5a4c01fd3740b774de331e7",
+    "src/gtm/schema.sql": "3ec3bbeef02d99075fb2acb7b7fdc73b1cf5483ff9ca324776bda165087cbfbb",
+    "src/gtm/store.py": "2d683ea48313273a56ecad8964925f07eb20fc761579992e935237de11ed8755",
+    "src/gtm/worker.py": "cbceba8d42bb87195c00fda590d2ce08770ae12fda87e34e0a2d3bf2c756f668",
+    "tests/conftest.py": "e663493ccc883754cc9e9912d62a6769c7de8f5c5e363475aeb394fd63db4de3",
+    "tests/test_additional_boundaries.py": "26793a24faa4707ff8718a7f77423764930542e61aa726fa2455979eadd2c636",
+    "tests/test_execution.py": "cc37a99488847a5959b608f03fa98a6dd9f5f986f2e4850bb8a5886586457862",
+    "tests/test_intelligence.py": "f10b4b8aa33710cc3b2cc079944a7d82613482c5db1971e3ed767a7db74ddaa2",
+    "tests/test_interfaces.py": "6ce51d6fe916e976f7d4c2593e1e732adfd387eeee2b9defed4db0e880ea62ec",
+    "tests/test_measurement.py": "e9a417376bb225e2f981fe6e8716080baab11122d88616e1f695f7120510ec8b",
+    "web/app.js": "098d020492c9a451e0262904f25f38affc19dd753ddf38d29354425350468a33",
+    "web/index.html": "2aaa8cb8e33a524d0c871be50e733d24ed682b24acaeab43a5c96469d32fde07",
+    "web/style.css": "7745ef987c2b81fd097016118f600901cccee1e1f27f35e0522b432c1fe71781"
+  },
+  "image_sha256": {
+    "account-workbench.png": "1a4958fa794099ac91382695dfa44d381bf19f2064f43865c4a5e9cbe65be4c0",
+    "execution-recovery.png": "461e33a4a59a0fc073996b420fc7b8689caff4bdd94d1bb736a7996b24b45456",
+    "mobile-workbench.png": "4c8b1615b9aa9ffcda1a4ba1da624349dc0097367416f5fc27e6bf58c0a9eaaa",
+    "pipeline-overview.png": "74f5c6baf3cbd59a9e9f0d70473e88ed79898952300a0e133b18d0e2cfa4c312"
+  }
+}

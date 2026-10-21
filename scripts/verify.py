@@ -51,7 +51,7 @@ def verify(output):
     assert demos[0]["measurement"]["leakage_accounts"] == []
     assert len([a for a in demos[0]["actions"] if a["status"] == "blocked"]) == 2
     assert any(a["attempts"] == 2 for a in demos[0]["actions"]), "rate_limit_not_exercised"
-    (output / "demo.json").write_text(json.dumps(demos[0], indent=2) + "\n", encoding="utf-8")
+    (output / "demo.json").write_text(json.dumps(demos[0], indent=2) + "\n", encoding="utf-8", newline="\n")
     assert source_hashes() == before, "source_changed_during_verification"
     result = {"executed_at": datetime.now(timezone.utc).isoformat(), "platform": platform.system(),
               "python": platform.python_version(), "tests": totals, "independent_demo_runs": 2,
@@ -60,9 +60,9 @@ def verify(output):
                                ["fastapi", "pydantic", "httpx", "uvicorn", "pytest", "playwright"]},
               "fresh_inference": "not_executed", "native_vendors": "not_executed",
               "source_sha256": before}
-    (output / "verification.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    (output / "verification.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
     result.update(checks())
-    (output / "verification.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    (output / "verification.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({"tests": totals, "independent_demo_runs": 2, **checks()}, indent=2))
     return result
 

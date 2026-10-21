@@ -1,0 +1,17 @@
+# Pipeline measurement contract · v1
+
+**Reporting unit:** one canonical account within an operating unit and experiment. Contacts, events and touches never expand the denominator. Assignment uses the versioned hash of experiment, salt and domain, with a 50/50 threshold. Counts can differ from 50/50 in a small fixture. Shared domains across operating units receive the same arm without merging brand ownership. Domains are a conservative allocation cluster; parent-company linkage, alternate domains and correlated subsidiaries are unresolved limitations. No independent-sample significance test is claimed.
+
+**Eligibility at assignment:** a verified, permitted, fresh and qualified new-business account, with no recorded accepted opportunity before assignment. The cohort and original eligibility decision are immutable. Suppression, no exposure, later ownership changes and opt-out do not remove assigned accounts from intent-to-treat reporting. Holdouts cannot prepare an enrollment. Observed enrollment of a holdout marks the comparison invalid.
+
+**Observation window:** `[assigned_at, assigned_at + 30 days)`. A row is mature when its full window ends by the report cutoff. Immature accounts remain inspectable but contribute neither denominator nor numerator to the mature comparison. No mature denominator produces `null`, not zero, for rates.
+
+**Qualified meeting:** an admitted `meeting_qualified` business ID occurring in the window and received by the reporting cutoff. Meeting rate counts accounts with at least one meeting. The separate qualified-meeting count retains multiple distinct meetings.
+
+**Accepted opportunity:** a CRM-owned `opportunity_accepted` business ID, with creation and acceptance times inside the window and receipt by the reporting cutoff. Qualified pipeline is the sum of those integer CAD cents, before dividing by all mature assigned accounts. A preexisting opportunity accepted during the window is excluded using its creation date. No win, invoice, cash, recognized revenue or ARR is inferred from accepted pipeline.
+
+**Duplicates and corrections:** reusing a source key with changed content fails. Duplicate delivery of the same outcome under another source event does not create another business outcome. Conflicting business identity/content fails and requires investigation. Outcome restatement or opportunity amount revisions are not implemented; they require explicit retraction/version semantics rather than overwriting a historical accepted record. Late first observations are supported. Changing the reporting cutoff includes newly known, in-window outcomes without rewriting earlier reports.
+
+**Attribution:** assignment and receipt linkage make exposure inspectable; neither proves the sequence caused an outcome. The fixture deliberately includes organic holdout outcomes. Missing cross-channel exposure, imperfect source completeness, parent-company identity and interference remain limitations. A mature date is not proof of complete vendor observation. Results are descriptive synthetic arithmetic with no commercial uplift, statistical significance or deployment claim.
+
+The [SQL](../src/gtm/pipeline.sql) and [independent-oracle/exclusion tests](../tests/test_measurement.py) encode these definitions. [Additional boundaries](../tests/test_additional_boundaries.py) cover shared-domain allocation and many-to-many fanout.

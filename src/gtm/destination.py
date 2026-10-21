@@ -142,3 +142,8 @@ class Destination:
     def request_counts(self):
         with sqlite3.connect(self.path) as db:
             return dict(db.execute("SELECT method,count(*) FROM requests GROUP BY method"))
+
+    def request_log(self):
+        with sqlite3.connect(self.path) as db:
+            db.row_factory = sqlite3.Row
+            return [dict(x) for x in db.execute("SELECT * FROM requests ORDER BY seq")]
