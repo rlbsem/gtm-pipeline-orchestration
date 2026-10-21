@@ -21,7 +21,8 @@ def files():
         if str(rel).replace("\\", "/") == "package-manifest.json":
             continue
         if rel.parts[0] in DIRS or rel.as_posix() in TOP:
-            if p.suffix.lower() in {".sqlite", ".db", ".pem", ".key", ".pyc", ".log"} or p.is_symlink():
+            if (p.suffix.lower() in {".sqlite", ".db", ".pem", ".key", ".pyc", ".log"} or p.is_symlink()
+                    or any(part in {".sf", ".sfdx", ".local"} for part in rel.parts)):
                 raise ValueError("private_file_in_public_tree:" + rel.as_posix())
             allowed.append(p)
     return sorted(allowed)

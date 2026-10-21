@@ -12,6 +12,12 @@ RECEIPT = "GTM_Task_Receipt__c"
 SUBJECT = "SYNTHETIC GTM SDR handoff - no prospect communication"
 NOTICE = "Synthetic internal handoff only. No outbound communication."
 MESSAGE = "Review the synthetic account evidence before any seller action."
+REQUIRED_FIELDS = {
+    "Account": {"Id", "OwnerId", "Website", "GTM_Test_Key__c", "GTM_Test_Active__c"},
+    "Contact": {"Id", "AccountId", "OwnerId", "Email", "HasOptedOutOfEmail", "GTM_Test_Key__c"},
+    "Opportunity": {"Id", "AccountId", "IsClosed"},
+    "Task": {"Id", "WhoId", "WhatId", "OwnerId", "CreatedById", "Subject", "Description", "GTM_Action_Key__c", "Status", "Priority", "IsReminderSet"},
+    RECEIPT: {"Id", "Action_Key__c", "Payload__c", "Payload_Hash__c", "Task_Id__c"}}
 
 
 @dataclass(frozen=True)
@@ -57,6 +63,12 @@ class StandardCRM:
                 desc = get_json(client, API + "/sobjects/" + obj + "/describe")
                 if not desc.get("queryable"):
                     raise SalesforceError("standard_read_access_required")
+                fields = {f["name"]: f for f in desc.get("fields", [])}
+                if not REQUIRED_FIELDS[obj] <= fields.keys():
+                    raise SalesforceError("standard_required_field_hidden:" + obj)
+                if obj == "Task" and client is self.writer and any(
+                        fields[n].get("createable") is not True for n in ("WhatId", "WhoId", "Description", "GTM_Action_Key__c")):
+                    raise SalesforceError("standard_task_create_field_denied")
                 if obj in {"Account", "Contact", "Opportunity", RECEIPT} and any(
                         desc.get(f) for f in ("createable", "updateable", "deletable")):
                     raise SalesforceError("unexpected_source_or_receipt_write_access")

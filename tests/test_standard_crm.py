@@ -6,7 +6,7 @@ import httpx
 import pytest
 
 from gtm.salesforce import Approval, SalesforceClient, SalesforceError
-from gtm.standard_crm import RECEIPT, Scope, StandardCRM, TaskDispatcher
+from gtm.standard_crm import RECEIPT, REQUIRED_FIELDS, Scope, StandardCRM, TaskDispatcher
 from gtm.store import canonical, digest
 from gtm.upgrade_scenarios import SCENARIO, cases, fixture
 
@@ -21,6 +21,7 @@ class Provider:
         self.rows, self.posts, self.drop, self.outage = {}, 0, False, False
         self.owner, self.consent, self.open, self.conflict = READER, True, False, False
         self.unique, self.readable, self.org = True, True, ORG
+        self.hidden_field = None
 
     def client(self, role):
         c = SalesforceClient("https://test.my.salesforce.com", "software-test")
@@ -39,7 +40,9 @@ class Provider:
                 return httpx.Response(404, json=[{"errorCode": "NOT_FOUND"}])
             body = {"queryable": True, "createable": obj == "Task" and role == "writer",
                     "updateable": False, "deletable": False,
-                    "fields": [{"name": "Action_Key__c", "unique": self.unique, "externalId": True}]}
+                    "fields": [{"name": n, "unique": self.unique if n == "Action_Key__c" else False,
+                                "externalId": n == "Action_Key__c", "createable": role == "writer" and obj == "Task"}
+                               for n in REQUIRED_FIELDS[obj] if n != self.hidden_field]}
         elif path.endswith("/query"):
             q = request.url.params["q"]
             rows = ([{"Id": self.org, "IsSandbox": False, "OrganizationType": "Developer Edition"}] if "Organization" in q
@@ -180,6 +183,15 @@ def test_tampered_durable_intent_blocks(standard):
         db.execute("UPDATE crm_tasks SET payload=? WHERE native_key=?", (canonical({"changed": True}), key))
     with pytest.raises(SalesforceError, match="standard_durable_intent_required"):
         d.dispatch(key, SCENARIO)
+
+
+@pytest.mark.parametrize("field", ["AccountId", "WhoId", "Description", "HasOptedOutOfEmail"])
+def test_hidden_relationship_or_consent_field_is_explicit_preflight_failure(standard, field):
+    p, crm, _, _ = standard
+    p.hidden_field = field
+    with pytest.raises(SalesforceError, match="standard_required_field_hidden"):
+        crm.preflight()
+    assert not crm.ready
 
 
 @pytest.mark.parametrize("run", ["production", "gtm-standard-../../bad", "gtm-standard-short", "gtm-standard-ABC12345"])

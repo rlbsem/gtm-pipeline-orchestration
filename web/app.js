@@ -72,13 +72,13 @@ function renderRecordedCase(){
  $("ai-context").textContent=pretty({context:r.context,citations:r.parsed?.citations,context_hash:r.context_hash,request_hash:r.request_hash,usage:r.usage,semantic_support:r.semantic_support});
 }
 async function loadRecordedEvidence(){
- const [native,ai]=await Promise.all([api("evidence/salesforce"),api("evidence/ai")]);
- const n=clear("native-proof");$("native-status").textContent=native.status||"Unavailable";
- if(native.status==="passed"){
-  [["Environment",native.preflight.organization_type],["Authenticated requests",native.authenticated_requests],["Independent exact readback","Verified"],["Lost acknowledgement / duplicates","Recovered / rejected"],["New review cleanup",native.cleanup.new_review_status+" · retained audit record"]].forEach(([k,v])=>{const row=el("div",null,"assurance-item");row.append(el("span",k),el("b",v));n.append(row);});
-  n.append(el("p","Standard Account / Contact / Task access was unavailable. Existing permissions were preserved.","subtle"));
+ const [native,ai,standard]=await Promise.all([api("evidence/salesforce"),api("evidence/ai"),api("evidence/salesforce-standard")]);
+ const n=clear("native-proof");$("native-status").textContent=standard.status||"Unavailable";
+ if(standard.status==="passed"){
+  [["Native REST objects","Account · Contact · Task"],["Authenticated requests",standard.authenticated_requests],["Independent Task / unique receipt",standard.receipt.task_count+" exact effect"],["Lost acknowledgement / duplicates","Recovered / rolled back"],["Owner / consent / active opportunity","New actions blocked"],["Controlled retention",standard.cleanup.task_status+" · opted out · disabled"],["Temporary access",standard.cleanup.temporary_assignments_removed+" assignments removed"]].forEach(([k,v])=>{const row=el("div",null,"assurance-item");row.append(el("span",k),el("b",v));n.append(row);});
+  n.append(el("p","Pinned Developer Edition. Synthetic internal handoff; no prospect communication. Earlier custom-review evidence is preserved below.","subtle"));
  }else n.append(el("p","No successful native record is available in this checkout.","subtle"));
- $("native-detail").textContent=pretty(native);
+ $("native-detail").textContent=pretty({standard_objects:standard,historical_internal_review:native});
  const a=clear("ai-proof");$("ai-status").textContent=ai.inferences_executed?ai.inferences_executed+" RESPONSES":"Unavailable";
  if(ai.records){recordedAI=ai;
   [["Executed model",ai.runtime.model],["Evaluation cases",new Set(ai.records.map(r=>r.case_id)).size],["Exact citation checks",ai.exact_citation_checks_passed+" / "+ai.inferences_executed],["Executable model prose","Never authorized"]].forEach(([k,v])=>{const row=el("div",null,"assurance-item");row.append(el("span",k),el("b",v));a.append(row);});

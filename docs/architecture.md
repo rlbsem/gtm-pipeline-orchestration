@@ -61,7 +61,25 @@ flowchart LR
   H --> M[Synthetic replies meetings opportunities and measurement]
 ```
 
-The UI exposes only two fixed sanitized evidence artifacts through GET; it has no Salesforce write or inference route. Native/model provenance is pinned to its executed Git revision, while fresh browser and regression reports bind current code. The [operator procedure](native-ai.md) explains permission limits, rejected model outputs, cleanup, cross-system races and remaining unexecuted standard-object access.
+The UI exposes three fixed sanitized evidence artifacts through GET; it has no Salesforce write or inference route. Native/model provenance is pinned to its executed Git revision, while fresh browser and regression reports bind current code. The [historical operator procedure](native-ai.md) preserves the earlier custom-review/model boundary.
+
+## Native standard-object boundary
+
+The [standard CRM lane](native-standard-crm.md) adds unique run-scoped Account/Contact resolution, exact owner/relationship/consent checks and a separate `crm_tasks` journal. A finite internal Task envelope references the pinned native records; model prose has no write authority. Parent locks and a server-side Apex guard recheck synthetic scope and open opportunities. A unique immutable receipt is inserted in the same transaction as the Task: duplicate receipt failure rolls back the extra Task. The independent reviewer reads both the Task and its exact receipt, rather than trusting the POST response.
+
+```mermaid
+flowchart LR
+  K[Unique synthetic Account and Contact keys] --> P[Owner consent and open-opportunity checks]
+  A[Bound local approval] --> J[Durable pinned Task intent]
+  P --> J
+  J --> G[Native Apex scope guard and parent locks]
+  G --> T[One transaction: Task plus unique receipt]
+  T --> R[Independent reviewer readback]
+  R --> J
+  T --> C[Complete Task and revoke temporary access]
+```
+
+Setup uses explicit isolated administrator authorization for metadata, temporary assignments and newly created synthetic records. Original profiles, custom-review grants and sharing defaults remain unchanged. Source objects and receipts are API read-only for the writer. Task creation requires activity permissions; the Apex guard restricts the broader system permission to marked synthetic insertions and blocks writer mutations. The read grants do not establish row isolation in an org with broad Account/Contact/Opportunity sharing defaults. Only exact test records are queried. Other Salesforce writers need not obey the parent-lock protocol, so cross-system races remain a stated limitation.
 
 ## Commercial profiles
 

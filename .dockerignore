@@ -15,4 +15,7 @@ docs/evidence/*
 docs/evidence/native-ai/*
 !docs/evidence/native-ai/ai-evaluation.json
 !docs/evidence/native-ai/salesforce-acceptance.json
+!docs/evidence/salesforce-standard
+docs/evidence/salesforce-standard/*
+!docs/evidence/salesforce-standard/acceptance.json
 tests

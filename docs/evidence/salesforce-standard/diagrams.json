@@ -1,0 +1,24 @@
+{
+  "checked_at": "2026-10-21T16:28:05.160887+00:00",
+  "parser": "official mermaid 12.2.0 in Chromium",
+  "blocks": [
+    {
+      "path": "README.md",
+      "block": 0,
+      "document_sha256": "1aa63f620c31bbd24e931a8c08767bdfacce854e8bde7f3f8ad523d51d6c0e9d",
+      "parse": "passed"
+    },
+    {
+      "path": "docs/architecture.md",
+      "block": 0,
+      "document_sha256": "1e5f727bba608fe096cb239978f8c86a4f954409c731032cdfc9c43f6b2fa559",
+      "parse": "passed"
+    },
+    {
+      "path": "docs/architecture.md",
+      "block": 1,
+      "document_sha256": "1e5f727bba608fe096cb239978f8c86a4f954409c731032cdfc9c43f6b2fa559",
+      "parse": "passed"
+    }
+  ]
+}

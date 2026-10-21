@@ -85,10 +85,11 @@ def create_app(engine, destination, worker):
 
     @app.get("/api/evidence/{lane}")
     def recorded_evidence(lane: str):
-        names = {"ai": "ai-evaluation.json", "salesforce": "salesforce-acceptance.json"}
+        names = {"ai": "native-ai/ai-evaluation.json", "salesforce": "native-ai/salesforce-acceptance.json",
+                 "salesforce-standard": "salesforce-standard/acceptance.json"}
         if lane not in names:
             return JSONResponse({"error": "not_found"}, status_code=404)
-        path = WEB.parent / "docs/evidence/native-ai" / names[lane]
+        path = WEB.parent / "docs/evidence" / names[lane]
         if not path.is_file():
             return {"status": "recorded_evidence_not_available", "live_execution": False}
         return FileResponse(path, media_type="application/json")

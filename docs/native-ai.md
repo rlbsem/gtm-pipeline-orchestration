@@ -1,5 +1,7 @@
 # Native review and model execution
 
+This document describes the preserved earlier custom-review/model execution. The subsequent [standard Account/Contact/Task acceptance](native-standard-crm.md) diagnoses its restricted identity's 404s and adds a separately authorized native lane. Statements below about unchanged permissions and unexecuted standard objects apply to the earlier run.
+
 The core SDR workflow is unchanged: synthetic intelligence, deterministic scoring, owned inbound routing, exact local approval, independent HTTP engagement, feedback and assigned-account measurement. The new lanes add evidence at two boundaries; they do not relabel the whole loop as a live CRM integration.
 
 ## Salesforce boundary

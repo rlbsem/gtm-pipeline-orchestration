@@ -94,6 +94,9 @@ def capture(workspace, output):
             page.locator("#inbound-result").filter(has_text="service_review").wait_for()
             page.locator('[data-view="proof"]').click()
             page.locator("#native-status").filter(has_text="passed").wait_for()
+            page.locator("#native-proof").filter(has_text="Account · Contact · Task").wait_for()
+            assert "1 exact effect" in page.locator("#native-proof").inner_text()
+            assert "4 assignments removed" in page.locator("#native-proof").inner_text()
             page.locator("#ai-status").filter(has_text="16 RESPONSES").wait_for()
             page.locator("#ai-response").filter(has_text="Juniper").wait_for()
             page.screenshot(path=output / "native-ai-evidence.png")
@@ -140,6 +143,6 @@ def capture(workspace, output):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--workspace", type=Path, required=True)
-    parser.add_argument("--output", type=Path, default=Path("docs/images/enterprise"))
+    parser.add_argument("--output", type=Path, default=Path("docs/images/salesforce-standard"))
     args = parser.parse_args()
     print(json.dumps(capture(args.workspace, args.output), indent=2))

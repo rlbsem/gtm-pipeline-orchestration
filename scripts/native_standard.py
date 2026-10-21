@@ -32,7 +32,7 @@ class Run:
         for role, alias in (("administrator", args.admin), ("integration", args.writer), ("reviewer", args.reader)):
             self.clients[role] = SalesforceClient(self.config["instance_url"], authenticate(args.cli, alias),
                 lambda method, path, response, r=role: self.observe(r, method, path, response))
-        self.drop = False
+        self.drop, self.cleaning = False, False
 
     def save(self):
         self.path.write_text(json.dumps(self.state, indent=2), encoding="utf-8")
@@ -42,7 +42,7 @@ class Run:
         self.raw.append({"role": role, "method": method, "path": path, "http": response.status_code,
                          "body": body, "at": datetime.now(timezone.utc).isoformat()})
         self.raw_path.write_text(json.dumps(self.raw, indent=2), encoding="utf-8")
-        if len(self.raw) > 350:
+        if len(self.raw) > (400 if self.cleaning else 350):
             raise SalesforceError("native_request_budget_exhausted")
         if self.drop and role == "integration" and method == "POST" and response.status_code == 201:
             self.drop = False
@@ -240,7 +240,7 @@ class Run:
         self.checks["final_exact_task_receipt_and_single_effect"] = crm.receipt(key)["exact_content"]
         return crm
 
-    def cleanup(self):
+    def quiesce(self):
         s = self.state
         if "native_key" in s and "task" not in s["ids"]:
             rows = self.query("SELECT Task_Id__c FROM " + RECEIPT + " WHERE Action_Key__c='" + s["native_key"] + "'")
@@ -264,10 +264,19 @@ class Run:
                 row = get_json(self.clients["administrator"], API + "/sobjects/" + obj + "/" + s["ids"][name], params={"fields": fields})
                 assert all(row.get(k) == v for k, v in expected.items()), "cleanup_readback_mismatch"
                 verified[name] = True
+        return verified
+
+    def retire(self):
+        s, errors = self.state, []
         for grant in reversed(s["assignments"]):
-            response = self.clients["administrator"].request("DELETE", API + "/sobjects/" + grant["object"] + "/" + grant["id"])
-            if response.status_code != 404:
-                success(response)
+            try:
+                response = self.clients["administrator"].request("DELETE", API + "/sobjects/" + grant["object"] + "/" + grant["id"])
+                if response.status_code != 404:
+                    success(response)
+            except Exception as error:
+                errors.append(type(error).__name__)
+        if errors:
+            raise SalesforceError("temporary_grant_retirement_incomplete")
         for role in ("administrator", "integration", "reviewer"):
             uid = self.admin_id if role == "administrator" else self.config[role + "_user_id"]
             rows = self.query("SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId='" + uid + "'")
@@ -276,6 +285,15 @@ class Run:
         assert sorted(r["PermissionSetLicenseId"] for r in rows) == s["baseline_psl"]
         if "task" in s["ids"]:
             assert not self.query("SELECT Id FROM Opportunity WHERE AccountId='" + s["ids"]["account"] + "' AND IsClosed=false")
+
+    def cleanup(self):
+        self.cleaning = True
+        try:
+            verified = self.quiesce()
+        finally:
+            # A failed lifecycle PATCH/readback must not skip removal of temporary privileges.
+            self.retire()
+        s = self.state
         return {"temporary_assignments_removed": len(s["assignments"]), "original_assignments_restored": True,
                 "retained_new_synthetic_records": {k: digest(v) for k, v in s["ids"].items()},
                 "readback_verified": verified, "task_status": "Completed" if "task" in verified else None,
@@ -316,18 +334,25 @@ def main():
         run.execute()
         status = "passed"
     finally:
-        cleanup = run.cleanup() if "baseline" in run.state else {"not_started": True}
+        try:
+            cleanup = run.cleanup() if "baseline" in run.state else {"not_started": True}
+        except Exception as error:
+            status = "cleanup_failed"
+            cleanup = {"original_assignments_restored": False, "requires_investigation": True,
+                       "error_type": type(error).__name__}
         report = {"status": status, "executed_at": datetime.now(timezone.utc).isoformat(), "source_sha256": before,
                   "boundary": "Native synthetic Account/Contact/Task REST execution; no prospect communication or commercial pipeline outcome.",
                   "checks": run.checks, "requests": run.public(), "authenticated_requests": len(run.raw), "cleanup": cleanup,
                   "receipt": getattr(run, "verified_receipt", None), "outreach_salesloft": "not_executed_no_approved_test_environment"}
         assert before == source_hashes(), "executable_source_changed_during_native_run"
         (args.workspace / "verification.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
-        run.state["phase"] = "finished"
+        run.state["phase"] = "cleanup_required" if status == "cleanup_failed" else "finished"
         run.save()
         for client in run.clients.values():
             client.close()
     print(json.dumps({"status": status, "requests": len(run.raw), "checks": run.checks, "cleanup_verified": cleanup.get("original_assignments_restored")}))
+    if status != "passed":
+        raise SalesforceError("native_acceptance_incomplete")
 
 
 if __name__ == "__main__":
