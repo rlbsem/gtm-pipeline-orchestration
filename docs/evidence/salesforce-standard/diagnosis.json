@@ -1,0 +1,304 @@
+{
+  "executed_at": "2026-10-21T15:57:32.521423+00:00",
+  "read_only": true,
+  "authenticated_requests": 35,
+  "environment_verified": true,
+  "api_versions_compared": [
+    "65.0",
+    "68.0"
+  ],
+  "roles": {
+    "administrator": {
+      "license": "Salesforce",
+      "profile_name": "System Administrator",
+      "global_describe": {
+        "65.0": {
+          "Account": true,
+          "Contact": true,
+          "Lead": true,
+          "Opportunity": true,
+          "Task": true
+        },
+        "68.0": {
+          "Account": true,
+          "Contact": true,
+          "Lead": true,
+          "Opportunity": true,
+          "Task": true
+        }
+      },
+      "standard_object_describe": {
+        "Account": {
+          "http": 200,
+          "createable": true,
+          "updateable": true,
+          "deletable": true,
+          "queryable": true
+        },
+        "Contact": {
+          "http": 200,
+          "createable": true,
+          "updateable": true,
+          "deletable": true,
+          "queryable": true
+        },
+        "Lead": {
+          "http": 200,
+          "createable": true,
+          "updateable": true,
+          "deletable": true,
+          "queryable": true
+        },
+        "Opportunity": {
+          "http": 200,
+          "createable": true,
+          "updateable": true,
+          "deletable": true,
+          "queryable": true
+        },
+        "Task": {
+          "http": 200,
+          "createable": true,
+          "updateable": true,
+          "deletable": true,
+          "queryable": true
+        }
+      },
+      "standard_object_grants": [
+        {
+          "SobjectType": "Account",
+          "PermissionsRead": true,
+          "PermissionsCreate": true,
+          "PermissionsEdit": true,
+          "PermissionsDelete": true,
+          "PermissionsViewAllRecords": true,
+          "PermissionsModifyAllRecords": true
+        },
+        {
+          "SobjectType": "Contact",
+          "PermissionsRead": true,
+          "PermissionsCreate": true,
+          "PermissionsEdit": true,
+          "PermissionsDelete": true,
+          "PermissionsViewAllRecords": true,
+          "PermissionsModifyAllRecords": true
+        },
+        {
+          "SobjectType": "Lead",
+          "PermissionsRead": true,
+          "PermissionsCreate": true,
+          "PermissionsEdit": true,
+          "PermissionsDelete": true,
+          "PermissionsViewAllRecords": true,
+          "PermissionsModifyAllRecords": true
+        },
+        {
+          "SobjectType": "Opportunity",
+          "PermissionsRead": true,
+          "PermissionsCreate": true,
+          "PermissionsEdit": true,
+          "PermissionsDelete": true,
+          "PermissionsViewAllRecords": true,
+          "PermissionsModifyAllRecords": true
+        }
+      ]
+    },
+    "integration": {
+      "license": "Salesforce Integration",
+      "profile_name": "Minimum Access - API Only Integrations",
+      "global_describe": {
+        "65.0": {
+          "Account": false,
+          "Contact": false,
+          "Lead": false,
+          "Opportunity": false,
+          "Task": false
+        },
+        "68.0": {
+          "Account": false,
+          "Contact": false,
+          "Lead": false,
+          "Opportunity": false,
+          "Task": false
+        }
+      },
+      "standard_object_describe": {
+        "Account": {
+          "http": 404,
+          "errors": [
+            {
+              "errorCode": "NOT_FOUND",
+              "message": "The requested resource does not exist"
+            }
+          ]
+        },
+        "Contact": {
+          "http": 404,
+          "errors": [
+            {
+              "errorCode": "NOT_FOUND",
+              "message": "The requested resource does not exist"
+            }
+          ]
+        },
+        "Lead": {
+          "http": 404,
+          "errors": [
+            {
+              "errorCode": "NOT_FOUND",
+              "message": "The requested resource does not exist"
+            }
+          ]
+        },
+        "Opportunity": {
+          "http": 404,
+          "errors": [
+            {
+              "errorCode": "NOT_FOUND",
+              "message": "The requested resource does not exist"
+            }
+          ]
+        },
+        "Task": {
+          "http": 404,
+          "errors": [
+            {
+              "errorCode": "NOT_FOUND",
+              "message": "The requested resource does not exist"
+            }
+          ]
+        }
+      },
+      "standard_object_grants": []
+    },
+    "reviewer": {
+      "license": "Salesforce",
+      "profile_name": "Minimum Access - Salesforce",
+      "global_describe": {
+        "65.0": {
+          "Account": false,
+          "Contact": false,
+          "Lead": false,
+          "Opportunity": false,
+          "Task": true
+        },
+        "68.0": {
+          "Account": false,
+          "Contact": false,
+          "Lead": false,
+          "Opportunity": false,
+          "Task": true
+        }
+      },
+      "standard_object_describe": {
+        "Account": {
+          "http": 404,
+          "errors": [
+            {
+              "errorCode": "NOT_FOUND",
+              "message": "The requested resource does not exist"
+            }
+          ]
+        },
+        "Contact": {
+          "http": 404,
+          "errors": [
+            {
+              "errorCode": "NOT_FOUND",
+              "message": "The requested resource does not exist"
+            }
+          ]
+        },
+        "Lead": {
+          "http": 404,
+          "errors": [
+            {
+              "errorCode": "NOT_FOUND",
+              "message": "The requested resource does not exist"
+            }
+          ]
+        },
+        "Opportunity": {
+          "http": 404,
+          "errors": [
+            {
+              "errorCode": "NOT_FOUND",
+              "message": "The requested resource does not exist"
+            }
+          ]
+        },
+        "Task": {
+          "http": 200,
+          "createable": false,
+          "updateable": false,
+          "deletable": false,
+          "queryable": true
+        }
+      },
+      "standard_object_grants": []
+    }
+  },
+  "resolution": [
+    "Existing unused Salesforce API Integration entitlement temporarily assigned",
+    "Read-only Account Contact Opportunity and receipt grants",
+    "Access Activities plus Edit Tasks scoped by native Apex guard",
+    "Required relationship consent and Task content field permissions",
+    "Temporary setup field access; original profiles and custom-review roles preserved"
+  ],
+  "prior_attempts": [
+    {
+      "attempt": 1,
+      "status": "failed",
+      "authenticated_requests": 24,
+      "blocker": "New Account marker fields hidden from setup administrator",
+      "task_created": false,
+      "original_assignments_restored": true,
+      "private_report_sha256": "34050f3f49241061539db93a969944281cff76f3cd4296b36ac1a077daff3dac"
+    },
+    {
+      "attempt": 2,
+      "status": "failed",
+      "authenticated_requests": 36,
+      "blocker": "Contact opt-out field hidden from setup administrator",
+      "task_created": false,
+      "original_assignments_restored": true,
+      "private_report_sha256": "656ba884efadb8cdd559b0ea062119d694cdbb239663391c1e393703514c72ab"
+    },
+    {
+      "attempt": 3,
+      "status": "failed",
+      "authenticated_requests": 44,
+      "blocker": "Task still hidden without Access Activities",
+      "task_created": false,
+      "original_assignments_restored": true,
+      "private_report_sha256": "66e1ea2f80fc87277ccc6a2c6784ffb1a9db69963b2d96328a21ee0ddedbd49e"
+    },
+    {
+      "attempt": 4,
+      "status": "failed",
+      "authenticated_requests": 36,
+      "blocker": "Retained fictional email matched native duplicate detection",
+      "task_created": false,
+      "original_assignments_restored": true,
+      "private_report_sha256": "b4084bbcc733d756016052537c3873bda1bb30c93b88ecef61b26b24766753a0"
+    },
+    {
+      "attempt": 5,
+      "status": "failed",
+      "authenticated_requests": 36,
+      "blocker": "Malformed duplicate-warning header rejected; no duplicate rules changed",
+      "task_created": false,
+      "original_assignments_restored": true,
+      "private_report_sha256": "2a275a2447ee057f19ce88214c9d59c384260992798d7d8a29977298165d735a"
+    },
+    {
+      "attempt": 6,
+      "status": "failed",
+      "authenticated_requests": 64,
+      "blocker": "Contact.AccountId hidden; remaining relationship and Task fields inspected and explicitly granted",
+      "task_created": false,
+      "original_assignments_restored": true,
+      "private_report_sha256": "927370d2820eb02c0ca3ffca1e5f3f3cfee26c7233453a4b6e58d5305354636a"
+    }
+  ]
+}

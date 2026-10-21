@@ -1,7 +1,7 @@
 "use strict";
 const $ = id => document.getElementById(id);
 let state, selected, prepared;
-const money = cents => new Intl.NumberFormat("en-CA", {style:"currency",currency:"CAD",maximumFractionDigits:0}).format(cents/100);
+const money = cents => state.scenario.currency+" "+new Intl.NumberFormat(state.scenario.locale, {style:"currency",currency:state.scenario.currency,maximumFractionDigits:0}).format(cents/100);
 const percent = value => value == null ? "—" : (value*100).toFixed(1)+"%";
 const pretty = value => JSON.stringify(value,null,2);
 function el(tag, text, cls) {const n=document.createElement(tag);if(text!=null)n.textContent=String(text);if(cls)n.className=cls;return n;}
@@ -10,7 +10,7 @@ function chip(text){return el("span",text,"tag "+text);}
 function message(text,error=false){$("notice").textContent=text;$("notice").className="notice"+(error?" error":"");}
 async function api(path,body){const options=body===undefined?{}:{method:"POST",headers:{"Content-Type":"application/json","X-Demo-Intent":"operator"},body:JSON.stringify(body)};const r=await fetch("/api/"+path,options);const data=await r.json();if(!r.ok)throw Error(data.error||"Request failed");return data;}
 async function task(fn){try{await fn();}catch(error){message(error.message,true);}}
-function openView(name){document.querySelectorAll(".view").forEach(n=>n.classList.toggle("active",n.id===name));document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.view===name));$("current-view").textContent={overview:"Pipeline overview",workspace:"Account workbench",inbound:"Inbound routing",recovery:"Execution & recovery"}[name];window.scrollTo(0,0);}
+function openView(name){document.querySelectorAll(".view").forEach(n=>n.classList.toggle("active",n.id===name));document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.view===name));$("current-view").textContent={overview:"Pipeline overview",workspace:"Account workbench",inbound:"Inbound routing",recovery:"Execution & recovery",proof:"Native & AI evidence",commercial:"Commercial scenario"}[name];window.scrollTo(0,0);}
 document.querySelectorAll("[data-view]").forEach(n=>n.onclick=()=>openView(n.dataset.view));
 document.querySelectorAll("[data-open]").forEach(n=>n.onclick=()=>openView(n.dataset.open));
 function current(){return state.accounts.find(a=>a.id===selected);}
@@ -19,6 +19,9 @@ function selectAccount(id){selected=id;prepared=null;$("account-select").value=i
 function metric(label,value,note){const n=el("div",null,"metric");n.append(el("div",label,"metric-label"),el("strong",value),el("small",note));return n;}
 function row(values,heading=false){const n=el("div",null,"comparison-row"+(heading?" heading-row":""));values.forEach(v=>n.append(el("span",v)));return n;}
 function renderOverview(){
+ $("scenario-profile").textContent=(state.scenario.profile==="enterprise"?"ENTERPRISE B2B":"HISTORICAL REGRESSION FIXTURE")+" · "+state.accounts.length+" synthetic accounts · "+state.scenario.currency;
+ $("comparison-basis").textContent="Fixed 30-day windows · mature accounts only · values in "+state.scenario.currency;
+ $("commercial-currency").textContent="SYNTHETIC · "+state.scenario.currency+" · NOT REVENUE";
  const m=state.measurement,t=m.arms.treatment,h=m.arms.holdout;
  clear("metrics").append(metric("Assigned accounts",t.assigned+h.assigned,"Brand-scoped · frozen allocation"),metric("Qualified meetings",t.qualified_meetings+h.qualified_meetings,"Mature 30-day account windows"),metric("Accepted opportunities",t.accepted_opportunities+h.accepted_opportunities,"Distinct CRM business identities"),metric("Qualified pipeline",money(t.pipeline_cents+h.pipeline_cents),"Synthetic accepted value · not revenue"));
  const c=clear("comparison");c.append(row(["Eligible accounts","Treatment","Holdout"],true),row(["Mature denominator",t.mature_accounts,h.mature_accounts]),row(["Enrolled accounts",t.exposed_accounts,h.exposed_accounts]),row(["Accounts with meeting",t.accounts_with_meetings,h.accounts_with_meetings]),row(["Meeting rate",percent(t.meeting_rate),percent(h.meeting_rate)]),row(["Accepted opportunities",t.accepted_opportunities,h.accepted_opportunities]),row(["Pipeline / assigned account",money(t.pipeline_per_account_cents||0),money(h.pipeline_per_account_cents||0)]));
@@ -48,7 +51,7 @@ function renderRecovery(){
  const journal=clear("journal");state.actions.forEach(a=>{const tr=el("tr"),account=state.accounts.find(x=>x.id===a.account_id);let td=el("td");td.append(el("strong",account?.name),el("small",a.action_key));tr.append(td);td=el("td");td.append(chip(a.status));tr.append(td,el("td",a.attempts+" / 3"),el("td",a.last_error||"Exact receipt verified"),el("td",a.receipt?JSON.parse(a.receipt).receipt_id:"—"));journal.append(tr);});
  const audit=clear("audit");[...state.audit].reverse().slice(0,35).forEach(a=>{const n=el("div",null,"audit-row");n.append(el("time",a.at),el("strong",a.event),el("span",a.subject));audit.append(n);});
 }
-async function load(){state=await api("state");if(!selected)selected=state.actions.find(a=>a.receipt)?.account_id||state.accounts[0].id;for(const id of ["account-select","inbound-account"]){const node=clear(id);state.accounts.forEach(a=>{const option=el("option",a.name+" · "+a.brand);option.value=a.id;node.append(option);});}$("account-select").value=selected;renderOverview();await renderAccount();renderRoutes();renderRecovery();}
+async function load(){state=await api("state");if(!selected)selected=state.actions.find(a=>a.receipt)?.account_id||state.accounts[0].id;for(const id of ["account-select","inbound-account"]){const node=clear(id);state.accounts.forEach(a=>{const option=el("option",a.name+" · "+a.brand);option.value=a.id;node.append(option);});}$("account-select").value=selected;renderOverview();await renderAccount();renderRoutes();renderRecovery();renderCommercial();}
 $("brand-filter").onchange=renderOverview;$("account-select").onchange=e=>selectAccount(e.target.value);
 $("prepare").onclick=()=>task(async()=>{prepared=await api("accounts/"+selected+"/prepare",{});await renderAccount();message("Review prepared. Check the exact owner, sequence and content before approval.");});
 $("approve").onclick=()=>task(async()=>{const action=await api("accounts/"+selected+"/approve",{prepared,reviewer:"demo-reviewer"});prepared=null;await load();message("Exact action approved: "+action.action_key+". No enrollment has been sent by approval alone.");});
@@ -61,3 +64,40 @@ $("refresh").onclick=()=>task(async()=>{await load();message("Fresh local state 
 $("advance").onclick=()=>task(async()=>{const d=new Date(state.clock);d.setSeconds(d.getSeconds()+5);await api("clock",{at:d.toISOString().replace(".000Z","Z")});prepared=null;await load();message("Scenario clock advanced five seconds; current policy will be checked before a new write.");});
 $("inbound-form").onsubmit=e=>{e.preventDefault();task(async()=>{const a=state.accounts.find(a=>a.id===$("inbound-account").value);const result=await api("ingest",{version:"source/v1",source:"web",source_id:"interactive-form-"+crypto.randomUUID(),brand:a.brand,kind:"inbound",domain:a.domain,account_id:a.id,observed_at:state.clock,data:{email:"review@"+a.domain,request:$("inbound-request").value,consent:$("inbound-consent").checked}});$("inbound-result").textContent=pretty(result);await load();message("Inbound decision persisted: "+result.status+" · "+result.reason);});};
 task(async()=>{await load();message("Executed synthetic scenario · actual local HTTP effects · no native vendor execution or commercial uplift claimed.");});
+
+let recordedAI;
+function renderRecordedCase(){
+ const r=recordedAI.records[Number($("ai-case").value)];
+ $("ai-case-status").textContent=r.case_id+" · seed "+r.seed+" · "+(r.validation_error||"Exact quotations checked")+" · "+r.latency_seconds+"s";
+ $("ai-response").textContent=r.raw_response;
+ $("ai-policy").textContent=pretty(r.policy);
+ $("ai-context").textContent=pretty({context:r.context,citations:r.parsed?.citations,context_hash:r.context_hash,request_hash:r.request_hash,usage:r.usage,semantic_support:r.semantic_support});
+}
+async function loadRecordedEvidence(){
+ const [native,ai,standard]=await Promise.all([api("evidence/salesforce"),api("evidence/ai"),api("evidence/salesforce-standard")]);
+ const n=clear("native-proof");$("native-status").textContent=standard.status||"Unavailable";
+ if(standard.status==="passed"){
+  [["Native REST objects","Account · Contact · Task"],["Authenticated requests",standard.authenticated_requests],["Independent Task / unique receipt",standard.receipt.task_count+" exact effect"],["Lost acknowledgement / duplicates","Recovered / rolled back"],["Owner / consent / active opportunity","New actions blocked"],["Controlled retention",standard.cleanup.task_status+" · opted out · disabled"],["Temporary access",standard.cleanup.temporary_assignments_removed+" assignments removed"]].forEach(([k,v])=>{const row=el("div",null,"assurance-item");row.append(el("span",k),el("b",v));n.append(row);});
+  n.append(el("p","Pinned Developer Edition. Synthetic internal handoff; no prospect communication. Earlier custom-review evidence is preserved below.","subtle"));
+ }else n.append(el("p","No successful native record is available in this checkout.","subtle"));
+ $("native-detail").textContent=pretty({standard_objects:standard,historical_internal_review:native});
+ const a=clear("ai-proof");$("ai-status").textContent=ai.inferences_executed?ai.inferences_executed+" RESPONSES":"Unavailable";
+ if(ai.records){recordedAI=ai;
+  [["Executed model",ai.runtime.model],["Evaluation cases",new Set(ai.records.map(r=>r.case_id)).size],["Exact citation checks",ai.exact_citation_checks_passed+" / "+ai.inferences_executed],["Executable model prose","Never authorized"]].forEach(([k,v])=>{const row=el("div",null,"assurance-item");row.append(el("span",k),el("b",v));a.append(row);});
+  ai.records.forEach((r,i)=>{const option=el("option",r.case_id.replaceAll("_"," ")+" · seed "+r.seed);option.value=i;$("ai-case").append(option);});
+  $("ai-case").onchange=renderRecordedCase;renderRecordedCase();
+ }else a.append(el("p","No actual model responses are available in this checkout.","subtle"));
+}
+task(loadRecordedEvidence);
+
+function renderCommercial(){
+ const accounts=Object.fromEntries(state.accounts.map(a=>[a.id,a]));
+ const assigned=state.accounts.filter(a=>a.cohort),arms=state.measurement.arms;
+ clear("commercial-metrics").append(metric("Synthetic qualified pipeline",money(arms.treatment.pipeline_cents+arms.holdout.pipeline_cents),"SQL measurement · mature windows"),metric("Accepted opportunities",arms.treatment.accepted_opportunities+arms.holdout.accepted_opportunities,"Distinct synthetic CRM outcomes"),metric("Assigned accounts",assigned.length,"All assigned accounts retained"),metric("Operating units",new Set(assigned.map(a=>a.brand)).size,"NA + EMEA territories"));
+ $("value-basis").textContent=state.scenario.value_basis;
+ const ledger=clear("commercial-ledger");
+ const opportunities=state.outcomes.filter(f=>f.kind==="opportunity_accepted");
+ opportunities.forEach(f=>{const a=accounts[f.account_id],quote=state.scenario.scope_quotes.find(q=>q.business_id===f.business_id);const tr=el("tr");let td=el("td");td.append(el("strong",f.business_id),el("small",a.name));tr.append(td);td=el("td");td.append(el("strong",a.segment.replaceAll("_"," ")),el("small",f.origin));tr.append(td);td=el("td");td.append(chip(a.cohort?.arm||"not assigned"));tr.append(td);td=el("td");td.append(el("strong",quote?quote.sites+" sites × "+money(quote.annual_site_value_cents):"Interactive synthetic CRM event"),el("small",quote?.scope||"Illustrative segment scope"));tr.append(td,el("td",money(f.amount_cents)));ledger.append(tr);});
+ const mix=clear("segment-mix");["mid_market","enterprise","strategic","unverified"].forEach(label=>{const count=assigned.filter(a=>a.segment===label).length;if(!count)return;const row=el("div",null,"assurance-item");row.append(el("span",label.replaceAll("_"," ")),el("b",count+" accounts"));mix.append(row);});
+ $("commercial-sources").textContent=pretty({scenario:state.scenario,crm_opportunity_events:state.sources.filter(s=>s.kind==="outcome"&&JSON.parse(s.payload).data.kind==="opportunity_accepted").map(s=>({source_key:s.source_key,received_at:s.received_at,payload:JSON.parse(s.payload)}))});
+}

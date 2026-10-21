@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TOP = {"README.md", "LICENSE", "pyproject.toml", "requirements.txt", "requirements.lock", "Dockerfile",
        "compose.yml", ".gitignore", ".gitattributes", ".dockerignore"}
-DIRS = {"src", "web", "tests", "scripts", "docs", ".github"}
+DIRS = {"src", "web", "tests", "scripts", "docs", ".github", "salesforce"}
 
 
 def files():
@@ -21,7 +21,8 @@ def files():
         if str(rel).replace("\\", "/") == "package-manifest.json":
             continue
         if rel.parts[0] in DIRS or rel.as_posix() in TOP:
-            if p.suffix.lower() in {".sqlite", ".db", ".pem", ".key", ".pyc", ".log"} or p.is_symlink():
+            if (p.suffix.lower() in {".sqlite", ".db", ".pem", ".key", ".pyc", ".log"} or p.is_symlink()
+                    or any(part in {".sf", ".sfdx", ".local"} for part in rel.parts)):
                 raise ValueError("private_file_in_public_tree:" + rel.as_posix())
             allowed.append(p)
     return sorted(allowed)
@@ -48,7 +49,7 @@ def checks():
 
 def source_hashes():
     return {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in files() if p.relative_to(ROOT).parts[0] in {"src", "web", "tests", "scripts", ".github"}
+            for p in files() if p.relative_to(ROOT).parts[0] in {"src", "web", "tests", "scripts", ".github", "salesforce"}
             or p.relative_to(ROOT).as_posix() in TOP - {"README.md", "LICENSE"}}
 
 

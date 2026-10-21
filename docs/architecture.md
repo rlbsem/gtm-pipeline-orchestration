@@ -43,3 +43,49 @@ The account mart aggregates meeting and opportunity grains separately before joi
 - Hashes and append-only triggers detect ordinary mutation and bind evidence; a host/database administrator is trusted. They are not a signature authority, WORM service or defense against that administrator.
 
 The container permits a bind inside its network namespace only so Compose can publish **127.0.0.1:8560**. Changing this to public hosting requires a different authentication and deployment design.
+
+## Separate native review boundary
+
+The explicit Salesforce acceptance runner uses an approved test-org pin, CLI-managed credentials, read-only administrator preflight, a create-only integration identity and an independent reviewer. A separate durable `crm_reviews` table binds the exact local approval to destination identity, synthetic alias mapping and advisory reference. It never writes a native receipt into the local engagement journal or counts a review as a pipeline outcome. Native exact-content lookup happens before new-action authorization, preserving historical reconciliation after opt-out. Current authorization and native synthetic owner/source are rechecked before each bounded new create. Existing immutable content cannot be overwritten by an upsert.
+
+```mermaid
+flowchart LR
+  E[Current synthetic source evidence] --> L[Actual local Qwen advice]
+  E --> P[Finite policy and exact local approval]
+  L -. request and context hashes only .-> J[Durable native review envelope]
+  P --> J
+  J --> S[Create-only Salesforce test review]
+  S --> V[Independent reviewer exact readback]
+  V --> J
+  P --> H[Separate local HTTP engagement loop]
+  H --> M[Synthetic replies meetings opportunities and measurement]
+```
+
+The UI exposes three fixed sanitized evidence artifacts through GET; it has no Salesforce write or inference route. Native/model provenance is pinned to its executed Git revision, while fresh browser and regression reports bind current code. The [historical operator procedure](native-ai.md) preserves the earlier custom-review/model boundary.
+
+## Native standard-object boundary
+
+The [standard CRM lane](native-standard-crm.md) adds unique run-scoped Account/Contact resolution, exact owner/relationship/consent checks and a separate `crm_tasks` journal. A finite internal Task envelope references the pinned native records; model prose has no write authority. Parent locks and a server-side Apex guard recheck synthetic scope and open opportunities. A unique immutable receipt is inserted in the same transaction as the Task: duplicate receipt failure rolls back the extra Task. The independent reviewer reads both the Task and its exact receipt, rather than trusting the POST response.
+
+```mermaid
+flowchart LR
+  K[Unique synthetic Account and Contact keys] --> P[Owner consent and open-opportunity checks]
+  A[Bound local approval] --> J[Durable pinned Task intent]
+  P --> J
+  J --> G[Native Apex scope guard and parent locks]
+  G --> T[One transaction: Task plus unique receipt]
+  T --> R[Independent reviewer readback]
+  R --> J
+  T --> C[Complete Task and revoke temporary access]
+```
+
+Setup uses explicit isolated administrator authorization for metadata, temporary assignments and newly created synthetic records. Original profiles, custom-review grants and sharing defaults remain unchanged. Source objects and receipts are API read-only for the writer. Task creation requires activity permissions; the Apex guard restricts the broader system permission to marked synthetic insertions and blocks writer mutations. The read grants do not establish row isolation in an org with broad Account/Contact/Opportunity sharing defaults. Only exact test records are queried. Other Salesforce writers need not obey the parent-lock protocol, so cross-system races remain a stated limitation.
+
+## Commercial profiles
+
+`--profile fixture` retains the original small deterministic source replay. `--profile enterprise` creates a separate 120-account B2B fixture from versioned segmentation and commercial scope assumptions. Workspace profile identity is persisted; existing data is never silently revalued or rebuilt. Both use the same `Engine`, `Worker`, independent destination, outcome contracts and `pipeline.sql`.
+
+Enterprise amounts are integer-cent annual opportunity estimates in actual synthetic CRM outcome records. A separate Python traversal of source events verifies counts, cohort/time cutoffs and amount totals against SQL and independently rereads CRM feedback through HTTP. The UI displays SQL totals and source-record line items; it contains no hardcoded enterprise pipeline total. Segment labels derive from CRM employee counts and do not override qualification or assignment. The larger scenario does not inherit a native/model execution claim from the earlier small fixture. [Assumptions, evidence and reproduction](evidence/enterprise-usd/README.md).
+
+
+The featured enterprise v2 currency and locale are pinned from the versioned scenario before source generation. All enterprise outcomes carry that denomination; admission, SQL and independent reconciliation reject mismatches. API and browser labels derive from the same snapshot. Existing CAD enterprise workspaces require a fresh directory, so existing amounts cannot acquire a new currency label. The archived small fixture retains its original implicit CAD contract and complete output.

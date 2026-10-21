@@ -1,0 +1,375 @@
+{
+  "executed_at": "2026-10-21T04:42:20.646515+00:00",
+  "run_id": "gtm-native-20261021-01",
+  "status": "passed",
+  "boundary": "native synthetic internal review; not native sequence or commercial outcomes",
+  "source_sha256": {
+    "pyproject.toml": "f5cf27b9df02662827937a59a77b24ba064e5e5de7fdc57985d800a7f6ad3d50",
+    "requirements.lock": "f6786f40ef4e82693b3b91b7fc3a591b6d68725afdeb723a3bbe13fcdb2f4d95",
+    "scripts/execution_bindings.py": "ac941b810a32105da00c349980a88c3d5cb7624ac0765e35212c2189fd594eb7",
+    "scripts/native_salesforce.py": "e381f976f6259395f12452830750b72d96e49b90341d9016cbba4a6dcca7db55",
+    "scripts/publication.py": "6586e382ededddbfbe6f585fe2b434f7390f561c8568c0bfdeabf056a935d50d",
+    "src/gtm/__init__.py": "182abe06ec4fec1849ea7160382f0b4e4461b17c9a3c649d5ff62d5320a259ac",
+    "src/gtm/advice.py": "74e967f8354c67f7c815c715b2ca3b5d4bf903680da8a970dee4cfa41028b76b",
+    "src/gtm/contracts.py": "10973a886a5f0d8adc426155624ae1536877f38d39976869b84339d3666c3914",
+    "src/gtm/destination.py": "7a7c98f56510be03b4ad75ff998e2cf14cab66c4d9b44ffcb7828e73ccc9ba5a",
+    "src/gtm/engine.py": "c31ffe81a63fd6f7e203097d1b7a34b8ea906abda8e1b7a9195c3bd9954c9208",
+    "src/gtm/fixtures.py": "b356a1c2a17360729d3b0a147a72dcbf3eaf8cf021f52f25a20a3dd8b384ea1d",
+    "src/gtm/policy.json": "ac8b8dde160296b37fd1e384cba9fa409372d3bdc5a4c01fd3740b774de331e7",
+    "src/gtm/salesforce.py": "0d7454a75c28db669144a7e0aa39cbc9bc820bfca9a003a142021800cbac2e18",
+    "src/gtm/schema.sql": "3ec3bbeef02d99075fb2acb7b7fdc73b1cf5483ff9ca324776bda165087cbfbb",
+    "src/gtm/store.py": "2d683ea48313273a56ecad8964925f07eb20fc761579992e935237de11ed8755",
+    "src/gtm/upgrade_cases.json": "2de37f8aaa6872bd6a793e30a7c2074bebc5caf9e69f277909b4d4292bace812",
+    "src/gtm/upgrade_scenarios.py": "2d8f7fafa07d72a826b3fbaa258151955c4468fddd89b83c81658bbeaa5c3673",
+    "src/gtm/worker.py": "cbceba8d42bb87195c00fda590d2ce08770ae12fda87e34e0a2d3bf2c756f668"
+  },
+  "preflight": {
+    "environment": "developer_edition",
+    "organization_type": "Developer Edition",
+    "org_sha256": "cb1c5a934be0510b5f29095703e3c5b49d85962e944fd1386cb9b2845d6fa181",
+    "destination_pin": "a6073fad7b4950e7986e13879aa2690f3b9c0c7dbcb2fa34758d772a77d36b60",
+    "create_only": true,
+    "independent_reader": true,
+    "unique_external_key": true,
+    "schema_sha256": "00926c74e98c68283285b182f9c7d6020e80c2de44476db47dba67a8c2cf2aa6",
+    "reviewer_schema_sha256": "c32ff90ca0ef1e9b711d9adecb2a9f92d80f1eee6ac1815909e472e39e3f7b57"
+  },
+  "standard_objects": {
+    "Account": {
+      "http": 404,
+      "executed_record_access": false
+    },
+    "Contact": {
+      "http": 404,
+      "executed_record_access": false
+    },
+    "Task": {
+      "http": 404,
+      "executed_record_access": false
+    }
+  },
+  "mapping": {
+    "local_brand": "atlas",
+    "local_account": "acc_53eb52349c000730",
+    "local_owner": "atlas-na",
+    "provider_brand": "cedar",
+    "provider_account": "account-0012",
+    "provider_owner": "cedar-east"
+  },
+  "native_key": "5693b57f17b2e00acda2b92725804a2c23671913d054334760534c4a89f0fb87",
+  "record_id_sha256": "4d5eb30ee003af4d247e4b6d438ba30666677f575934c34b42f24356c46fe78f",
+  "envelope_sha256": "ba0e3aeb0ccedf774bb75330ba93d71dfa181fea7373b42a1d7dd13622e1da3b",
+  "advisory_reference": {
+    "context_hash": "a435352f82eb82d01be432b5dd865d450c468905521e5db9ce32b4ff895f59b2",
+    "request_hash": "5a1c3d15d05c48bd14665302549102f35fb3bec2f384a39f648dbb56457e3247",
+    "validation_error": null
+  },
+  "checks": {
+    "client_lost_ack_recovered": true,
+    "unique_duplicate_rejected": true,
+    "reviewer_effective_create_false": true,
+    "reviewer_post_rejected_and_absent": true,
+    "integration_protected_update_rejected": true,
+    "exact_independent_readback": true,
+    "one_record_for_action_key": true,
+    "receipt_reconciled_after_optout": true,
+    "new_action_blocked_after_optout": true,
+    "source_unchanged": true,
+    "audit_valid": true
+  },
+  "cleanup": {
+    "new_review_status": "Rejected",
+    "readback_verified": true,
+    "record_retained_for_audit": true,
+    "users_permissions_and_existing_records_changed": false
+  },
+  "requests": [
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:15.358191+00:00",
+      "resource": "organization_query",
+      "response_sha256": "999aa5817cef1b96735b652cbe1ef586a1ef213bc1831d81d499c9e3bace1502",
+      "error_codes": []
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:15.519190+00:00",
+      "resource": "userinfo",
+      "response_sha256": "35d601fceb3e1972965dcfef872ef8698e843b74476e3fd267d4b39343e5f320",
+      "error_codes": []
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:15.693191+00:00",
+      "resource": "userinfo",
+      "response_sha256": "d4895f8f4c4e5f553e75ad4f41ab5bcf5343fb8c4e868d0d9e15dc87f6155c2e",
+      "error_codes": []
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:16.030840+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "00926c74e98c68283285b182f9c7d6020e80c2de44476db47dba67a8c2cf2aa6",
+      "error_codes": []
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:16.186840+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "c32ff90ca0ef1e9b711d9adecb2a9f92d80f1eee6ac1815909e472e39e3f7b57",
+      "error_codes": []
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:16.341840+00:00",
+      "resource": "Synthetic_Account__c",
+      "response_sha256": "46afb3aba3a2dc46b73b5b7db8547137cf8678d178b00e5cdc0d8fd48650c25f",
+      "error_codes": []
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:16.512839+00:00",
+      "resource": "User",
+      "response_sha256": "eeefb3b697ca80e67bc28798c503dbf400879ac5216af76ea456e141f6009a4a",
+      "error_codes": []
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:16.661840+00:00",
+      "resource": "Synthetic_Account__c",
+      "response_sha256": "46afb3aba3a2dc46b73b5b7db8547137cf8678d178b00e5cdc0d8fd48650c25f",
+      "error_codes": []
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:16.772844+00:00",
+      "resource": "User",
+      "response_sha256": "eeefb3b697ca80e67bc28798c503dbf400879ac5216af76ea456e141f6009a4a",
+      "error_codes": []
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 404,
+      "at": "2026-10-21T04:42:16.897629+00:00",
+      "resource": "Account",
+      "response_sha256": "7a45ae5ed2279a4ba01f08066e8946d91ea11460996262848845c2100d3431b3",
+      "error_codes": [
+        "NOT_FOUND"
+      ]
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 404,
+      "at": "2026-10-21T04:42:16.996628+00:00",
+      "resource": "Contact",
+      "response_sha256": "7a45ae5ed2279a4ba01f08066e8946d91ea11460996262848845c2100d3431b3",
+      "error_codes": [
+        "NOT_FOUND"
+      ]
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 404,
+      "at": "2026-10-21T04:42:18.086409+00:00",
+      "resource": "Task",
+      "response_sha256": "7a45ae5ed2279a4ba01f08066e8946d91ea11460996262848845c2100d3431b3",
+      "error_codes": [
+        "NOT_FOUND"
+      ]
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 404,
+      "at": "2026-10-21T04:42:18.266236+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "7a45ae5ed2279a4ba01f08066e8946d91ea11460996262848845c2100d3431b3",
+      "error_codes": [
+        "NOT_FOUND"
+      ]
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:18.370238+00:00",
+      "resource": "Synthetic_Account__c",
+      "response_sha256": "46afb3aba3a2dc46b73b5b7db8547137cf8678d178b00e5cdc0d8fd48650c25f",
+      "error_codes": []
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:18.482237+00:00",
+      "resource": "User",
+      "response_sha256": "eeefb3b697ca80e67bc28798c503dbf400879ac5216af76ea456e141f6009a4a",
+      "error_codes": []
+    },
+    {
+      "role": "integration",
+      "method": "POST",
+      "http": 201,
+      "at": "2026-10-21T04:42:18.790275+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "2eda89b33a8294933746beb08493ecb895fabfb6864ffdcb0ab6a0e390d4cf74",
+      "error_codes": []
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:18.999642+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "76ae0161b2b6354e4ac5ee5f32310e76cf52dfbc44108ce8170d939fa6439ac6",
+      "error_codes": []
+    },
+    {
+      "role": "integration",
+      "method": "POST",
+      "http": 400,
+      "at": "2026-10-21T04:42:19.170642+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "77727045f3e96590c64e084af148f30f5e8f2516ab27253f666b04d4251df1e3",
+      "error_codes": [
+        "DUPLICATE_VALUE"
+      ]
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 404,
+      "at": "2026-10-21T04:42:19.283641+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "7a45ae5ed2279a4ba01f08066e8946d91ea11460996262848845c2100d3431b3",
+      "error_codes": [
+        "NOT_FOUND"
+      ]
+    },
+    {
+      "role": "reviewer",
+      "method": "POST",
+      "http": 400,
+      "at": "2026-10-21T04:42:19.379989+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "07dd1605c7968aa8851d7440f494a18f888af63efb49a158baf35ba442253c98",
+      "error_codes": [
+        "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY"
+      ]
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 404,
+      "at": "2026-10-21T04:42:19.448988+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "7a45ae5ed2279a4ba01f08066e8946d91ea11460996262848845c2100d3431b3",
+      "error_codes": [
+        "NOT_FOUND"
+      ]
+    },
+    {
+      "role": "integration",
+      "method": "PATCH",
+      "http": 400,
+      "at": "2026-10-21T04:42:19.571990+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "d7fa628cff8802d559427b7c7e8095e11aa57d0616e7687a0d0e658398882688",
+      "error_codes": [
+        "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY"
+      ]
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:19.700988+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "877eb7b66a4747f421a688bfb762e2df266d081d7ddd7634c739c8952dace6c3",
+      "error_codes": []
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:19.782989+00:00",
+      "resource": "organization_query",
+      "response_sha256": "c50ee03cca59d6e3b09ee99b6b0208db90b29baac951d722297a382e53a94495",
+      "error_codes": []
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:19.899526+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "877eb7b66a4747f421a688bfb762e2df266d081d7ddd7634c739c8952dace6c3",
+      "error_codes": []
+    },
+    {
+      "role": "reviewer",
+      "method": "PATCH",
+      "http": 204,
+      "at": "2026-10-21T04:42:20.165516+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "error_codes": []
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:20.267516+00:00",
+      "resource": "Seller_Action__c",
+      "response_sha256": "7261c284d4ba481d28e5edea5f4a016879a736e385ef2d2a5c1e4ffb2210792d",
+      "error_codes": []
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:20.402515+00:00",
+      "resource": "Synthetic_Account__c",
+      "response_sha256": "46afb3aba3a2dc46b73b5b7db8547137cf8678d178b00e5cdc0d8fd48650c25f",
+      "error_codes": []
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-21T04:42:20.497514+00:00",
+      "resource": "User",
+      "response_sha256": "eeefb3b697ca80e67bc28798c503dbf400879ac5216af76ea456e141f6009a4a",
+      "error_codes": []
+    }
+  ],
+  "authenticated_requests": 29,
+  "limits": [
+    "Standard Account/Contact/Task access not granted; no standard record lane executed.",
+    "Lost acknowledgement is client-side fault injection after actual POST 201.",
+    "Rejected POST error codes are recorded without classifying trigger errors as permission codes.",
+    "Raw record identifiers and response bodies remain in private operator workspace.",
+    "Source changes after last read cannot be prevented atomically across two systems."
+  ]
+}

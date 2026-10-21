@@ -18,7 +18,7 @@ from publication import source_hashes
 def capture(workspace, output):
     output.mkdir(parents=True, exist_ok=True)
     bound_sources = source_hashes()
-    engine, destination, worker = build(workspace)
+    engine, destination, worker = build(workspace, "enterprise")
     server = uvicorn.Server(uvicorn.Config(create_app(engine, destination, worker), host="127.0.0.1", port=0,
                                           log_level="error"))
     thread = threading.Thread(target=server.run, daemon=True)
@@ -38,7 +38,23 @@ def capture(workspace, output):
             page.on("pageerror", lambda error: errors.append(str(error)))
             page.goto(url)
             page.locator("#accounts tr").first.wait_for()
+            baseline = page.request.get(url + "/api/state").json()
+            total = sum(a["pipeline_cents"] for a in baseline["measurement"]["arms"].values())
+            assert total == 346000000 and len(baseline["accounts"]) == 120
+            assert baseline["scenario"]["currency"] == baseline["measurement"]["currency"] == "USD"
+            assert baseline["scenario"]["locale"] == "en-US"
+            assert all(f["currency"] == "USD" for f in baseline["outcomes"])
+            assert "USD $3,460,000" in page.locator("#metrics").inner_text()
+            assert "values in USD" in page.locator("#comparison-basis").inner_text()
             page.screenshot(path=output / "pipeline-overview.png")
+            page.locator('[data-view="commercial"]').click()
+            assert page.locator("#commercial-ledger tr").count() == 5
+            assert "$1,200,000" in page.locator("#commercial-ledger").inner_text()
+            assert "USD" in page.locator("#commercial-currency").inner_text()
+            assert "CAD" not in page.locator("#commercial-ledger").inner_text()
+            page.screenshot(path=output / "commercial-scenario.png")
+            page.set_viewport_size({"width": 390, "height": 844})
+            page.screenshot(path=output / "mobile-commercial.png", full_page=True)
             page.set_viewport_size({"width": 1440, "height": 1320})
             page.locator('[data-view="workspace"]').click()
             page.locator("#receipt").filter(has_text="READ-BACK VERIFIED").wait_for()
@@ -73,13 +89,32 @@ def capture(workspace, output):
             action = next(a for a in engine.rows("actions") if a["account_id"] == account)
             assert action["status"] == "reconciled" and action["attempts"] == 1
             assert len([f for f in engine.rows("feedback") if f["account_id"] == account]) == 3
+            after = page.request.get(url + "/api/state").json()
+            after_pipeline = sum(a["pipeline_cents"] for a in after["measurement"]["arms"].values())
+            interactive_value = next(f["amount_cents"] for f in after["outcomes"]
+                                     if f["kind"] == "opportunity_accepted" and f["account_id"] == account)
+            assert after_pipeline == total + interactive_value
+            assert after["measurement"]["currency"] == "USD"
+            assert all(json.loads(s["payload"])["data"]["currency"] == "USD" for s in after["sources"] if s["kind"] == "outcome")
             page.locator('[data-view="inbound"]').click()
             page.locator("#inbound-request").select_option("support")
             page.locator('#inbound-form button[type="submit"]').click()
             page.locator("#inbound-result").filter(has_text="service_review").wait_for()
+            page.locator('[data-view="proof"]').click()
+            page.locator("#native-status").filter(has_text="passed").wait_for()
+            page.locator("#native-proof").filter(has_text="Account · Contact · Task").wait_for()
+            assert "1 exact effect" in page.locator("#native-proof").inner_text()
+            assert "4 assignments removed" in page.locator("#native-proof").inner_text()
+            page.locator("#ai-status").filter(has_text="16 RESPONSES").wait_for()
+            page.locator("#ai-response").filter(has_text="Juniper").wait_for()
+            page.screenshot(path=output / "native-ai-evidence.png")
+            # Inspect an actual rejected model response, rendered as text, never executable HTML.
+            page.locator("#ai-case").select_option("8")
+            page.locator("#ai-case-status").filter(has_text="citation_not_exact").wait_for()
+            assert '"prepare_allowed": false' in page.locator("#ai-policy").inner_text()
             mobile_checks = {}
             page.set_viewport_size({"width": 390, "height": 844})
-            for name in ("overview", "workspace", "inbound", "recovery"):
+            for name in ("overview", "workspace", "inbound", "recovery", "proof", "commercial"):
                 page.locator(f'[data-view="{name}"]').click()
                 mobile_checks[name] = page.evaluate("() => document.documentElement.scrollWidth <= innerWidth")
                 assert mobile_checks[name], "mobile_overflow:" + name
@@ -91,9 +126,17 @@ def capture(workspace, output):
         result = {"captured_at": datetime.now(timezone.utc).isoformat(), "method": "actual Chromium / local UI and APIs",
                   "desktop_viewport": {"width": 1440, "height": 1120}, "mobile_viewport": {"width": 390, "height": 844},
                   "account_workbench_viewport": {"width": 1440, "height": 1320},
-                  "screenshots_before_interaction": True, "no_page_overflow": mobile_checks, "page_errors": errors,
+                  "profile": "enterprise", "currency": baseline["scenario"]["currency"], "locale": baseline["scenario"]["locale"],
+                  "baseline_pipeline_cents": total,
+                  "after_interaction_pipeline_cents": after_pipeline,
+                  "interactive_crm_opportunity_cents": interactive_value,
+                  "screenshot_phases": {"before_interaction": ["pipeline-overview.png", "commercial-scenario.png",
+                                        "mobile-commercial.png", "account-workbench.png", "execution-recovery.png"],
+                                        "after_interaction": ["native-ai-evidence.png", "mobile-workbench.png"]},
+                  "no_page_overflow": mobile_checks, "page_errors": errors,
                   "browser_flow": ["prepare", "exact_approval", "real_lost_ack", "independent_receipt_recovery",
-                                   "positive_reply", "qualified_meeting", "accepted_opportunity", "inbound_service_route"],
+                                   "positive_reply", "qualified_meeting", "accepted_opportunity", "inbound_service_route",
+                                   "recorded_native_and_ai_evidence", "inspect_rejected_model_citation"],
                   "new_action_attempts": action["attempts"], "new_action_status": action["status"],
                   "inference": "not_executed", "native_vendors": "not_executed",
                   "source_sha256": bound_sources,
@@ -109,6 +152,6 @@ def capture(workspace, output):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--workspace", type=Path, required=True)
-    parser.add_argument("--output", type=Path, default=Path("docs/images"))
+    parser.add_argument("--output", type=Path, default=Path("docs/images/enterprise-usd"))
     args = parser.parse_args()
     print(json.dumps(capture(args.workspace, args.output), indent=2))

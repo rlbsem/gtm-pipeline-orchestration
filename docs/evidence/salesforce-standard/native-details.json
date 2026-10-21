@@ -1,0 +1,686 @@
+{
+  "derived_from_acceptance_sha256": "c06796857f652ba1cb44aa9330bb18368eccf0b0789c204bbd233f98d40ee631",
+  "effective_permissions": {
+    "integration": {
+      "Account": {
+        "queryable": true,
+        "createable": false,
+        "updateable": false,
+        "deletable": false,
+        "fields": {
+          "Id": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Website": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "OwnerId": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "GTM_Test_Active__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "GTM_Test_Key__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": true,
+            "externalId": true
+          }
+        }
+      },
+      "Contact": {
+        "queryable": true,
+        "createable": false,
+        "updateable": false,
+        "deletable": false,
+        "fields": {
+          "Id": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "AccountId": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Email": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "OwnerId": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "HasOptedOutOfEmail": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "GTM_Test_Key__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": true,
+            "externalId": true
+          }
+        }
+      },
+      "Opportunity": {
+        "queryable": true,
+        "createable": false,
+        "updateable": false,
+        "deletable": false,
+        "fields": {
+          "Id": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "AccountId": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "IsClosed": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          }
+        }
+      },
+      "Task": {
+        "queryable": true,
+        "createable": true,
+        "updateable": true,
+        "deletable": true,
+        "fields": {
+          "Id": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "WhoId": {
+            "createable": true,
+            "updateable": true,
+            "unique": false,
+            "externalId": false
+          },
+          "WhatId": {
+            "createable": true,
+            "updateable": true,
+            "unique": false,
+            "externalId": false
+          },
+          "Subject": {
+            "createable": true,
+            "updateable": true,
+            "unique": false,
+            "externalId": false
+          },
+          "Status": {
+            "createable": true,
+            "updateable": true,
+            "unique": false,
+            "externalId": false
+          },
+          "Priority": {
+            "createable": true,
+            "updateable": true,
+            "unique": false,
+            "externalId": false
+          },
+          "OwnerId": {
+            "createable": true,
+            "updateable": true,
+            "unique": false,
+            "externalId": false
+          },
+          "Description": {
+            "createable": true,
+            "updateable": true,
+            "unique": false,
+            "externalId": false
+          },
+          "CreatedById": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "IsReminderSet": {
+            "createable": true,
+            "updateable": true,
+            "unique": false,
+            "externalId": false
+          },
+          "GTM_Action_Key__c": {
+            "createable": true,
+            "updateable": true,
+            "unique": false,
+            "externalId": false
+          }
+        }
+      },
+      "GTM_Task_Receipt__c": {
+        "queryable": true,
+        "createable": false,
+        "updateable": false,
+        "deletable": false,
+        "fields": {
+          "Id": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Action_Key__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": true,
+            "externalId": true
+          },
+          "Payload_Hash__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Payload__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Task_Id__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          }
+        }
+      }
+    },
+    "reviewer": {
+      "Account": {
+        "queryable": true,
+        "createable": false,
+        "updateable": false,
+        "deletable": false,
+        "fields": {
+          "Id": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Website": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "OwnerId": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "GTM_Test_Active__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "GTM_Test_Key__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": true,
+            "externalId": true
+          }
+        }
+      },
+      "Contact": {
+        "queryable": true,
+        "createable": false,
+        "updateable": false,
+        "deletable": false,
+        "fields": {
+          "Id": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "AccountId": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Email": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "OwnerId": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "HasOptedOutOfEmail": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "GTM_Test_Key__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": true,
+            "externalId": true
+          }
+        }
+      },
+      "Opportunity": {
+        "queryable": true,
+        "createable": false,
+        "updateable": false,
+        "deletable": false,
+        "fields": {
+          "Id": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "AccountId": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "IsClosed": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          }
+        }
+      },
+      "Task": {
+        "queryable": true,
+        "createable": false,
+        "updateable": false,
+        "deletable": false,
+        "fields": {
+          "Id": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "WhoId": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "WhatId": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Subject": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Status": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Priority": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "OwnerId": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Description": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "CreatedById": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "IsReminderSet": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "GTM_Action_Key__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          }
+        }
+      },
+      "GTM_Task_Receipt__c": {
+        "queryable": true,
+        "createable": false,
+        "updateable": false,
+        "deletable": false,
+        "fields": {
+          "Id": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Action_Key__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": true,
+            "externalId": true
+          },
+          "Payload_Hash__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Payload__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          },
+          "Task_Id__c": {
+            "createable": false,
+            "updateable": false,
+            "unique": false,
+            "externalId": false
+          }
+        }
+      }
+    }
+  },
+  "relationships": {
+    "account_id_hash": "346a843bee23e0617521b40c7730640e70d61703e6f3bebf1e4e8a82ea5620d1",
+    "contact_account_id_hash": "346a843bee23e0617521b40c7730640e70d61703e6f3bebf1e4e8a82ea5620d1",
+    "task_account_id_hash": "346a843bee23e0617521b40c7730640e70d61703e6f3bebf1e4e8a82ea5620d1",
+    "contact_id_hash": "3041cab87f8b198db76d30d48c3a6f91740c54204cffd13636d02273b3333983",
+    "task_contact_id_hash": "3041cab87f8b198db76d30d48c3a6f91740c54204cffd13636d02273b3333983",
+    "account_owner_hash": "906c4463e297a9d7b514a1db775d7d686c6a1b5e0d03714308cf23a3ec3d117f",
+    "contact_owner_hash": "906c4463e297a9d7b514a1db775d7d686c6a1b5e0d03714308cf23a3ec3d117f",
+    "task_owner_hash": "906c4463e297a9d7b514a1db775d7d686c6a1b5e0d03714308cf23a3ec3d117f",
+    "task_created_by_hash": "746bfdcb73a6f8cec8195a6b0fa9551db04eacb757e336182d6148ca82c968c9",
+    "independent_reader_hash": "906c4463e297a9d7b514a1db775d7d686c6a1b5e0d03714308cf23a3ec3d117f"
+  },
+  "rejected_operations": [
+    {
+      "request_index": 30,
+      "http": 404,
+      "role": "administrator",
+      "response_sha256": "7a45ae5ed2279a4ba01f08066e8946d91ea11460996262848845c2100d3431b3",
+      "errors": [
+        {
+          "code": "NOT_FOUND",
+          "message": "The requested resource does not exist"
+        }
+      ]
+    },
+    {
+      "request_index": 32,
+      "http": 404,
+      "role": "administrator",
+      "response_sha256": "7a45ae5ed2279a4ba01f08066e8946d91ea11460996262848845c2100d3431b3",
+      "errors": [
+        {
+          "code": "NOT_FOUND",
+          "message": "The requested resource does not exist"
+        }
+      ]
+    },
+    {
+      "request_index": 34,
+      "http": 404,
+      "role": "administrator",
+      "response_sha256": "7a45ae5ed2279a4ba01f08066e8946d91ea11460996262848845c2100d3431b3",
+      "errors": [
+        {
+          "code": "NOT_FOUND",
+          "message": "The requested resource does not exist"
+        }
+      ]
+    },
+    {
+      "request_index": 54,
+      "http": 404,
+      "role": "reviewer",
+      "response_sha256": "7a45ae5ed2279a4ba01f08066e8946d91ea11460996262848845c2100d3431b3",
+      "errors": [
+        {
+          "code": "NOT_FOUND",
+          "message": "The requested resource does not exist"
+        }
+      ]
+    },
+    {
+      "request_index": 65,
+      "http": 400,
+      "role": "integration",
+      "response_sha256": "6da82b54c41efb53e1adfa51939f873c0e7f736687a297fab649109f53330258",
+      "errors": [
+        {
+          "code": "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY",
+          "message": "GTMTaskBoundary: execution of AfterInsert\n\ncaused by: System.DmlException: Insert failed. First exception on row 0; first error: DUPLICATE_VALUE, duplicate value found: Action_Key__c duplicates value on record with id: [record-id]: []\n\nTrigger.GTMTaskBoundary: line 21, column 1"
+        }
+      ]
+    },
+    {
+      "request_index": 69,
+      "http": 400,
+      "role": "integration",
+      "response_sha256": "01a5b1a3ccfbc17b6a615a0fffb6fc6ed435f20b780bfdd38fd5cb59a0932956",
+      "errors": [
+        {
+          "code": "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY",
+          "message": "entity type cannot be updated: Account"
+        }
+      ]
+    },
+    {
+      "request_index": 70,
+      "http": 400,
+      "role": "integration",
+      "response_sha256": "546e7f674086f123afd4abd756f62af7e1bee1d6e84dee200802418f6ee107e3",
+      "errors": [
+        {
+          "code": "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY",
+          "message": "entity type cannot be updated: Contact"
+        }
+      ]
+    },
+    {
+      "request_index": 71,
+      "http": 400,
+      "role": "integration",
+      "response_sha256": "7489f6a851fc5578afb39881ded6fd273a5200b56f1eba00c7456211b7508541",
+      "errors": [
+        {
+          "code": "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY",
+          "message": "insufficient access rights on object id"
+        }
+      ]
+    },
+    {
+      "request_index": 75,
+      "http": 400,
+      "role": "integration",
+      "response_sha256": "01b4dcfdae3ed598273c8500775fdb07356b0d808ee165cb89793b333dba0744",
+      "errors": [
+        {
+          "code": "FIELD_CUSTOM_VALIDATION_EXCEPTION",
+          "message": "GTM_SCOPE_OR_AUTHORITY_REJECTED"
+        }
+      ]
+    },
+    {
+      "request_index": 82,
+      "http": 400,
+      "role": "integration",
+      "response_sha256": "01b4dcfdae3ed598273c8500775fdb07356b0d808ee165cb89793b333dba0744",
+      "errors": [
+        {
+          "code": "FIELD_CUSTOM_VALIDATION_EXCEPTION",
+          "message": "GTM_SCOPE_OR_AUTHORITY_REJECTED"
+        }
+      ]
+    },
+    {
+      "request_index": 89,
+      "http": 400,
+      "role": "integration",
+      "response_sha256": "01b4dcfdae3ed598273c8500775fdb07356b0d808ee165cb89793b333dba0744",
+      "errors": [
+        {
+          "code": "FIELD_CUSTOM_VALIDATION_EXCEPTION",
+          "message": "GTM_SCOPE_OR_AUTHORITY_REJECTED"
+        }
+      ]
+    },
+    {
+      "request_index": 96,
+      "http": 400,
+      "role": "integration",
+      "response_sha256": "01b4dcfdae3ed598273c8500775fdb07356b0d808ee165cb89793b333dba0744",
+      "errors": [
+        {
+          "code": "FIELD_CUSTOM_VALIDATION_EXCEPTION",
+          "message": "GTM_SCOPE_OR_AUTHORITY_REJECTED"
+        }
+      ]
+    },
+    {
+      "request_index": 106,
+      "http": 400,
+      "role": "integration",
+      "response_sha256": "01b4dcfdae3ed598273c8500775fdb07356b0d808ee165cb89793b333dba0744",
+      "errors": [
+        {
+          "code": "FIELD_CUSTOM_VALIDATION_EXCEPTION",
+          "message": "GTM_SCOPE_OR_AUTHORITY_REJECTED"
+        }
+      ]
+    },
+    {
+      "request_index": 113,
+      "http": 400,
+      "role": "reviewer",
+      "response_sha256": "c28b7a481de8e531e433d2c067f5938fb70ad2caf9f1c28cd7821f3ee2d182eb",
+      "errors": [
+        {
+          "code": "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY",
+          "message": "entity type cannot be inserted: Task"
+        }
+      ]
+    },
+    {
+      "request_index": 117,
+      "http": 400,
+      "role": "integration",
+      "response_sha256": "23c96ced33c46757575e5f82c549102d9b17addaf270bf9386600d1fcae9027d",
+      "errors": [
+        {
+          "code": "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY",
+          "message": "entity type cannot be inserted: GTM Task Receipt"
+        }
+      ]
+    }
+  ],
+  "apex_deployment": {
+    "status": "Succeeded",
+    "tests_completed": 3,
+    "tests_failed": 0,
+    "successes": [
+      {
+        "name": "GTMTaskGateTest",
+        "methodName": "atomicReceiptAndImmutableAction",
+        "time": 62820
+      },
+      {
+        "name": "GTMTaskGateTest",
+        "methodName": "authorityAndScopeRejection",
+        "time": 3130
+      },
+      {
+        "name": "GTMTaskGateTest",
+        "methodName": "ordinaryTasksUnaffectedAndForgeryRejected",
+        "time": 1300
+      }
+    ],
+    "coverage": [
+      {
+        "name": "GTMTaskGate",
+        "type": "Class",
+        "numLocations": 36,
+        "numLocationsNotCovered": 0
+      },
+      {
+        "name": "GTMTaskBoundary",
+        "type": "Trigger",
+        "numLocations": 17,
+        "numLocationsNotCovered": 3
+      },
+      {
+        "name": "GTMReceiptBoundary",
+        "type": "Trigger",
+        "numLocations": 1,
+        "numLocationsNotCovered": 0
+      }
+    ]
+  },
+  "boundary": "Sanitized derivation of recorded native responses; hashes are not vendor signatures."
+}

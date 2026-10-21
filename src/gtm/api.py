@@ -9,6 +9,7 @@ from pydantic import ValidationError
 from .advice import research
 from .contracts import DomainError, moment, stamp
 from .fixtures import FINISH, START, outcome, record
+from .enterprise import account_segment, describe, enterprise_outcome, interactive_value
 from .measurement import measure
 from .worker import reconcile
 
@@ -70,10 +71,14 @@ def create_app(engine, destination, worker):
             with engine.connection() as db:
                 score = engine._score(db, a["id"], app.state.clock)
             cohort = next((c for c in engine.rows("cohorts") if c["account_id"] == a["id"]), None)
-            accounts.append({**a, "score": score, "cohort": cohort})
-        return {"clock": app.state.clock, "measurement_clock": FINISH,
+            accounts.append({**a, "score": score, "cohort": cohort, "segment": account_segment(engine, a["id"])})
+        scenario = describe(engine)
+        outcomes = engine.rows("feedback")
+        if scenario["profile"] == "enterprise":
+            outcomes = [f | {"currency": scenario["currency"]} for f in outcomes]
+        return {"clock": app.state.clock, "measurement_clock": FINISH, "scenario": scenario,
                 "accounts": accounts, "actions": engine.rows("actions"), "routes": engine.rows("routes"),
-                "outcomes": engine.rows("feedback"), "sources": engine.rows("sources"),
+                "outcomes": outcomes, "sources": engine.rows("sources"),
                 "audit": engine.rows("audit")[-100:], "measurement": measure(engine, FINISH),
                 "reconciliation": reconcile(engine, worker.client), "audit_valid": engine.audit_valid(),
                 "inference": "not_executed", "native_vendors": "not_executed"}
@@ -81,6 +86,17 @@ def create_app(engine, destination, worker):
     @app.get("/api/accounts/{account_id}/research")
     def brief(account_id: str):
         return research(engine, account_id)
+
+    @app.get("/api/evidence/{lane}")
+    def recorded_evidence(lane: str):
+        names = {"ai": "native-ai/ai-evaluation.json", "salesforce": "native-ai/salesforce-acceptance.json",
+                 "salesforce-standard": "salesforce-standard/acceptance.json"}
+        if lane not in names:
+            return JSONResponse({"error": "not_found"}, status_code=404)
+        path = WEB.parent / "docs/evidence" / names[lane]
+        if not path.is_file():
+            return {"status": "recorded_evidence_not_available", "live_execution": False}
+        return FileResponse(path, media_type="application/json")
 
     @app.post("/api/accounts/{account_id}/prepare")
     def prepare(account_id: str):
@@ -133,8 +149,10 @@ def create_app(engine, destination, worker):
         parent = next((f["business_id"] for f in known if f["kind"] == parent_kind), None)
         if parent_kind and not parent:
             raise DomainError("record_preceding_feedback_first")
-        return outcome(engine, account_id, "interactive-" + kind + "-" + account_id, kind, app.state.clock,
-                       1500000 if kind == "opportunity_accepted" else 0, action["action_key"], parent,
+        amount = (interactive_value(engine, account_id) if describe(engine)["profile"] == "enterprise" else 1500000)
+        emit = enterprise_outcome if describe(engine)["profile"] == "enterprise" else outcome
+        return emit(engine, account_id, "interactive-" + kind + "-" + account_id, kind, app.state.clock,
+                       amount if kind == "opportunity_accepted" else 0, action["action_key"], parent,
                        client=worker.client)
 
     @app.post("/api/accounts/{account_id}/optout")

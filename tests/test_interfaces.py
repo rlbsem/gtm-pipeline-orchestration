@@ -28,6 +28,12 @@ def test_real_operator_api_security_and_review(ready):
         assert state["reconciliation"]["safe_to_resume"] and state["inference"] == "not_executed"
         assert client.get("/", headers={"Host": "external.example"}).status_code == 403
         assert client.get("/assets/secret.txt").status_code == 404
+        assert client.get("/api/evidence/ai").json()["inferences_executed"] == 16
+        assert client.get("/api/evidence/salesforce").json()["status"] == "passed"
+        assert client.get("/api/evidence/salesforce-standard").json()["authenticated_requests"] == 140
+        assert client.get("/api/evidence/runtime.json").status_code == 404
+        assert client.post("/api/evidence/salesforce", headers=headers).status_code == 405
+        assert client.post("/api/evidence/salesforce-standard", headers=headers).status_code == 405
 
 
 @pytest.mark.parametrize("url", ["https://vendor.example", "http://10.0.0.1", "http://127.0.0.1@evil.example",

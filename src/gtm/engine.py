@@ -5,12 +5,13 @@ from pathlib import Path
 
 from .contracts import Action, DomainError, Record, moment, stamp
 from .store import Store, canonical, digest
+from .currency import validate as validate_currency
 
 DATA_FIELDS = {
     "account": {"name", "employees", "industry", "territory", "lifecycle", "owner"},
     "contact": {"email", "consent"}, "intent": {"signal"},
     "inbound": {"email", "request", "consent"}, "consent": {"allowed"}, "owner": {"owner"},
-    "outcome": {"kind", "business_id", "parent_id", "action_key", "origin", "amount_cents", "created_at"},
+    "outcome": {"kind", "business_id", "parent_id", "action_key", "origin", "amount_cents", "created_at", "currency"},
 }
 SOURCES = {"account": {"crm", "enrichment"}, "contact": {"crm"}, "owner": {"crm"},
            "consent": {"crm", "web"}, "intent": {"web", "enrichment"},
@@ -185,6 +186,7 @@ class Engine(Store):
 
     def _outcome(self, db, r, account_id, key, now):
         d = r.data
+        validate_currency(db, d)
         kind = d.get("kind")
         if kind not in {"reply_positive", "reply_negative", "meeting_qualified", "opportunity_accepted"}:
             raise DomainError("unknown_outcome")

@@ -1,0 +1,23 @@
+{
+  "version": "enterprise-prospecting/v2",
+  "currency": "USD",
+  "locale": "en-US",
+  "denomination": "Synthetic USD-denominated scope estimates, not converted historical CAD or real-world revenue. No exchange rate is applied.",
+  "value_basis": "Illustrative 12-month opportunity ACV; qualified pipeline, not revenue, bookings or ARR",
+  "population": 120,
+  "segments": {
+    "mid_market": {"employees": [240, 450, 700, 950], "annual_site_value_cents": 3000000, "interactive_sites": 6},
+    "enterprise": {"employees": [1800, 3200, 6000, 8500], "annual_site_value_cents": 4500000, "interactive_sites": 10},
+    "strategic": {"employees": [15000, 26000, 40000, 60000], "annual_site_value_cents": 5000000, "interactive_sites": 20}
+  },
+  "segment_cycle": ["mid_market", "mid_market", "enterprise", "enterprise", "strategic"],
+  "meetings": [5, 6, 12, 21, 28, 36, 52, 59, 67, 83, 98, 114],
+  "opportunities": [
+    {"account_index": 5, "sites": 6, "scope": "Regional multi-site platform pilot"},
+    {"account_index": 28, "sites": 10, "scope": "Enterprise integration rollout"},
+    {"account_index": 59, "sites": 20, "scope": "Strategic platform consolidation"},
+    {"account_index": 83, "sites": 14, "scope": "Cross-region operating-system expansion"},
+    {"account_index": 114, "sites": 24, "scope": "Global multi-site modernization"}
+  ],
+  "assumptions": "Fictional scoped commercial estimates, not vendor pricing or market benchmarks. Outcome accounts and deal scopes are specified independently of cohort allocation; no lift is targeted."
+}
