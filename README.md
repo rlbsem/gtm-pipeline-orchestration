@@ -6,6 +6,8 @@ Prospecting, qualification, CRM routing and engagement often operate in separate
 
 The Python application and independent HTTP engagement destination **execute locally** with durable databases. All companies, contacts, requests and outcomes are synthetic. No customer communications, live CRM connection or commercial uplift is claimed. The optional authenticated local LLM adapter is implemented and contract-tested; **fresh model inference has not been executed for this repository**.
 
+**Executed proof:** [73 passing regression tests and two identical independent HTTP demos](docs/evidence/verification.json), plus [real desktop/mobile browser workflows](docs/images/provenance.json), including lost-acknowledgement recovery and downstream feedback.
+
 ![Actual pipeline overview, independent receipts and account-level treatment comparison](docs/images/pipeline-overview.png)
 
 *Captured from the running application. [Screenshot provenance and browser execution](docs/images/provenance.json).*

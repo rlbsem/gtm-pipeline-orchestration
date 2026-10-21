@@ -1,5 +1,5 @@
 {
-  "executed_at": "2026-10-21T02:10:11.063475+00:00",
+  "executed_at": "2026-10-21T02:17:19.706507+00:00",
   "platform": "Windows",
   "python": "3.12.14",
   "tests": {
@@ -32,7 +32,7 @@
     "pyproject.toml": "f5cf27b9df02662827937a59a77b24ba064e5e5de7fdc57985d800a7f6ad3d50",
     "requirements.lock": "f6786f40ef4e82693b3b91b7fc3a591b6d68725afdeb723a3bbe13fcdb2f4d95",
     "requirements.txt": "893ff6ae6831dd41daa296a1e046ea522b487847bd02c45f64334fc0890363a7",
-    "scripts/capture.py": "adae62e993415b326485b8394745fb44504b4ae5f0dc35455cb768138c1a5191",
+    "scripts/capture.py": "5215534aba9f5b9d4e434c09be29e5b13c7e4eed76c830d196d2c3975af93bfb",
     "scripts/check_evidence.py": "1f038ddb67884d25d8a9d498c3fcb559334c81a771cc39d8e5a87aac148759cb",
     "scripts/lock.py": "481c881b670a297817902efad5d75f90e7f4795945d7a1145e1e1332b28e5445",
     "scripts/publication.py": "6586e382ededddbfbe6f585fe2b434f7390f561c8568c0bfdeabf056a935d50d",
@@ -58,7 +58,7 @@
     "tests/test_intelligence.py": "f10b4b8aa33710cc3b2cc079944a7d82613482c5db1971e3ed767a7db74ddaa2",
     "tests/test_interfaces.py": "6ce51d6fe916e976f7d4c2593e1e732adfd387eeee2b9defed4db0e880ea62ec",
     "tests/test_measurement.py": "e9a417376bb225e2f981fe6e8716080baab11122d88616e1f695f7120510ec8b",
-    "web/app.js": "098d020492c9a451e0262904f25f38affc19dd753ddf38d29354425350468a33",
+    "web/app.js": "28426a270b8a043ff693c447f5448330ce5343bca445ff70b585666addb31922",
     "web/index.html": "2aaa8cb8e33a524d0c871be50e733d24ed682b24acaeab43a5c96469d32fde07",
     "web/style.css": "7745ef987c2b81fd097016118f600901cccee1e1f27f35e0522b432c1fe71781"
   },

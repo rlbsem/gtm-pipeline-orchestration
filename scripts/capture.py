@@ -57,6 +57,8 @@ def capture(workspace, output):
             page.wait_for_function("() => !document.getElementById('approve').disabled")
             page.locator("#approve").click()
             page.wait_for_function("() => !document.getElementById('dispatch').disabled")
+            page.locator("#prepared").filter(has_text="Approved by demo-reviewer").wait_for()
+            assert page.locator("#approve").is_disabled()
             page.get_by_text("Test a local failure safely", exact=True).click()
             page.locator("#lost-ack").click()
             page.locator("#notice").filter(has_text="will commit").wait_for()
@@ -64,6 +66,7 @@ def capture(workspace, output):
             page.locator("#notice").filter(has_text="uncertain").wait_for()
             page.locator("#dispatch").click()
             page.locator("#receipt").filter(has_text="READ-BACK VERIFIED").wait_for()
+            assert "Awaiting exact approval" not in page.locator("#prepared").inner_text()
             for kind in ("reply_positive", "meeting_qualified", "opportunity_accepted"):
                 page.locator(f'[data-feedback="{kind}"]').click()
                 page.locator("#timeline").filter(has_text=kind.replace("_", " ")).wait_for()
