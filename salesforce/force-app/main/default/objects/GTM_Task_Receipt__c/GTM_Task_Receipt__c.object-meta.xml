@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+<deploymentStatus>Deployed</deploymentStatus><label>GTM Task Receipt</label><pluralLabel>GTM Task Receipts</pluralLabel><nameField><label>Receipt</label><type>AutoNumber</type><displayFormat>GTM-{000000}</displayFormat></nameField><sharingModel>Read</sharingModel>
+</CustomObject>
+
