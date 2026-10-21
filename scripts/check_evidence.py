@@ -9,6 +9,7 @@ from publication import ROOT, source_hashes
 
 BASELINE = "601d3865e40c4e62836adafa01e377a1579468ec"
 NATIVE_AI = "4b06935b23edee3045a58553ec9fcdf2fa056084"
+NATIVE_UI = "644065dd561019b351ca7330d2146fd4c10e1d66"
 
 
 def blob(revision, path):
@@ -20,12 +21,13 @@ def historical(report, revision):
         assert hashlib.sha256(blob(revision, path)).hexdigest() == fingerprint, "historical_source_mismatch:" + path
 
 
-def browser(path, current):
+def browser(path, current, revision=BASELINE):
     provenance = json.loads(path.read_text())
     if current:
         assert provenance["source_sha256"] == source_hashes(), "browser_source_mismatch"
     else:
-        historical(provenance, BASELINE)
+        historical(provenance, revision)
+        assert path.read_bytes() == blob(revision, path.relative_to(ROOT).as_posix())
     for name, fingerprint in provenance["image_sha256"].items():
         assert hashlib.sha256((path.parent / name).read_bytes()).hexdigest() == fingerprint
     assert not provenance["page_errors"] and all(provenance["no_page_overflow"].values())
@@ -41,11 +43,23 @@ def check():
         assert (ROOT / path).read_bytes() == blob(BASELINE, path), "historical_record_rewritten:" + path
     assert report["tests"]["tests"] == 73
     browser(ROOT / "docs/images/provenance.json", False)
-    current = json.loads((ROOT / "docs/evidence/native-ai/local/verification.json").read_text())
+    historical(json.loads((ROOT / "docs/evidence/native-ai/local/verification.json").read_text()), NATIVE_UI)
+    for name in ("verification.json", "tests.xml", "demo.json"):
+        path = "docs/evidence/native-ai/local/" + name
+        assert (ROOT / path).read_bytes() == blob(NATIVE_UI, path), "historical_upgrade_record_rewritten"
+    browser(ROOT / "docs/images/native-ai/provenance.json", False, NATIVE_UI)
+    current = json.loads((ROOT / "docs/evidence/enterprise/verification.json").read_text())
     assert current["source_sha256"] == source_hashes(), "current_executed_source_mismatch"
-    assert current["tests"]["tests"] >= 108
+    assert current["tests"]["tests"] >= 127 and current["independent_demo_runs"] == 4
     assert all(current["tests"][k] == 0 for k in ("failures", "errors", "skipped"))
-    browser(ROOT / "docs/images/native-ai/provenance.json", True)
+    browser(ROOT / "docs/images/enterprise/provenance.json", True)
+    fixture = json.loads((ROOT / "docs/evidence/enterprise/fixture-demo.json").read_text())
+    assert fixture == json.loads((ROOT / "docs/evidence/demo.json").read_text())
+    enterprise = json.loads((ROOT / "docs/evidence/enterprise/demo.json").read_text())
+    amounts = [json.loads(s["payload"])["data"]["amount_cents"] for s in enterprise["source_records"]
+               if s["kind"] == "outcome" and json.loads(s["payload"])["data"]["kind"] == "opportunity_accepted"]
+    assert len(amounts) == 5 and sum(amounts) == 346000000
+    assert enterprise["financial_audit"]["pipeline_cents"] == sum(amounts)
     ai = json.loads((ROOT / "docs/evidence/native-ai/ai-evaluation.json").read_text())
     native = json.loads((ROOT / "docs/evidence/native-ai/salesforce-acceptance.json").read_text())
     for name, record in [("ai-evaluation.json", ai), ("salesforce-acceptance.json", native)]:

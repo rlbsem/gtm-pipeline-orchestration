@@ -6,11 +6,13 @@ Prospecting, qualification, CRM routing and engagement often operate in separate
 
 The Python application and independent HTTP engagement destination **execute locally** with durable databases. All companies, contacts, requests and outcomes are synthetic. A separate **native Salesforce Developer Edition acceptance** verifies a restricted internal-review handoff. **Sixteen fresh Qwen responses** demonstrate advisory research with recorded validation failures. Neither lane sends prospect communications or establishes commercial uplift.
 
-**Executed proof:** [Current regression and two independent HTTP demos](docs/evidence/native-ai/local/verification.json) · [29 authenticated Salesforce requests](docs/evidence/native-ai/salesforce-acceptance.json) · [16 actual model responses](docs/evidence/native-ai/ai-evaluation.json). The [original 73-test evidence](docs/evidence/verification.json) remains unchanged.
+The primary enterprise B2B profile covers **120 accounts and CAD3.46M of synthetic accepted-opportunity pipeline**, calculated from five CRM outcome events. The original small deterministic scenario remains available for regression and recovery tests.
 
-![Actual pipeline overview, independent receipts and account-level treatment comparison](docs/images/native-ai/pipeline-overview.png)
+**Executed proof:** [Current regression and four independent HTTP demos](docs/evidence/enterprise/verification.json) · [29 authenticated Salesforce requests](docs/evidence/native-ai/salesforce-acceptance.json) · [16 actual model responses](docs/evidence/native-ai/ai-evaluation.json). The [original 73-test evidence](docs/evidence/verification.json) remains unchanged.
 
-*Captured from the running application. [Screenshot provenance and browser execution](docs/images/native-ai/provenance.json).*
+![Actual pipeline overview, independent receipts and account-level treatment comparison](docs/images/enterprise/pipeline-overview.png)
+
+*Captured from the running application. [Screenshot provenance and browser execution](docs/images/enterprise/provenance.json).*
 
 ## Run the complete loop
 
@@ -25,8 +27,8 @@ Activate `.venv\Scripts\Activate.ps1` in Windows PowerShell, or `source .venv/bi
 ```text
 python -m pip install -r requirements.lock
 python -m pip install --no-deps --no-build-isolation -e .
-gtm demo --workspace .local/demo
-gtm serve --workspace .local/demo
+gtm demo --profile enterprise --workspace .local/enterprise-v1
+gtm serve --profile enterprise --workspace .local/enterprise-v1
 ```
 
 Open **http://127.0.0.1:8560/**. The demo writes real HTTP requests and separate control/engagement databases. Existing workspaces are preserved. Use a fresh workspace name to reproduce the original scenario; interactive changes remain in the workspace you use.
@@ -38,16 +40,17 @@ Open **http://127.0.0.1:8560/**. The demo writes real HTTP requests and separate
 5. Record a positive reply, qualified meeting and accepted opportunity. Each feedback event crosses HTTP and is read back before admission.
 6. Submit an inquiry in **Inbound routing**, or investigate blocked actions in **Execution & recovery**.
 7. Open **Native & AI evidence** to inspect recorded Salesforce checks, actual model text, source context and rejected citations. Viewing evidence never calls a vendor or model.
+8. Open **Commercial scenario** to trace the five enterprise opportunity values to their scope assumptions, CRM sources and account segments.
 
 The operator clock starts January 21, after the scenario's previously recorded feedback. The mature comparison separately reports through February 2. Future source events are rejected at admission; reporting also checks outcome time and receipt/knowledge cutoffs. Both dates are synthetic scenario coordinates.
 
 ## One action, with evidence at every boundary
 
-![Actual account research, exact review, independent receipt and downstream feedback](docs/images/native-ai/account-workbench.png)
+![Actual account research, exact review, independent receipt and downstream feedback](docs/images/enterprise/account-workbench.png)
 
-The first treatment account in the fixture receives a pricing inquiry. Its verified brand/account reference and synthetic contact resolve to the existing CRM owner. Separate fit and intent rules qualify it. The seller approves one finite discovery sequence. The destination commits enrollment, then deliberately closes its HTTP connection before acknowledging it. A fresh worker reads back the original content and receipt rather than sending again. Subsequent synthetic reply, meeting and accepted-opportunity events retain that action lineage.
+The enterprise fixture routes six pricing inquiries to their existing CRM owners. Its verified brand/account reference and synthetic contact resolve to the existing CRM owner. Separate fit and intent rules qualify it. The seller approves one finite discovery sequence. One independent destination request commits enrollment, then deliberately closes its HTTP connection before acknowledging it. A fresh worker reads back the original content and receipt rather than sending again. Subsequent synthetic reply, meeting and accepted-opportunity events retain that action lineage.
 
-Other accounts demonstrate owner changes, opt-out, rate limiting, a service inquiry, an unverified discovery and an ambiguous shared domain. Inspect the [executed action journal and routing records](docs/evidence/demo.json) or [failure contracts](docs/operations.md).
+The enterprise workflow retains owner-change, opt-out and rate-limit failures. The small regression fixture additionally preserves service, unverified-discovery and ambiguous-domain cases. Inspect the [executed enterprise journal and routing records](docs/evidence/enterprise/demo.json) or [failure contracts](docs/operations.md).
 
 ```mermaid
 flowchart LR
@@ -69,18 +72,31 @@ flowchart LR
 
 ## Measure the denominator, not just the success stories
 
-The executed fixture has **28 accounts**, including **24 assigned eligible accounts**, seven independently verified enrollments, two blocked actions and one treatment account left available for interactive review. Five qualified meetings and five accepted opportunities produce **CAD28,000 of synthetic qualified pipeline**. These values come from the [executed sources and receipts](docs/evidence/demo.json), not a frontend formula.
+The primary enterprise demonstration has **120 synthetic accounts**: 48 mid-market, 48 enterprise and 24 strategic accounts, spanning three industries, two operating units and NA/EMEA territories. The unchanged account allocation produces 66 treatment and 54 holdout accounts. Sixty-three enrollments have exact independent receipts; two actions are blocked and one treatment account remains available for interactive review. Twelve qualified meetings lead to **five accepted opportunities and CAD3,460,000 of synthetic qualified pipeline**.
+
+The five synthetic CRM outcomes carry annual contract value estimates of **CAD180,000, CAD450,000, CAD1,000,000, CAD630,000 and CAD1,200,000**. Their illustrative site scopes and unit assumptions are [versioned fixture inputs](src/gtm/enterprise-scenario.json). Amounts enter actual `source/v1` CRM outcome events, cross the local feedback HTTP boundary and pass through the existing SQL measurement engine. A separate Python source-event traversal independently reconciles amounts, counts and readback. [Executed source events, financial audit and lineage](docs/evidence/enterprise/demo.json).
+
+![Actual enterprise opportunity ledger and explicit synthetic scope assumptions](docs/images/enterprise/commercial-scenario.png)
 
 | Mature 30-day comparison | Treatment | Holdout |
 |---|---:|---:|
-| Assigned accounts | 10 | 14 |
-| Enrolled accounts | 7 | 0 |
-| Accounts with qualified meetings | 2 | 3 |
-| Meeting rate | 20.0% | 21.4% |
-| Accepted opportunities | 2 | 3 |
-| Pipeline per assigned account | CAD1,000 | CAD1,285.71 |
+| Assigned accounts | 66 | 54 |
+| Enrolled accounts | 63 | 0 |
+| Accounts with qualified meetings | 7 | 5 |
+| Meeting rate | 10.6% | 9.3% |
+| Accepted opportunities | 3 | 2 |
+| Synthetic pipeline | CAD2,650,000 | CAD810,000 |
+| Pipeline per assigned account | CAD40,151.52 | CAD15,000 |
 
-The synthetic treatment does **not** outperform holdout on meeting rate. Outcomes are explicit fixture inputs; this is a demonstration of calculation and exclusion rules, not estimated commercial uplift. Assignment is deterministic; all assigned accounts stay in the denominator even if never enrolled or subsequently opted out. Shared domains across operating units receive the same arm without merging identities. Preexisting opportunity creation dates, late knowledge, outcome windows, immature cohorts and leakage have dedicated tests. [Definitions and limitations](docs/measurement.md) · [SQL implementation](src/gtm/pipeline.sql).
+Outcome accounts and scopes are specified independently of allocation. Their unequal distribution and concentrated deal values are fixture arithmetic, **not evidence of incremental pipeline, AI lift or causal improvement**. All assigned accounts remain in the denominator, including unactivated and later-blocked accounts. The holdout receives organic outcomes without enrollment. These are accepted opportunity estimates, not realized revenue, signed bookings, ARR, vendor prices or actual client results. [Definitions and limitations](docs/measurement.md) · [Unchanged SQL implementation](src/gtm/pipeline.sql).
+
+The original **28-account / CAD28,000** scenario remains unchanged for regression and failure recovery:
+
+```text
+gtm demo --profile fixture --workspace .local/regression-01
+```
+
+Its complete output is compared against the [original recorded fixture](docs/evidence/demo.json) during every verification. Existing workspaces retain their original profile; use a fresh enterprise workspace rather than overwriting one. [Scenario assumptions and evidence](docs/evidence/enterprise/README.md).
 
 ## Controls that change execution behavior
 
@@ -95,15 +111,17 @@ The synthetic treatment does **not** outperform holdout on meeting rate. Outcome
 | Receiver rate limits | Persist exponential backoff and a three-attempt write budget |
 | Remote effect survives loss of local intent | Independent reconciliation returns `remote_ahead_missing_intent`, `safe_to_resume=false` |
 
-![Actual recovery console and durable action journal](docs/images/native-ai/execution-recovery.png)
+![Actual recovery console and durable action journal](docs/images/enterprise/execution-recovery.png)
 
 These controls assume a trusted local operator, received CRM authority and the receiver's idempotent-content contract. They do not guarantee global exactly-once delivery or discover source-system changes that have not arrived. [Architecture and trust boundaries](docs/architecture.md).
 
 ## Advice and a native CRM review, independently verified
 
-![Running evidence interface with Salesforce acceptance and actual model responses](docs/images/native-ai/native-ai-evidence.png)
+![Running evidence interface with Salesforce acceptance and actual model responses](docs/images/enterprise/native-ai-evidence.png)
 
 The Salesforce lane uses separate integration and reviewer identities, a pinned approved test organization, a create-only synthetic review object and a unique external action key. One review was created, its successful acknowledgement deliberately discarded on the client, and its exact immutable content independently read back after restarting the dispatcher. Duplicate creation and restricted writes were rejected. The new review was marked **Rejected** and retained as an audit record; existing records, users and permissions were unchanged.
+
+Those native/model executions use the original small fixture. The enterprise commercial upgrade adds independently verified local execution; it does not imply another native Salesforce or model run.
 
 The integration identity's standard Account, Contact and Task describe requests returned 404. Those record-access lanes were **not executed**. The permitted custom synthetic registry validates mapping and owner authority; it does not establish standard Salesforce Account/Contact resolution. [Scope, executed checks and operator procedure](docs/native-ai.md).
 
@@ -119,7 +137,7 @@ python scripts/check_evidence.py
 python scripts/publication.py --package
 ```
 
-Use a fresh workspace for each browser reproduction. Verification runs regression tests and two independent end-to-end HTTP demos, compares the complete output, checks source hashes, audits public content and checks local Markdown targets. The package is reopened and each file hash verified. Historical source attestation requires a full Git clone; ordinary local verification needs no vendor credentials or model. [Current verification](docs/evidence/native-ai/local/verification.json) · [JUnit results](docs/evidence/native-ai/local/tests.xml) · [Hosted CI](https://github.com/rlbsem/gtm-pipeline-orchestration/actions).
+Use a fresh workspace for each browser reproduction. Verification runs regression tests and four independent end-to-end HTTP demos (two per profile), compares the complete output, checks source hashes, audits public content and checks local Markdown targets. The package is reopened and each file hash verified. Historical source attestation requires a full Git clone; ordinary local verification needs no vendor credentials or model. [Current verification](docs/evidence/enterprise/verification.json) · [JUnit results](docs/evidence/enterprise/tests.xml) · [Hosted CI](https://github.com/rlbsem/gtm-pipeline-orchestration/actions).
 
 | Boundary | Status |
 |---|---|

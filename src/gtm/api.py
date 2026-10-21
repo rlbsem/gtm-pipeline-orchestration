@@ -9,6 +9,7 @@ from pydantic import ValidationError
 from .advice import research
 from .contracts import DomainError, moment, stamp
 from .fixtures import FINISH, START, outcome, record
+from .enterprise import account_segment, describe, interactive_value
 from .measurement import measure
 from .worker import reconcile
 
@@ -70,8 +71,8 @@ def create_app(engine, destination, worker):
             with engine.connection() as db:
                 score = engine._score(db, a["id"], app.state.clock)
             cohort = next((c for c in engine.rows("cohorts") if c["account_id"] == a["id"]), None)
-            accounts.append({**a, "score": score, "cohort": cohort})
-        return {"clock": app.state.clock, "measurement_clock": FINISH,
+            accounts.append({**a, "score": score, "cohort": cohort, "segment": account_segment(engine, a["id"])})
+        return {"clock": app.state.clock, "measurement_clock": FINISH, "scenario": describe(engine),
                 "accounts": accounts, "actions": engine.rows("actions"), "routes": engine.rows("routes"),
                 "outcomes": engine.rows("feedback"), "sources": engine.rows("sources"),
                 "audit": engine.rows("audit")[-100:], "measurement": measure(engine, FINISH),
@@ -143,8 +144,9 @@ def create_app(engine, destination, worker):
         parent = next((f["business_id"] for f in known if f["kind"] == parent_kind), None)
         if parent_kind and not parent:
             raise DomainError("record_preceding_feedback_first")
+        amount = (interactive_value(engine, account_id) if describe(engine)["profile"] == "enterprise" else 1500000)
         return outcome(engine, account_id, "interactive-" + kind + "-" + account_id, kind, app.state.clock,
-                       1500000 if kind == "opportunity_accepted" else 0, action["action_key"], parent,
+                       amount if kind == "opportunity_accepted" else 0, action["action_key"], parent,
                        client=worker.client)
 
     @app.post("/api/accounts/{account_id}/optout")

@@ -62,3 +62,9 @@ flowchart LR
 ```
 
 The UI exposes only two fixed sanitized evidence artifacts through GET; it has no Salesforce write or inference route. Native/model provenance is pinned to its executed Git revision, while fresh browser and regression reports bind current code. The [operator procedure](native-ai.md) explains permission limits, rejected model outputs, cleanup, cross-system races and remaining unexecuted standard-object access.
+
+## Commercial profiles
+
+`--profile fixture` retains the original small deterministic source replay. `--profile enterprise` creates a separate 120-account B2B fixture from versioned segmentation and commercial scope assumptions. Workspace profile identity is persisted; existing data is never silently revalued or rebuilt. Both use the same `Engine`, `Worker`, independent destination, outcome contracts and `pipeline.sql`.
+
+Enterprise amounts are integer-cent annual opportunity estimates in actual synthetic CRM outcome records. A separate Python traversal of source events verifies counts, cohort/time cutoffs and amount totals against SQL and independently rereads CRM feedback through HTTP. The UI displays SQL totals and source-record line items; it contains no hardcoded enterprise pipeline total. Segment labels derive from CRM employee counts and do not override qualification or assignment. The larger scenario does not inherit a native/model execution claim from the earlier small fixture. [Assumptions, evidence and reproduction](evidence/enterprise/README.md).

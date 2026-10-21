@@ -7,20 +7,29 @@ import uvicorn
 from .api import create_app
 from .destination import Destination
 from .engine import Engine
+from .enterprise import describe, replay_enterprise
 from .fixtures import FINISH, replay
 from .measurement import measure
 from .worker import EngagementClient, Worker, reconcile
 
 
-def build(workspace):
+def build(workspace, profile=None):
     workspace = Path(workspace)
     workspace.mkdir(parents=True, exist_ok=True)
     engine = Engine(workspace / "control.sqlite")
+    with engine.connection() as db:
+        stored = db.execute("SELECT value FROM runtime WHERE key='scenario_profile'").fetchone()
+    existing = stored[0] if stored else "fixture" if engine.rows("accounts") else None
+    if profile not in {None, "fixture", "enterprise"} or (profile and existing and profile != existing):
+        raise ValueError("workspace_profile_mismatch_use_fresh_directory")
+    profile = existing or profile or "enterprise"
+    with engine.transaction() as db:
+        db.execute("INSERT OR IGNORE INTO runtime VALUES('scenario_profile',?)", (profile,))
     destination = Destination(workspace / "engagement.sqlite").start()
     worker = Worker(engine, EngagementClient(destination.url, destination.token))
     try:
         if not engine.rows("accounts"):
-            replay(engine, destination, worker)
+            (replay_enterprise if profile == "enterprise" else replay)(engine, destination, worker)
     except BaseException:
         destination.close()
         raise
@@ -32,13 +41,15 @@ def main():
     parser.add_argument("command", choices=["demo", "serve", "infer"])
     parser.add_argument("--workspace", default=".local/demo")
     parser.add_argument("--port", type=int, default=8560)
+    parser.add_argument("--profile", choices=["fixture", "enterprise"],
+                        help="Fresh workspaces default to enterprise; existing workspaces retain their profile")
     parser.add_argument("--container-bind", action="store_true", help="Bind inside a container only; publish port on host loopback")
     parser.add_argument("--account")
     parser.add_argument("--model-origin")
     parser.add_argument("--model")
     parser.add_argument("--model-key-file")
     args = parser.parse_args()
-    engine, destination, worker = build(args.workspace)
+    engine, destination, worker = build(args.workspace, args.profile)
     try:
         if args.command == "serve":
             print(f"Local synthetic workbench: http://127.0.0.1:{args.port}")
@@ -61,6 +72,10 @@ def main():
                       "feedback": engine.rows("feedback"), "account_records": engine.rows("accounts"),
                       "audit": engine.rows("audit"), "receiver_requests": destination.request_log(),
                       "fresh_inference": "not_executed", "native_vendors": "not_executed"}
+            if describe(engine)["profile"] == "enterprise":
+                from .commercial import financial_audit
+                result["scenario"] = describe(engine)
+                result["financial_audit"] = financial_audit(engine, result["measurement"], worker.client)
             (Path(args.workspace) / "demo.json").write_text(json.dumps(result, indent=2) + "\n")
             print(json.dumps({"accounts": len(engine.rows("accounts")), "arms": result["measurement"]["arms"],
                               "reconciliation": result["reconciliation"], "audit_valid": result["audit_valid"]}, indent=2))

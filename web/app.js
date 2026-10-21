@@ -10,7 +10,7 @@ function chip(text){return el("span",text,"tag "+text);}
 function message(text,error=false){$("notice").textContent=text;$("notice").className="notice"+(error?" error":"");}
 async function api(path,body){const options=body===undefined?{}:{method:"POST",headers:{"Content-Type":"application/json","X-Demo-Intent":"operator"},body:JSON.stringify(body)};const r=await fetch("/api/"+path,options);const data=await r.json();if(!r.ok)throw Error(data.error||"Request failed");return data;}
 async function task(fn){try{await fn();}catch(error){message(error.message,true);}}
-function openView(name){document.querySelectorAll(".view").forEach(n=>n.classList.toggle("active",n.id===name));document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.view===name));$("current-view").textContent={overview:"Pipeline overview",workspace:"Account workbench",inbound:"Inbound routing",recovery:"Execution & recovery",proof:"Native & AI evidence"}[name];window.scrollTo(0,0);}
+function openView(name){document.querySelectorAll(".view").forEach(n=>n.classList.toggle("active",n.id===name));document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.view===name));$("current-view").textContent={overview:"Pipeline overview",workspace:"Account workbench",inbound:"Inbound routing",recovery:"Execution & recovery",proof:"Native & AI evidence",commercial:"Commercial scenario"}[name];window.scrollTo(0,0);}
 document.querySelectorAll("[data-view]").forEach(n=>n.onclick=()=>openView(n.dataset.view));
 document.querySelectorAll("[data-open]").forEach(n=>n.onclick=()=>openView(n.dataset.open));
 function current(){return state.accounts.find(a=>a.id===selected);}
@@ -19,6 +19,7 @@ function selectAccount(id){selected=id;prepared=null;$("account-select").value=i
 function metric(label,value,note){const n=el("div",null,"metric");n.append(el("div",label,"metric-label"),el("strong",value),el("small",note));return n;}
 function row(values,heading=false){const n=el("div",null,"comparison-row"+(heading?" heading-row":""));values.forEach(v=>n.append(el("span",v)));return n;}
 function renderOverview(){
+ $("scenario-profile").textContent=(state.scenario.profile==="enterprise"?"ENTERPRISE B2B":"SMALL REGRESSION FIXTURE")+" · "+state.accounts.length+" synthetic accounts · CAD";
  const m=state.measurement,t=m.arms.treatment,h=m.arms.holdout;
  clear("metrics").append(metric("Assigned accounts",t.assigned+h.assigned,"Brand-scoped · frozen allocation"),metric("Qualified meetings",t.qualified_meetings+h.qualified_meetings,"Mature 30-day account windows"),metric("Accepted opportunities",t.accepted_opportunities+h.accepted_opportunities,"Distinct CRM business identities"),metric("Qualified pipeline",money(t.pipeline_cents+h.pipeline_cents),"Synthetic accepted value · not revenue"));
  const c=clear("comparison");c.append(row(["Eligible accounts","Treatment","Holdout"],true),row(["Mature denominator",t.mature_accounts,h.mature_accounts]),row(["Enrolled accounts",t.exposed_accounts,h.exposed_accounts]),row(["Accounts with meeting",t.accounts_with_meetings,h.accounts_with_meetings]),row(["Meeting rate",percent(t.meeting_rate),percent(h.meeting_rate)]),row(["Accepted opportunities",t.accepted_opportunities,h.accepted_opportunities]),row(["Pipeline / assigned account",money(t.pipeline_per_account_cents||0),money(h.pipeline_per_account_cents||0)]));
@@ -48,7 +49,7 @@ function renderRecovery(){
  const journal=clear("journal");state.actions.forEach(a=>{const tr=el("tr"),account=state.accounts.find(x=>x.id===a.account_id);let td=el("td");td.append(el("strong",account?.name),el("small",a.action_key));tr.append(td);td=el("td");td.append(chip(a.status));tr.append(td,el("td",a.attempts+" / 3"),el("td",a.last_error||"Exact receipt verified"),el("td",a.receipt?JSON.parse(a.receipt).receipt_id:"—"));journal.append(tr);});
  const audit=clear("audit");[...state.audit].reverse().slice(0,35).forEach(a=>{const n=el("div",null,"audit-row");n.append(el("time",a.at),el("strong",a.event),el("span",a.subject));audit.append(n);});
 }
-async function load(){state=await api("state");if(!selected)selected=state.actions.find(a=>a.receipt)?.account_id||state.accounts[0].id;for(const id of ["account-select","inbound-account"]){const node=clear(id);state.accounts.forEach(a=>{const option=el("option",a.name+" · "+a.brand);option.value=a.id;node.append(option);});}$("account-select").value=selected;renderOverview();await renderAccount();renderRoutes();renderRecovery();}
+async function load(){state=await api("state");if(!selected)selected=state.actions.find(a=>a.receipt)?.account_id||state.accounts[0].id;for(const id of ["account-select","inbound-account"]){const node=clear(id);state.accounts.forEach(a=>{const option=el("option",a.name+" · "+a.brand);option.value=a.id;node.append(option);});}$("account-select").value=selected;renderOverview();await renderAccount();renderRoutes();renderRecovery();renderCommercial();}
 $("brand-filter").onchange=renderOverview;$("account-select").onchange=e=>selectAccount(e.target.value);
 $("prepare").onclick=()=>task(async()=>{prepared=await api("accounts/"+selected+"/prepare",{});await renderAccount();message("Review prepared. Check the exact owner, sequence and content before approval.");});
 $("approve").onclick=()=>task(async()=>{const action=await api("accounts/"+selected+"/approve",{prepared,reviewer:"demo-reviewer"});prepared=null;await load();message("Exact action approved: "+action.action_key+". No enrollment has been sent by approval alone.");});
@@ -86,3 +87,15 @@ async function loadRecordedEvidence(){
  }else a.append(el("p","No actual model responses are available in this checkout.","subtle"));
 }
 task(loadRecordedEvidence);
+
+function renderCommercial(){
+ const accounts=Object.fromEntries(state.accounts.map(a=>[a.id,a]));
+ const assigned=state.accounts.filter(a=>a.cohort),arms=state.measurement.arms;
+ clear("commercial-metrics").append(metric("Synthetic qualified pipeline",money(arms.treatment.pipeline_cents+arms.holdout.pipeline_cents),"SQL measurement · mature windows"),metric("Accepted opportunities",arms.treatment.accepted_opportunities+arms.holdout.accepted_opportunities,"Distinct synthetic CRM outcomes"),metric("Assigned accounts",assigned.length,"All assigned accounts retained"),metric("Operating units",new Set(assigned.map(a=>a.brand)).size,"NA + EMEA territories"));
+ $("value-basis").textContent=state.scenario.value_basis;
+ const ledger=clear("commercial-ledger");
+ const opportunities=state.outcomes.filter(f=>f.kind==="opportunity_accepted");
+ opportunities.forEach(f=>{const a=accounts[f.account_id],quote=state.scenario.scope_quotes.find(q=>q.business_id===f.business_id);const tr=el("tr");let td=el("td");td.append(el("strong",f.business_id),el("small",a.name));tr.append(td);td=el("td");td.append(el("strong",a.segment.replaceAll("_"," ")),el("small",f.origin));tr.append(td);td=el("td");td.append(chip(a.cohort?.arm||"not assigned"));tr.append(td);td=el("td");td.append(el("strong",quote?quote.sites+" sites × "+money(quote.annual_site_value_cents):"Interactive synthetic CRM event"),el("small",quote?.scope||"Illustrative segment scope"));tr.append(td,el("td",money(f.amount_cents)));ledger.append(tr);});
+ const mix=clear("segment-mix");["mid_market","enterprise","strategic","unverified"].forEach(label=>{const count=assigned.filter(a=>a.segment===label).length;if(!count)return;const row=el("div",null,"assurance-item");row.append(el("span",label.replaceAll("_"," ")),el("b",count+" accounts"));mix.append(row);});
+ $("commercial-sources").textContent=pretty({scenario:state.scenario,crm_opportunity_events:state.sources.filter(s=>s.kind==="outcome"&&JSON.parse(s.payload).data.kind==="opportunity_accepted").map(s=>({source_key:s.source_key,received_at:s.received_at,payload:JSON.parse(s.payload)}))});
+}
