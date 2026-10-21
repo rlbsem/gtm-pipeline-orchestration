@@ -1,0 +1,15 @@
+.venv/
+.local/
+work/
+dist/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+*.db
+*.sqlite*
+.env
+*.pem
+*.key
