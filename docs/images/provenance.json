@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-21T02:04:15.498140+00:00",
+  "captured_at": "2026-10-21T02:08:32.891812+00:00",
   "method": "actual Chromium / local UI and APIs",
   "desktop_viewport": {
     "width": 1440,
@@ -41,7 +41,7 @@
     ".github/workflows/verify.yml": "b4770d19bf8729bc5962b35b8cb5fd0133b4fadb0cd3f0030605642c2fbaddbe",
     ".gitignore": "71e12bd1b099e246c2a3b10fcc384e61b1f5dadf7e925a54d162a19448ef3b0d",
     "compose.yml": "12b60e4d883c53859d5e4283eb9ed14fb3b4a42097911981721cc12c51575665",
-    "Dockerfile": "fb98201033dc7e91b94ce812b569db8e5fc64b4d8c79cb2f26a3d4bcfac83809",
+    "Dockerfile": "f19e97119da779d1d0b1d3d796e3cb466773461b2497903e30507e06598fcb7d",
     "pyproject.toml": "f5cf27b9df02662827937a59a77b24ba064e5e5de7fdc57985d800a7f6ad3d50",
     "requirements.lock": "f6786f40ef4e82693b3b91b7fc3a591b6d68725afdeb723a3bbe13fcdb2f4d95",
     "requirements.txt": "893ff6ae6831dd41daa296a1e046ea522b487847bd02c45f64334fc0890363a7",
