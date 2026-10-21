@@ -5,6 +5,8 @@ WITH eligible_outcomes AS (
  WHERE c.experiment=:experiment AND f.occurred_at >= c.assigned_at AND f.occurred_at < c.window_end
    AND f.occurred_at <= :as_of AND f.received_at <= :as_of
    AND f.created_at >= c.assigned_at
+   AND (:currency IS NULL OR (SELECT json_extract(s.payload,'$.data.currency')
+                             FROM sources s WHERE s.source_key=f.source_key)=:currency)
 ), meetings AS (
  SELECT experiment,account_id,count(DISTINCT business_id) meetings FROM eligible_outcomes
  WHERE kind='meeting_qualified' GROUP BY experiment,account_id
@@ -16,7 +18,7 @@ WITH eligible_outcomes AS (
  WHERE receipt IS NOT NULL AND json_extract(receipt,'$.accepted_at')<=:as_of
  GROUP BY experiment,account_id
 )
-SELECT c.*, CASE WHEN c.window_end<=:as_of THEN 1 ELSE 0 END mature,
+SELECT c.*, :currency currency, CASE WHEN c.window_end<=:as_of THEN 1 ELSE 0 END mature,
  coalesce(m.meetings,0) meetings,coalesce(o.opportunities,0) opportunities,
  coalesce(o.pipeline_cents,0) pipeline_cents,coalesce(x.exposures,0) exposures
 FROM cohorts c LEFT JOIN meetings m ON c.experiment=m.experiment AND c.account_id=m.account_id

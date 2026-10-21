@@ -7,7 +7,7 @@ import uvicorn
 from .api import create_app
 from .destination import Destination
 from .engine import Engine
-from .enterprise import describe, replay_enterprise
+from .enterprise import describe, pin_specification, replay_enterprise
 from .fixtures import FINISH, replay
 from .measurement import measure
 from .worker import EngagementClient, Worker, reconcile
@@ -23,6 +23,8 @@ def build(workspace, profile=None):
     if profile not in {None, "fixture", "enterprise"} or (profile and existing and profile != existing):
         raise ValueError("workspace_profile_mismatch_use_fresh_directory")
     profile = existing or profile or "enterprise"
+    if profile == "enterprise":
+        pin_specification(engine)
     with engine.transaction() as db:
         db.execute("INSERT OR IGNORE INTO runtime VALUES('scenario_profile',?)", (profile,))
     destination = Destination(workspace / "engagement.sqlite").start()

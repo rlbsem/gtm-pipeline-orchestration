@@ -1,7 +1,7 @@
 "use strict";
 const $ = id => document.getElementById(id);
 let state, selected, prepared;
-const money = cents => new Intl.NumberFormat("en-CA", {style:"currency",currency:"CAD",maximumFractionDigits:0}).format(cents/100);
+const money = cents => state.scenario.currency+" "+new Intl.NumberFormat(state.scenario.locale, {style:"currency",currency:state.scenario.currency,maximumFractionDigits:0}).format(cents/100);
 const percent = value => value == null ? "—" : (value*100).toFixed(1)+"%";
 const pretty = value => JSON.stringify(value,null,2);
 function el(tag, text, cls) {const n=document.createElement(tag);if(text!=null)n.textContent=String(text);if(cls)n.className=cls;return n;}
@@ -19,7 +19,9 @@ function selectAccount(id){selected=id;prepared=null;$("account-select").value=i
 function metric(label,value,note){const n=el("div",null,"metric");n.append(el("div",label,"metric-label"),el("strong",value),el("small",note));return n;}
 function row(values,heading=false){const n=el("div",null,"comparison-row"+(heading?" heading-row":""));values.forEach(v=>n.append(el("span",v)));return n;}
 function renderOverview(){
- $("scenario-profile").textContent=(state.scenario.profile==="enterprise"?"ENTERPRISE B2B":"SMALL REGRESSION FIXTURE")+" · "+state.accounts.length+" synthetic accounts · CAD";
+ $("scenario-profile").textContent=(state.scenario.profile==="enterprise"?"ENTERPRISE B2B":"HISTORICAL REGRESSION FIXTURE")+" · "+state.accounts.length+" synthetic accounts · "+state.scenario.currency;
+ $("comparison-basis").textContent="Fixed 30-day windows · mature accounts only · values in "+state.scenario.currency;
+ $("commercial-currency").textContent="SYNTHETIC · "+state.scenario.currency+" · NOT REVENUE";
  const m=state.measurement,t=m.arms.treatment,h=m.arms.holdout;
  clear("metrics").append(metric("Assigned accounts",t.assigned+h.assigned,"Brand-scoped · frozen allocation"),metric("Qualified meetings",t.qualified_meetings+h.qualified_meetings,"Mature 30-day account windows"),metric("Accepted opportunities",t.accepted_opportunities+h.accepted_opportunities,"Distinct CRM business identities"),metric("Qualified pipeline",money(t.pipeline_cents+h.pipeline_cents),"Synthetic accepted value · not revenue"));
  const c=clear("comparison");c.append(row(["Eligible accounts","Treatment","Holdout"],true),row(["Mature denominator",t.mature_accounts,h.mature_accounts]),row(["Enrolled accounts",t.exposed_accounts,h.exposed_accounts]),row(["Accounts with meeting",t.accounts_with_meetings,h.accounts_with_meetings]),row(["Meeting rate",percent(t.meeting_rate),percent(h.meeting_rate)]),row(["Accepted opportunities",t.accepted_opportunities,h.accepted_opportunities]),row(["Pipeline / assigned account",money(t.pipeline_per_account_cents||0),money(h.pipeline_per_account_cents||0)]));

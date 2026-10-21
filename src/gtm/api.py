@@ -9,7 +9,7 @@ from pydantic import ValidationError
 from .advice import research
 from .contracts import DomainError, moment, stamp
 from .fixtures import FINISH, START, outcome, record
-from .enterprise import account_segment, describe, interactive_value
+from .enterprise import account_segment, describe, enterprise_outcome, interactive_value
 from .measurement import measure
 from .worker import reconcile
 
@@ -72,9 +72,13 @@ def create_app(engine, destination, worker):
                 score = engine._score(db, a["id"], app.state.clock)
             cohort = next((c for c in engine.rows("cohorts") if c["account_id"] == a["id"]), None)
             accounts.append({**a, "score": score, "cohort": cohort, "segment": account_segment(engine, a["id"])})
-        return {"clock": app.state.clock, "measurement_clock": FINISH, "scenario": describe(engine),
+        scenario = describe(engine)
+        outcomes = engine.rows("feedback")
+        if scenario["profile"] == "enterprise":
+            outcomes = [f | {"currency": scenario["currency"]} for f in outcomes]
+        return {"clock": app.state.clock, "measurement_clock": FINISH, "scenario": scenario,
                 "accounts": accounts, "actions": engine.rows("actions"), "routes": engine.rows("routes"),
-                "outcomes": engine.rows("feedback"), "sources": engine.rows("sources"),
+                "outcomes": outcomes, "sources": engine.rows("sources"),
                 "audit": engine.rows("audit")[-100:], "measurement": measure(engine, FINISH),
                 "reconciliation": reconcile(engine, worker.client), "audit_valid": engine.audit_valid(),
                 "inference": "not_executed", "native_vendors": "not_executed"}
@@ -146,7 +150,8 @@ def create_app(engine, destination, worker):
         if parent_kind and not parent:
             raise DomainError("record_preceding_feedback_first")
         amount = (interactive_value(engine, account_id) if describe(engine)["profile"] == "enterprise" else 1500000)
-        return outcome(engine, account_id, "interactive-" + kind + "-" + account_id, kind, app.state.clock,
+        emit = enterprise_outcome if describe(engine)["profile"] == "enterprise" else outcome
+        return emit(engine, account_id, "interactive-" + kind + "-" + account_id, kind, app.state.clock,
                        amount if kind == "opportunity_accepted" else 0, action["action_key"], parent,
                        client=worker.client)
 

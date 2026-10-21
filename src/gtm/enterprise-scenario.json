@@ -1,6 +1,8 @@
 {
-  "version": "enterprise-prospecting/v1",
-  "currency": "CAD",
+  "version": "enterprise-prospecting/v2",
+  "currency": "USD",
+  "locale": "en-US",
+  "denomination": "Synthetic USD-denominated scope estimates, not converted historical CAD or real-world revenue. No exchange rate is applied.",
   "value_basis": "Illustrative 12-month opportunity ACV; qualified pipeline, not revenue, bookings or ARR",
   "population": 120,
   "segments": {

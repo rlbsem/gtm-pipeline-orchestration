@@ -13,6 +13,7 @@ NATIVE_UI = "644065dd561019b351ca7330d2146fd4c10e1d66"
 ENTERPRISE = "9f13ea79977dda1b56f25df5ca5c4060ffaf345f"
 STANDARD = "c54503f00e65ad4195a74c0bacf2ce003add091c"
 CLEANUP = "36fd314015812f2114d5e96a0cbbaee24b17b2e4"
+CAD_UI = "62e48215a3609ba136f4ce581f98cc893e2378d9"
 
 
 def blob(revision, path):
@@ -58,11 +59,28 @@ def check():
         for path in paths:
             assert (ROOT / path).read_bytes() == blob(ENTERPRISE, path), "enterprise_history_rewritten:" + path
     browser(ROOT / "docs/images/enterprise/provenance.json", False, ENTERPRISE)
-    current = json.loads((ROOT / "docs/evidence/salesforce-standard/local/verification.json").read_text())
+    historical(json.loads((ROOT / "docs/evidence/salesforce-standard/local/verification.json").read_text()), CAD_UI)
+    for folder in ("docs/evidence/salesforce-standard", "docs/images/salesforce-standard"):
+        paths = subprocess.run(["git", "ls-tree", "-r", "--name-only", CAD_UI, folder], cwd=ROOT,
+                               capture_output=True, text=True, check=True).stdout.splitlines()
+        for path in paths:
+            assert (ROOT / path).read_bytes() == blob(CAD_UI, path), "native_or_cad_history_rewritten:" + path
+    browser(ROOT / "docs/images/salesforce-standard/provenance.json", False, CAD_UI)
+    current = json.loads((ROOT / "docs/evidence/enterprise-usd/verification.json").read_text())
     assert current["source_sha256"] == source_hashes(), "current_executed_source_mismatch"
-    assert current["tests"]["tests"] >= 152 and current["independent_demo_runs"] == 4
+    assert current["tests"]["tests"] >= 163 and current["independent_demo_runs"] == 4
     assert all(current["tests"][k] == 0 for k in ("failures", "errors", "skipped"))
-    browser(ROOT / "docs/images/salesforce-standard/provenance.json", True)
+    browser(ROOT / "docs/images/enterprise-usd/provenance.json", True)
+    usd = json.loads((ROOT / "docs/evidence/enterprise-usd/demo.json").read_text())
+    assert usd["scenario"]["currency"] == usd["measurement"]["currency"] == usd["financial_audit"]["currency"] == "USD"
+    assert usd["scenario"]["locale"] == "en-US"
+    usd_browser = json.loads((ROOT / "docs/images/enterprise-usd/provenance.json").read_text())
+    assert usd_browser["currency"] == usd["scenario"]["currency"]
+    assert usd_browser["locale"] == usd["scenario"]["locale"]
+    outcomes = [json.loads(s["payload"])["data"] for s in usd["source_records"] if s["kind"] == "outcome"]
+    assert all(r["currency"] == "USD" for r in outcomes)
+    assert sum(r["amount_cents"] for r in outcomes if r["kind"] == "opportunity_accepted") == usd["financial_audit"]["pipeline_cents"] == 346000000
+    assert json.loads((ROOT / "docs/evidence/enterprise-usd/fixture-demo.json").read_text()) == json.loads((ROOT / "docs/evidence/demo.json").read_text())
     fixture = json.loads((ROOT / "docs/evidence/enterprise/fixture-demo.json").read_text())
     assert fixture == json.loads((ROOT / "docs/evidence/demo.json").read_text())
     enterprise = json.loads((ROOT / "docs/evidence/enterprise/demo.json").read_text())

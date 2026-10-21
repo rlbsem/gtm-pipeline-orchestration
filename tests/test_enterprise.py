@@ -32,10 +32,12 @@ def test_enterprise_economics_are_five_real_crm_events(enterprise):
     assert report["opportunity_count"] == 5 and report["source_to_sql_parity"]
     assert report["assigned_segment_counts"] == {"mid_market": 48, "enterprise": 48, "strategic": 24}
     assert len(engine.rows("accounts")) == 120
+    assert report["currency"] == describe(engine)["currency"] == specification()["currency"] == "USD"
     source = {r["source_key"]: json.loads(r["payload"]) for r in engine.rows("sources")}
     for opportunity in report["opportunities"]:
         event = source[opportunity["source_key"]]
         assert event["source"] == "crm" and event["data"]["amount_cents"] == opportunity["amount_cents"]
+        assert event["data"]["currency"] == opportunity["currency"] == report["currency"]
 
 
 def test_enterprise_preserves_all_execution_controls_and_denominators(enterprise):
@@ -116,5 +118,85 @@ def test_browser_api_declares_enterprise_values_as_synthetic(enterprise):
     with TestClient(create_app(engine, destination, worker)) as client:
         state = client.get("/api/state").json()
     assert state["scenario"]["synthetic"] and state["scenario"]["profile"] == "enterprise"
+    assert state["scenario"]["currency"] == state["measurement"]["currency"] == "USD"
+    assert state["scenario"]["locale"] == "en-US"
+    assert all(q["currency"] == "USD" for q in state["scenario"]["scope_quotes"])
+    assert all(f["currency"] == "USD" for f in state["outcomes"])
     assert "not revenue" in state["scenario"]["value_basis"]
     assert sum(a["pipeline_cents"] for a in state["measurement"]["arms"].values()) == 346000000
+
+
+@pytest.mark.parametrize("currency", [None, "CAD", "usd", "EUR"])
+def test_enterprise_rejects_missing_or_mixed_currency_events(enterprise, currency):
+    engine, _, _ = enterprise
+    event = copy.deepcopy(next(json.loads(s["payload"]) for s in engine.rows("sources")
+                               if s["kind"] == "outcome" and json.loads(s["payload"])["data"]["kind"] == "opportunity_accepted"))
+    event["source_id"] = "currency-negative-" + str(currency)
+    event["data"]["business_id"] = event["source_id"]
+    if currency is None:
+        event["data"].pop("currency")
+    else:
+        event["data"]["currency"] = currency
+    before = len(engine.rows("feedback"))
+    with pytest.raises(ValueError, match="enterprise_outcome_currency_mismatch"):
+        engine.ingest(event, FINISH)
+    assert len(engine.rows("feedback")) == before
+
+
+def test_independent_financial_audit_rejects_currency_relabel(enterprise):
+    engine, _, worker = enterprise
+    report = copy.deepcopy(measure(engine, FINISH))
+    report["currency"] = "CAD"
+    with pytest.raises(ValueError, match="measurement_currency_mismatch"):
+        financial_audit(engine, report, worker.client)
+
+
+def test_sql_rejects_host_injected_mixed_source_currency(enterprise, tmp_path):
+    from gtm.engine import Engine
+    engine, _, _ = enterprise
+    faulty = Engine(tmp_path / "isolated-host-fault.sqlite")
+    with engine.connection() as original, faulty.connection() as replica:
+        original.backup(replica)
+    source = next(s for s in engine.rows("sources") if s["kind"] == "outcome")
+    bad = json.loads(source["payload"])
+    bad["data"]["currency"] = "CAD"
+    # Fault injection bypasses a guard ONLY in a disposable copy; normal source rows stay immutable.
+    with faulty.connection() as db:
+        db.execute("DROP TRIGGER source_no_update")
+        db.execute("UPDATE sources SET payload=? WHERE source_key=?", (json.dumps(bad), source["source_key"]))
+    with pytest.raises(ValueError, match="measurement_source_currency_mismatch"):
+        measure(faulty, FINISH)
+    with engine.connection() as db:
+        assert db.execute("SELECT 1 FROM sqlite_master WHERE name='source_no_update'").fetchone()
+
+
+def test_legacy_enterprise_workspace_cannot_be_relabelled(tmp_path):
+    from gtm.engine import Engine
+    from gtm.fixtures import START, record
+    workspace = tmp_path / "legacy"
+    engine = Engine(workspace / "control.sqlite")
+    engine.ingest(record("crm", "old-enterprise", "atlas", "account", "enterprise-001.example", {"name": "Old synthetic account"}), START)
+    with engine.connection() as db:
+        db.execute("INSERT INTO runtime VALUES('scenario_profile','enterprise')")
+    before = engine.rows("sources")
+    with pytest.raises(ValueError, match="legacy_enterprise_currency_use_fresh_workspace"):
+        build(workspace, "enterprise")
+    assert engine.rows("sources") == before
+    with engine.connection() as db:
+        assert not db.execute("SELECT 1 FROM runtime WHERE key='enterprise_specification'").fetchone()
+
+
+def test_enterprise_specification_is_pinned_not_read_as_a_new_label(engine, monkeypatch):
+    import gtm.enterprise as module
+    original = module.pin_specification(engine)
+    changed = copy.deepcopy(original)
+    changed["currency"], changed["locale"] = "CAD", "en-CA"
+    monkeypatch.setattr(module, "specification", lambda: changed)
+    assert describe(engine)["currency"] == "USD"
+    with pytest.raises(ValueError, match="specification_changed_use_fresh_workspace"):
+        module.pin_specification(engine)
+
+
+def test_historical_fixture_metadata_remains_cad(ready):
+    engine, _, _, _, _ = ready
+    assert describe(engine)["currency"] == "CAD" and describe(engine)["locale"] == "en-CA"

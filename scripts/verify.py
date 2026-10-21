@@ -37,7 +37,7 @@ def verify(output):
     tree = ET.parse(test_xml)
     suites = list(tree.getroot())
     totals = {key: sum(int(s.get(key, "0")) for s in suites) for key in ("tests", "failures", "errors", "skipped")}
-    assert totals["tests"] >= 65 and not any(totals[k] for k in ("failures", "errors", "skipped")), totals
+    assert totals["tests"] >= 163 and not any(totals[k] for k in ("failures", "errors", "skipped")), totals
     for suite in suites:
         suite.attrib.pop("hostname", None)
     tree.write(output / "tests.xml", encoding="utf-8", xml_declaration=True)
@@ -57,7 +57,12 @@ def verify(output):
             assert demos[0] == json.loads((ROOT / "docs/evidence/demo.json").read_text()), "original_fixture_changed"
         else:
             assert demos[0]["financial_audit"]["source_to_sql_parity"]
-            assert 200000000 <= demos[0]["financial_audit"]["pipeline_cents"] <= 500000000
+            assert demos[0]["financial_audit"]["pipeline_cents"] == 346000000
+            assert demos[0]["scenario"]["currency"] == demos[0]["measurement"]["currency"] == demos[0]["financial_audit"]["currency"] == "USD"
+            assert demos[0]["scenario"]["locale"] == "en-US"
+            assert all(json.loads(s["payload"])["data"]["currency"] == "USD"
+                       for s in demos[0]["source_records"] if s["kind"] == "outcome")
+            assert all(r["currency"] == "USD" for r in demos[0]["financial_audit"]["opportunities"])
         name = "fixture-demo.json" if profile == "fixture" else "demo.json"
         (output / name).write_text(json.dumps(demos[0], indent=2) + "\n", encoding="utf-8", newline="\n")
     assert source_hashes() == before, "source_changed_during_verification"
@@ -78,6 +83,6 @@ def verify(output):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=Path("docs/evidence/salesforce-standard/local"))
+    parser.add_argument("--output", type=Path, default=Path("docs/evidence/enterprise-usd"))
     args = parser.parse_args()
     verify(args.output)

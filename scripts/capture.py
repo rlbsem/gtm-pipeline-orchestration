@@ -41,11 +41,17 @@ def capture(workspace, output):
             baseline = page.request.get(url + "/api/state").json()
             total = sum(a["pipeline_cents"] for a in baseline["measurement"]["arms"].values())
             assert total == 346000000 and len(baseline["accounts"]) == 120
-            assert "$3,460,000" in page.locator("#metrics").inner_text()
+            assert baseline["scenario"]["currency"] == baseline["measurement"]["currency"] == "USD"
+            assert baseline["scenario"]["locale"] == "en-US"
+            assert all(f["currency"] == "USD" for f in baseline["outcomes"])
+            assert "USD $3,460,000" in page.locator("#metrics").inner_text()
+            assert "values in USD" in page.locator("#comparison-basis").inner_text()
             page.screenshot(path=output / "pipeline-overview.png")
             page.locator('[data-view="commercial"]').click()
             assert page.locator("#commercial-ledger tr").count() == 5
             assert "$1,200,000" in page.locator("#commercial-ledger").inner_text()
+            assert "USD" in page.locator("#commercial-currency").inner_text()
+            assert "CAD" not in page.locator("#commercial-ledger").inner_text()
             page.screenshot(path=output / "commercial-scenario.png")
             page.set_viewport_size({"width": 390, "height": 844})
             page.screenshot(path=output / "mobile-commercial.png", full_page=True)
@@ -88,6 +94,8 @@ def capture(workspace, output):
             interactive_value = next(f["amount_cents"] for f in after["outcomes"]
                                      if f["kind"] == "opportunity_accepted" and f["account_id"] == account)
             assert after_pipeline == total + interactive_value
+            assert after["measurement"]["currency"] == "USD"
+            assert all(json.loads(s["payload"])["data"]["currency"] == "USD" for s in after["sources"] if s["kind"] == "outcome")
             page.locator('[data-view="inbound"]').click()
             page.locator("#inbound-request").select_option("support")
             page.locator('#inbound-form button[type="submit"]').click()
@@ -118,7 +126,8 @@ def capture(workspace, output):
         result = {"captured_at": datetime.now(timezone.utc).isoformat(), "method": "actual Chromium / local UI and APIs",
                   "desktop_viewport": {"width": 1440, "height": 1120}, "mobile_viewport": {"width": 390, "height": 844},
                   "account_workbench_viewport": {"width": 1440, "height": 1320},
-                  "profile": "enterprise", "baseline_pipeline_cents": total,
+                  "profile": "enterprise", "currency": baseline["scenario"]["currency"], "locale": baseline["scenario"]["locale"],
+                  "baseline_pipeline_cents": total,
                   "after_interaction_pipeline_cents": after_pipeline,
                   "interactive_crm_opportunity_cents": interactive_value,
                   "screenshot_phases": {"before_interaction": ["pipeline-overview.png", "commercial-scenario.png",
@@ -143,6 +152,6 @@ def capture(workspace, output):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--workspace", type=Path, required=True)
-    parser.add_argument("--output", type=Path, default=Path("docs/images/salesforce-standard"))
+    parser.add_argument("--output", type=Path, default=Path("docs/images/enterprise-usd"))
     args = parser.parse_args()
     print(json.dumps(capture(args.workspace, args.output), indent=2))

@@ -1,7 +1,7 @@
 services:
   workbench:
     build: .
-    command: ["gtm", "serve", "--container-bind", "--profile", "enterprise", "--workspace", ".local/enterprise-v1"]
+    command: ["gtm", "serve", "--container-bind", "--profile", "enterprise", "--workspace", ".local/enterprise-usd-v2"]
     ports:
       - "127.0.0.1:8560:8560"
     volumes:

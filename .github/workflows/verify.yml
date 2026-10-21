@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           fetch-depth: 0
-      - run: git fetch --no-tags origin 4b06935b23edee3045a58553ec9fcdf2fa056084 644065dd561019b351ca7330d2146fd4c10e1d66 9f13ea79977dda1b56f25df5ca5c4060ffaf345f c54503f00e65ad4195a74c0bacf2ce003add091c 36fd314015812f2114d5e96a0cbbaee24b17b2e4
+      - run: git fetch --no-tags origin 4b06935b23edee3045a58553ec9fcdf2fa056084 644065dd561019b351ca7330d2146fd4c10e1d66 9f13ea79977dda1b56f25df5ca5c4060ffaf345f c54503f00e65ad4195a74c0bacf2ce003add091c 36fd314015812f2114d5e96a0cbbaee24b17b2e4 62e48215a3609ba136f4ce581f98cc893e2378d9
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.12'

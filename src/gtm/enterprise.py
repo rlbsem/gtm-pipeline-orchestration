@@ -2,12 +2,50 @@
 import json
 from pathlib import Path
 
-from .fixtures import START, outcome, record
-from .store import digest
+from .fixtures import START, record
+from .store import canonical, digest
+from .currency import metadata
 
 
 def specification():
     return json.loads(Path(__file__).with_name("enterprise-scenario.json").read_text())
+
+
+def pin_specification(engine):
+    config = specification()
+    with engine.transaction() as db:
+        prior = db.execute("SELECT value FROM runtime WHERE key='enterprise_specification'").fetchone()
+        if prior and json.loads(prior[0]) != config:
+            raise ValueError("enterprise_specification_changed_use_fresh_workspace")
+        if not prior:
+            if db.execute("SELECT 1 FROM accounts LIMIT 1").fetchone():
+                raise ValueError("legacy_enterprise_currency_use_fresh_workspace")
+            db.execute("INSERT INTO runtime VALUES('enterprise_specification',?)", (canonical(config),))
+        db.execute("INSERT OR IGNORE INTO runtime VALUES('scenario_profile','enterprise')")
+        metadata(db)
+    return config
+
+
+def pinned_specification(engine):
+    with engine.connection() as db:
+        metadata(db)
+        row = db.execute("SELECT value FROM runtime WHERE key='enterprise_specification'").fetchone()
+    if not row:
+        raise ValueError("enterprise_specification_required")
+    return json.loads(row[0])
+
+
+def enterprise_outcome(engine, account, suffix, kind, at, amount=0, action_key=None, parent_id=None,
+                       received_at=None, client=None, created_at=None):
+    with engine.connection() as db:
+        a, money = engine.account(db, account), metadata(db)
+    event = record("crm" if kind == "opportunity_accepted" else "engagement", suffix, a["brand"], "outcome", a["domain"],
+                   {"kind": kind, "business_id": suffix, "origin": "sequence" if action_key else "organic",
+                    "action_key": action_key, "parent_id": parent_id, "amount_cents": amount,
+                    "currency": money["currency"], "created_at": created_at or at}, at, account)
+    if client:
+        event = client.emit_feedback(event)
+    return engine.ingest(event, received_at or at)
 
 
 def segment(employees):
@@ -24,14 +62,14 @@ def account_segment(engine, account_id):
 
 
 def interactive_value(engine, account_id):
-    config = specification()["segments"][account_segment(engine, account_id)]
+    config = pinned_specification(engine)["segments"][account_segment(engine, account_id)]
     return config["interactive_sites"] * config["annual_site_value_cents"]
 
 
 def seed_enterprise(engine):
     if engine.rows("accounts"):
         raise ValueError("fixture_workspace_must_be_empty")
-    config = specification()
+    config = pin_specification(engine)
     accounts = []
     for index in range(config["population"]):
         segment_config = config["segments"][config["segment_cycle"][index % 5]]
@@ -55,8 +93,8 @@ def seed_enterprise(engine):
 
 
 def replay_enterprise(engine, destination, worker):
-    config = specification()
     accounts = seed_enterprise(engine)
+    config = pinned_specification(engine)
     cohorts = {row["account_id"]: row for row in engine.rows("cohorts")}
     treatment = [a for a in accounts if cohorts[a]["arm"] == "treatment"]
     # Outcome indices/scopes are immutable fixture inputs, never selected to favor an arm.
@@ -93,19 +131,19 @@ def replay_enterprise(engine, destination, worker):
         account_id = accounts[index]
         action_key = actions[account_id]["action_key"] if account_id in actions else None
         reply, meeting = f"enterprise-reply-{index:03}", f"enterprise-meeting-{index:03}"
-        outcome(engine, account_id, reply, "reply_positive", "2026-01-04T12:00:00Z", action_key=action_key, client=worker.client)
-        outcome(engine, account_id, meeting, "meeting_qualified", "2026-01-07T12:00:00Z",
+        enterprise_outcome(engine, account_id, reply, "reply_positive", "2026-01-04T12:00:00Z", action_key=action_key, client=worker.client)
+        enterprise_outcome(engine, account_id, meeting, "meeting_qualified", "2026-01-07T12:00:00Z",
                 action_key=action_key, parent_id=reply if action_key else None, client=worker.client)
         if index in opportunities:
             quote = opportunities[index]
             label = config["segment_cycle"][index % 5]
             unit = config["segments"][label]["annual_site_value_cents"]
             business_id = f"enterprise-opportunity-{index:03}"
-            outcome(engine, account_id, business_id, "opportunity_accepted", "2026-01-15T12:00:00Z",
+            enterprise_outcome(engine, account_id, business_id, "opportunity_accepted", "2026-01-15T12:00:00Z",
                     amount=quote["sites"] * unit, action_key=action_key, parent_id=meeting if action_key else None,
                     client=worker.client)
             quotes.append({**quote, "business_id": business_id, "account_id": account_id, "segment": label,
-                           "annual_site_value_cents": unit, "amount_cents": quote["sites"] * unit,
+                           "annual_site_value_cents": unit, "amount_cents": quote["sites"] * unit, "currency": config["currency"],
                            "specification_sha256": digest(config)})
     # Keep an eligible unactivated account for browser approval and recovery exercises.
     with engine.connection() as db:
@@ -122,7 +160,11 @@ def describe(engine):
         profile = db.execute("SELECT value FROM runtime WHERE key='scenario_profile'").fetchone()
         quotes = db.execute("SELECT value FROM runtime WHERE key='enterprise_scope_quotes'").fetchone()
     profile = profile[0] if profile else "fixture"
-    return {"profile": profile, "synthetic": True, "currency": "CAD",
-            "value_basis": specification()["value_basis"] if profile == "enterprise" else "Small regression fixture values",
-            "specification_sha256": digest(specification()) if profile == "enterprise" else None,
+    config = pinned_specification(engine) if profile == "enterprise" else None
+    with engine.connection() as db:
+        money = metadata(db)
+    return {"profile": profile, "synthetic": True, **money,
+            "value_basis": config["value_basis"] if config else "Historical CAD regression fixture values",
+            "denomination": config["denomination"] if config else "Original implicit-CAD fixture; no conversion.",
+            "specification_sha256": digest(config) if config else None,
             "scope_quotes": json.loads(quotes[0]) if quotes else []}
