@@ -8,5 +8,11 @@ __pycache__
 *.pem
 *.key
 .env
-docs
+docs/*
+!docs/evidence
+docs/evidence/*
+!docs/evidence/native-ai
+docs/evidence/native-ai/*
+!docs/evidence/native-ai/ai-evaluation.json
+!docs/evidence/native-ai/salesforce-acceptance.json
 tests

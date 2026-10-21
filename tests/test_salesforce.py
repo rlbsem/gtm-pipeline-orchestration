@@ -200,3 +200,70 @@ def test_immutable_native_journal_and_exact_key_binding(native):
     with engine.connection() as db, pytest.raises(sqlite3.IntegrityError, match="immutable_crm_intent"):
         db.execute("UPDATE crm_reviews SET envelope_hash=?", (digest("different"),))
     assert dispatcher.prepare(intent["action_key"], "gtm-software-contract", SCENARIO)["native_key"] == intent["native_key"]
+
+
+@pytest.mark.parametrize("defect", ["wrong_org", "ordinary_production", "missing_unique", "reviewer_can_create", "writer_can_update"])
+def test_preflight_contract_defects_fail_before_any_write(native, defect):
+    _, provider, inbox, _, _, _ = native
+    if defect in {"wrong_org", "ordinary_production"}:
+        provider.environment["Id" if defect == "wrong_org" else "OrganizationType"] = (
+            "00D" + "9" * 15 if defect == "wrong_org" else "Enterprise Edition")
+    else:
+        client = inbox.reader if defect == "reviewer_can_create" else inbox.writer
+        original = client.request
+        def faulty(method, path, **kwargs):
+            response = original(method, path, **kwargs)
+            if path.endswith("/describe"):
+                schema = response.json()
+                if defect == "missing_unique":
+                    next(f for f in schema["fields"] if f["name"] == "Action_Key__c")["unique"] = False
+                else:
+                    schema["createable" if defect == "reviewer_can_create" else "updateable"] = True
+                return httpx.Response(200, json=schema)
+            return response
+        client.request = faulty
+    with pytest.raises(SalesforceError):
+        inbox.preflight()
+    assert not inbox.ready and not provider.writes
+
+
+def test_admin_transport_enforces_read_only():
+    client = SalesforceClient("https://test.my.salesforce.com", "software-test", read_only=True)
+    try:
+        with pytest.raises(SalesforceError, match="read_only"):
+            client.request("POST", "/services/data/v65.0/sobjects/Seller_Action__c/", json={})
+    finally:
+        client.close()
+
+
+def test_unexpected_trigger_error_is_not_duplicate_or_success(native):
+    _, _, inbox, _, intent, _ = native
+    original = inbox.writer.request
+    def denied(method, path, **kwargs):
+        if method == "POST":
+            return httpx.Response(400, json=[{"errorCode": "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY"}])
+        return original(method, path, **kwargs)
+    inbox.writer.request = denied
+    with pytest.raises(SalesforceError, match="native_http_400"):
+        inbox.create(intent["native_key"], json.loads(intent["envelope"]))
+
+
+@pytest.mark.parametrize("wrong_owner", [False, True])
+def test_exact_standard_resolution_is_read_only_and_synthetic(native, wrong_owner):
+    _, _, inbox, _, _, _ = native
+    account, contact, marker = "001" + "3" * 15, "003" + "4" * 15, "GTM-SYNTHETIC-contract"
+    calls = []
+    def read(method, path, **kwargs):
+        calls.append(method)
+        row = ({"Id": account, "OwnerId": WRITER if wrong_owner else READER, "Description": marker,
+                "Website": "https://fixture.example"} if "/Account/" in path else
+               {"Id": contact, "AccountId": account, "OwnerId": READER, "Description": marker,
+                "Email": "contact@fixture.example"})
+        return httpx.Response(200, json=row)
+    inbox.writer.request = read
+    if wrong_owner:
+        with pytest.raises(SalesforceError, match="owner_mismatch"):
+            standard_resolution(inbox, account, contact, READER, marker)
+    else:
+        assert standard_resolution(inbox, account, contact, READER, marker)["account"]["Id"] == account
+    assert calls == ["GET", "GET"]

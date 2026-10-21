@@ -43,3 +43,22 @@ The account mart aggregates meeting and opportunity grains separately before joi
 - Hashes and append-only triggers detect ordinary mutation and bind evidence; a host/database administrator is trusted. They are not a signature authority, WORM service or defense against that administrator.
 
 The container permits a bind inside its network namespace only so Compose can publish **127.0.0.1:8560**. Changing this to public hosting requires a different authentication and deployment design.
+
+## Separate native review boundary
+
+The explicit Salesforce acceptance runner uses an approved test-org pin, CLI-managed credentials, read-only administrator preflight, a create-only integration identity and an independent reviewer. A separate durable `crm_reviews` table binds the exact local approval to destination identity, synthetic alias mapping and advisory reference. It never writes a native receipt into the local engagement journal or counts a review as a pipeline outcome. Native exact-content lookup happens before new-action authorization, preserving historical reconciliation after opt-out. Current authorization and native synthetic owner/source are rechecked before each bounded new create. Existing immutable content cannot be overwritten by an upsert.
+
+```mermaid
+flowchart LR
+  E[Current synthetic source evidence] --> L[Actual local Qwen advice]
+  E --> P[Finite policy and exact local approval]
+  L -. request and context hashes only .-> J[Durable native review envelope]
+  P --> J
+  J --> S[Create-only Salesforce test review]
+  S --> V[Independent reviewer exact readback]
+  V --> J
+  P --> H[Separate local HTTP engagement loop]
+  H --> M[Synthetic replies meetings opportunities and measurement]
+```
+
+The UI exposes only two fixed sanitized evidence artifacts through GET; it has no Salesforce write or inference route. Native/model provenance is pinned to its executed Git revision, while fresh browser and regression reports bind current code. The [operator procedure](native-ai.md) explains permission limits, rejected model outputs, cleanup, cross-system races and remaining unexecuted standard-object access.

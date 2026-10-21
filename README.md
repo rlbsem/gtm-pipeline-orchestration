@@ -4,13 +4,13 @@
 
 Prospecting, qualification, CRM routing and engagement often operate in separate tools. This engine connects them in one inspectable SDR workflow: discover an account, resolve identity, explain fit and intent, route an inquiry, review an action, enroll it safely, and follow reply, meeting and opportunity feedback into an account-level experiment.
 
-The Python application and independent HTTP engagement destination **execute locally** with durable databases. All companies, contacts, requests and outcomes are synthetic. No customer communications, live CRM connection or commercial uplift is claimed. The optional authenticated local LLM adapter is implemented and contract-tested; **fresh model inference has not been executed for this repository**.
+The Python application and independent HTTP engagement destination **execute locally** with durable databases. All companies, contacts, requests and outcomes are synthetic. A separate **native Salesforce Developer Edition acceptance** verifies a restricted internal-review handoff. **Sixteen fresh Qwen responses** demonstrate advisory research with recorded validation failures. Neither lane sends prospect communications or establishes commercial uplift.
 
-**Executed proof:** [73 passing regression tests and two identical independent HTTP demos](docs/evidence/verification.json), plus [real desktop/mobile browser workflows](docs/images/provenance.json), including lost-acknowledgement recovery and downstream feedback.
+**Executed proof:** [Current regression and two independent HTTP demos](docs/evidence/native-ai/local/verification.json) · [29 authenticated Salesforce requests](docs/evidence/native-ai/salesforce-acceptance.json) · [16 actual model responses](docs/evidence/native-ai/ai-evaluation.json). The [original 73-test evidence](docs/evidence/verification.json) remains unchanged.
 
-![Actual pipeline overview, independent receipts and account-level treatment comparison](docs/images/pipeline-overview.png)
+![Actual pipeline overview, independent receipts and account-level treatment comparison](docs/images/native-ai/pipeline-overview.png)
 
-*Captured from the running application. [Screenshot provenance and browser execution](docs/images/provenance.json).*
+*Captured from the running application. [Screenshot provenance and browser execution](docs/images/native-ai/provenance.json).*
 
 ## Run the complete loop
 
@@ -37,12 +37,13 @@ Open **http://127.0.0.1:8560/**. The demo writes real HTTP requests and separate
 4. Open the failure controls and arm a lost acknowledgement. Dispatch, then reconcile: one durable remote enrollment remains.
 5. Record a positive reply, qualified meeting and accepted opportunity. Each feedback event crosses HTTP and is read back before admission.
 6. Submit an inquiry in **Inbound routing**, or investigate blocked actions in **Execution & recovery**.
+7. Open **Native & AI evidence** to inspect recorded Salesforce checks, actual model text, source context and rejected citations. Viewing evidence never calls a vendor or model.
 
 The operator clock starts January 21, after the scenario's previously recorded feedback. The mature comparison separately reports through February 2. Future source events are rejected at admission; reporting also checks outcome time and receipt/knowledge cutoffs. Both dates are synthetic scenario coordinates.
 
 ## One action, with evidence at every boundary
 
-![Actual account research, exact review, independent receipt and downstream feedback](docs/images/account-workbench.png)
+![Actual account research, exact review, independent receipt and downstream feedback](docs/images/native-ai/account-workbench.png)
 
 The first treatment account in the fixture receives a pricing inquiry. Its verified brand/account reference and synthetic contact resolve to the existing CRM owner. Separate fit and intent rules qualify it. The seller approves one finite discovery sequence. The destination commits enrollment, then deliberately closes its HTTP connection before acknowledging it. A fresh worker reads back the original content and receipt rather than sending again. Subsequent synthetic reply, meeting and accepted-opportunity events retain that action lineage.
 
@@ -94,9 +95,19 @@ The synthetic treatment does **not** outperform holdout on meeting rate. Outcome
 | Receiver rate limits | Persist exponential backoff and a three-attempt write budget |
 | Remote effect survives loss of local intent | Independent reconciliation returns `remote_ahead_missing_intent`, `safe_to_resume=false` |
 
-![Actual recovery console and durable action journal](docs/images/execution-recovery.png)
+![Actual recovery console and durable action journal](docs/images/native-ai/execution-recovery.png)
 
 These controls assume a trusted local operator, received CRM authority and the receiver's idempotent-content contract. They do not guarantee global exactly-once delivery or discover source-system changes that have not arrived. [Architecture and trust boundaries](docs/architecture.md).
+
+## Advice and a native CRM review, independently verified
+
+![Running evidence interface with Salesforce acceptance and actual model responses](docs/images/native-ai/native-ai-evidence.png)
+
+The Salesforce lane uses separate integration and reviewer identities, a pinned approved test organization, a create-only synthetic review object and a unique external action key. One review was created, its successful acknowledgement deliberately discarded on the client, and its exact immutable content independently read back after restarting the dispatcher. Duplicate creation and restricted writes were rejected. The new review was marked **Rejected** and retained as an audit record; existing records, users and permissions were unchanged.
+
+The integration identity's standard Account, Contact and Task describe requests returned 404. Those record-access lanes were **not executed**. The permitted custom synthetic registry validates mapping and owner authority; it does not establish standard Salesforce Account/Contact resolution. [Scope, executed checks and operator procedure](docs/native-ai.md).
+
+The Qwen3-14B evaluation records eight cases at two seeds: ordinary inbound, prompt injection, unsupported personalization, conflicting enrichment, stale intent, revoked consent and two post-approval authority changes. **10 of 16 responses passed exact-quotation validation; six were rejected and preserved.** This is a mechanical citation result, not a semantic-grounding or usefulness score. Actual responses, contexts, latency, token usage and model/runtime hashes are inspectable. Arbitrary model wording cannot replace the finite approved message, and policy blocks stale or unauthorized execution independently of model advice. [Executed evidence and limitations](docs/evidence/native-ai/README.md).
 
 ## Verification and integration status
 
@@ -108,13 +119,15 @@ python scripts/check_evidence.py
 python scripts/publication.py --package
 ```
 
-Use a fresh workspace for each browser reproduction. Verification runs regression tests and two independent end-to-end HTTP demos, compares the complete output, checks source hashes, audits public content and checks local Markdown targets. The package is reopened and each file hash verified. [Recorded verification](docs/evidence/verification.json) · [JUnit results](docs/evidence/tests.xml) · [Hosted CI](https://github.com/rlbsem/gtm-pipeline-orchestration/actions).
+Use a fresh workspace for each browser reproduction. Verification runs regression tests and two independent end-to-end HTTP demos, compares the complete output, checks source hashes, audits public content and checks local Markdown targets. The package is reopened and each file hash verified. Historical source attestation requires a full Git clone; ordinary local verification needs no vendor credentials or model. [Current verification](docs/evidence/native-ai/local/verification.json) · [JUnit results](docs/evidence/native-ai/local/tests.xml) · [Hosted CI](https://github.com/rlbsem/gtm-pipeline-orchestration/actions).
 
 | Boundary | Status |
 |---|---|
 | Browser, API, local orchestration and independent HTTP effects | Executed with synthetic data |
 | Process-death recovery, permissions, duplicates, backoff and experiment exclusions | Local regression tests |
-| Optional authenticated local LLM | Implemented and software-contract-tested; fresh inference unexecuted |
+| Authenticated local Qwen3-14B | 16 fresh responses; 10 exact-citation passes, 6 recorded rejections; finite policy tested separately |
+| Salesforce synthetic internal-review object | Native DE acceptance: independent readback, lost-ack recovery, duplicates, restricted writes and audit cleanup |
+| Standard Salesforce Account/Contact resolution | Guarded exact-ID reader contract-tested; native access unavailable under existing restricted identity |
 | Salesforce Task mapping | Scoped mapper tests only; no native requests or metadata deployment |
 | Clay / sales-engagement vendors | Source/adapter interfaces only; no native integration claimed |
 | Cloud infrastructure / public application deployment | Not executed |

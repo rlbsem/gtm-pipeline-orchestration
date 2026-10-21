@@ -41,6 +41,7 @@ def verify(output):
     for suite in suites:
         suite.attrib.pop("hostname", None)
     tree.write(output / "tests.xml", encoding="utf-8", xml_declaration=True)
+    (output / "tests.xml").write_bytes((output / "tests.xml").read_bytes().replace(b"\r\n", b"\n"))
     demos = []
     for index in range(2):
         workspace = work / f"demo-{index}"
@@ -69,6 +70,6 @@ def verify(output):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=Path("docs/evidence"))
+    parser.add_argument("--output", type=Path, default=Path("docs/evidence/native-ai/local"))
     args = parser.parse_args()
     verify(args.output)

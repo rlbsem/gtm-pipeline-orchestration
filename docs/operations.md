@@ -34,7 +34,7 @@ An already running, explicitly approved authenticated loopback model can be used
 gtm infer --workspace .local/review-01 --account CANONICAL_ACCOUNT_ID --model-origin http://127.0.0.1:8093 --model MODEL_NAME --model-key-file PRIVATE_LOCAL_KEY_FILE
 ```
 
-The result stays in the ignored workspace with actual raw text, request/context hashes, model response identity and usage. Failed calls do not become success records. Inspect the provider's model/weights/runtime provenance separately before publishing any such result; this CLI alone cannot attest the actual weights behind an endpoint. No model was downloaded, started or called for the delivered evidence. The model interface tests use explicitly identified software responders. Exact quote checks do not establish complete semantic support.
+The result stays in the ignored workspace with actual raw text, request/context hashes, model response identity and usage. Failed calls do not become success records. Inspect the provider's model/weights/runtime provenance separately before publishing any such result; this CLI alone cannot attest the actual weights behind an endpoint. The original evidence did not invoke a model. The separate [native/model upgrade](native-ai.md) records fresh local inference without changing the default demo. The model interface tests use explicitly identified software responders. Exact quote checks do not establish complete semantic support.
 
 ## Vendor boundary
 
@@ -42,7 +42,7 @@ The result stays in the ignored workspace with actual raw text, request/context 
 
 The [Salesforce Task mapper](../src/gtm/adapters.py) requires explicit brand/account and brand/owner mappings and uses `WhatId` for account linkage. Its two proposed custom fields require a separately reviewed metadata deployment. It is not a native sender, permission validator or deployed integration. [Official Task field reference](https://developer.salesforce.com/docs/platform/field-reference/references/field-reference/salesforce-field-reference-task.html).
 
-Native Salesforce, Clay and sales-engagement acceptance requires separately authorized isolated environments, pinned identities, restricted credentials and vendor-effective permissions/read-back. No existing Salesforce/Snowflake environment or credentials were used in this repository. A JSON source marked `crm` in the local demo is an operator-supplied synthetic record, not a vendor attestation.
+Native Salesforce, Clay and sales-engagement acceptance requires separately authorized isolated environments, pinned identities, restricted credentials and vendor-effective permissions/read-back. The original core evidence used no vendor environment. The separate native upgrade used an approved existing Salesforce test org for an internal-review acceptance; no Snowflake execution occurred here. A JSON source marked `crm` in the local demo is an operator-supplied synthetic record, not a vendor attestation.
 
 ## Container
 

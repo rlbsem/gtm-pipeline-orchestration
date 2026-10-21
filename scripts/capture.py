@@ -77,12 +77,22 @@ def capture(workspace, output):
             page.locator("#inbound-request").select_option("support")
             page.locator('#inbound-form button[type="submit"]').click()
             page.locator("#inbound-result").filter(has_text="service_review").wait_for()
+            page.locator('[data-view="proof"]').click()
+            page.locator("#native-status").filter(has_text="passed").wait_for()
+            page.locator("#ai-status").filter(has_text="16 RESPONSES").wait_for()
+            page.locator("#ai-response").filter(has_text="Juniper").wait_for()
+            page.screenshot(path=output / "native-ai-evidence.png")
+            # Inspect an actual rejected model response, rendered as text, never executable HTML.
+            page.locator("#ai-case").select_option("8")
+            page.locator("#ai-case-status").filter(has_text="citation_not_exact").wait_for()
+            assert '"prepare_allowed": false' in page.locator("#ai-policy").inner_text()
             mobile_checks = {}
             page.set_viewport_size({"width": 390, "height": 844})
-            for name in ("overview", "workspace", "inbound", "recovery"):
+            for name in ("overview", "workspace", "inbound", "recovery", "proof"):
                 page.locator(f'[data-view="{name}"]').click()
                 mobile_checks[name] = page.evaluate("() => document.documentElement.scrollWidth <= innerWidth")
                 assert mobile_checks[name], "mobile_overflow:" + name
+            page.screenshot(path=output / "mobile-native-ai.png", full_page=True)
             page.locator('[data-view="workspace"]').click()
             page.screenshot(path=output / "mobile-workbench.png", full_page=True)
             browser.close()
@@ -93,7 +103,8 @@ def capture(workspace, output):
                   "account_workbench_viewport": {"width": 1440, "height": 1320},
                   "screenshots_before_interaction": True, "no_page_overflow": mobile_checks, "page_errors": errors,
                   "browser_flow": ["prepare", "exact_approval", "real_lost_ack", "independent_receipt_recovery",
-                                   "positive_reply", "qualified_meeting", "accepted_opportunity", "inbound_service_route"],
+                                   "positive_reply", "qualified_meeting", "accepted_opportunity", "inbound_service_route",
+                                   "recorded_native_and_ai_evidence", "inspect_rejected_model_citation"],
                   "new_action_attempts": action["attempts"], "new_action_status": action["status"],
                   "inference": "not_executed", "native_vendors": "not_executed",
                   "source_sha256": bound_sources,
@@ -109,6 +120,6 @@ def capture(workspace, output):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--workspace", type=Path, required=True)
-    parser.add_argument("--output", type=Path, default=Path("docs/images"))
+    parser.add_argument("--output", type=Path, default=Path("docs/images/native-ai"))
     args = parser.parse_args()
     print(json.dumps(capture(args.workspace, args.output), indent=2))
