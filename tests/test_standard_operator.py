@@ -79,3 +79,23 @@ def test_failed_cleanup_is_recorded_and_cli_cannot_report_success(tmp_path, monk
     assert report["status"] == "cleanup_failed"
     assert report["cleanup"]["original_assignments_restored"] is False
     assert report["cleanup"]["requires_investigation"] and run.state["phase"] == "cleanup_required"
+
+
+def test_setup_cannot_adopt_and_later_mutate_unjournaled_existing_records():
+    run = module.Run.__new__(module.Run)
+    run.config = {"integration_user_id": "writer", "reviewer_user_id": "reader"}
+    run.admin_id = "administrator"
+    run.state = {"baseline": {}, "baseline_psl": ["entitlement"], "run_id": "gtm-standard-software-existing",
+                 "ids": {}, "assignments": []}
+    run.save = lambda: None
+    run.assign = lambda *args: None
+    run.query = lambda q: [{"Id": "entitlement" if "PermissionSetLicense WHERE" in q else "permission"}]
+    class ExistingProvider:
+        def request(self, method, path):
+            assert method == "GET", "setup must not mutate an untracked existing row"
+            return httpx.Response(200, json={"queryable": True} if path.endswith("/describe") else {"Id": "existing-record"})
+    run.clients = {name: ExistingProvider() for name in ("administrator", "integration", "reviewer")}
+    run.write = lambda *args: pytest.fail("unexpected setup write")
+    with pytest.raises(SalesforceError, match="unmanifested_synthetic_record_requires_reconciliation"):
+        run.setup()
+    assert run.state["ids"] == {}

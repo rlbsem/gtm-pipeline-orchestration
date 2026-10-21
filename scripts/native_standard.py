@@ -114,7 +114,9 @@ class Run:
             r = self.clients["administrator"].request("GET", API + "/sobjects/" + obj +
                  "/GTM_Test_Key__c/" + quote(marker, safe=""))
             if r.status_code == 200:
-                record = r.json()["Id"]
+                # An external key is identity evidence, not proof that THIS journal created the row.
+                # Never adopt an untracked prior record and later mutate it during cleanup.
+                raise SalesforceError("unmanifested_synthetic_record_requires_reconciliation")
             elif r.status_code == 404:
                 if obj == "Contact":
                     body["AccountId"] = s["ids"]["account"]

@@ -43,4 +43,6 @@ python scripts/native_standard.py --config PRIVATE_CONFIG --workspace .local/nat
 
 The runner uses temporary dedicated assignments and records their IDs before proceeding. It retains the newly created synthetic audit records, completes the Task, opts out the Contact, disables the Account, closes the blocker Opportunity as lost, removes its temporary assignments and restores the original entitlement/permission-set assignments. It does not delete prior acceptance records or change duplicate rules. Unassigned metadata remains for reproduction. Investigate any failed cleanup before another run; never discard the private journal.
 
+An existing external key outside the current journal is not automatically adopted. Reconcile the private request/response history before adding any recovered ID to a manifest. A key collision alone never authorizes cleanup to change a prior record, and a fresh namespace must not be used to hide an uncertain outcome.
+
 No approved Outreach or Salesloft test tenant is configured. Neither native engagement integration nor outbound delivery is claimed.

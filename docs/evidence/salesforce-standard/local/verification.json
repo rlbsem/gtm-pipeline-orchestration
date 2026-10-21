@@ -1,9 +1,9 @@
 {
-  "executed_at": "2026-10-21T16:33:00.719176+00:00",
+  "executed_at": "2026-10-21T16:42:44.019898+00:00",
   "platform": "Windows",
   "python": "3.12.14",
   "tests": {
-    "tests": 153,
+    "tests": 154,
     "failures": 0,
     "errors": 0,
     "skipped": 0
@@ -64,7 +64,7 @@
     "scripts/execution_bindings.py": "ac941b810a32105da00c349980a88c3d5cb7624ac0765e35212c2189fd594eb7",
     "scripts/lock.py": "481c881b670a297817902efad5d75f90e7f4795945d7a1145e1e1332b28e5445",
     "scripts/native_salesforce.py": "e381f976f6259395f12452830750b72d96e49b90341d9016cbba4a6dcca7db55",
-    "scripts/native_standard.py": "e4ae7fd4f8d54a1e70b05ec855e5355691006034f03c990ee18a3fbd1dadc837",
+    "scripts/native_standard.py": "e09e67e2a34524d40565bc3b696f2e93ea359dd843585521e0cb31c0df7d925c",
     "scripts/publication.py": "276e9337a9e15254715fbb0bee3caf9d188b90a08622a71a00063f749263046b",
     "scripts/summarize_standard.py": "ab9001497427ec790c4c8b1772804b3dd0cae2ea761d0673837bf74f6d5b289c",
     "scripts/verify.py": "d104344c48aab896acf5452ce4e28d4706db3c7849ee72a5be02ad06eb69546c",
@@ -101,7 +101,7 @@
     "tests/test_measurement.py": "e9a417376bb225e2f981fe6e8716080baab11122d88616e1f695f7120510ec8b",
     "tests/test_salesforce.py": "f6cb0428349e1989e5a90400c45082c1d082a38d775b24293830676ca02a595e",
     "tests/test_standard_crm.py": "0f402f75c8e567f68d83a957057012a081d88922bb61ec5a9ccc2f10dbcd8c5b",
-    "tests/test_standard_operator.py": "3665166973b53d09fccd7df84de98c0f1d2dde376f387fb8782893d5dba4408e",
+    "tests/test_standard_operator.py": "34ed27049b84d40bef2f1facb54548df2979b9525778ee12502b06d08e19bd46",
     "web/app.js": "e1eeac684685828d104d0f5ab25e53ab93e48c20ca724ff1ae8ce332b5192c9e",
     "web/index.html": "ac469abed10d6b0d9af1e094dc87030633378631b7aa074f7a55f0be6332b4e9",
     "web/style.css": "3d4a36cccef12ae2d37c4adca59e74e7daf9c58ee7627b774e67db3e4e002fc3"
