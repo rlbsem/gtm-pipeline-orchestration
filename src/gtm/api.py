@@ -82,6 +82,16 @@ def create_app(engine, destination, worker):
     def brief(account_id: str):
         return research(engine, account_id)
 
+    @app.get("/api/evidence/{lane}")
+    def recorded_evidence(lane: str):
+        names = {"ai": "ai-evaluation.json", "salesforce": "salesforce-acceptance.json"}
+        if lane not in names:
+            return JSONResponse({"error": "not_found"}, status_code=404)
+        path = WEB.parent / "docs/evidence/native-ai" / names[lane]
+        if not path.is_file():
+            return {"status": "recorded_evidence_not_available", "live_execution": False}
+        return FileResponse(path, media_type="application/json")
+
     @app.post("/api/accounts/{account_id}/prepare")
     def prepare(account_id: str):
         return engine.prepare(account_id, app.state.clock)

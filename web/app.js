@@ -10,7 +10,7 @@ function chip(text){return el("span",text,"tag "+text);}
 function message(text,error=false){$("notice").textContent=text;$("notice").className="notice"+(error?" error":"");}
 async function api(path,body){const options=body===undefined?{}:{method:"POST",headers:{"Content-Type":"application/json","X-Demo-Intent":"operator"},body:JSON.stringify(body)};const r=await fetch("/api/"+path,options);const data=await r.json();if(!r.ok)throw Error(data.error||"Request failed");return data;}
 async function task(fn){try{await fn();}catch(error){message(error.message,true);}}
-function openView(name){document.querySelectorAll(".view").forEach(n=>n.classList.toggle("active",n.id===name));document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.view===name));$("current-view").textContent={overview:"Pipeline overview",workspace:"Account workbench",inbound:"Inbound routing",recovery:"Execution & recovery"}[name];window.scrollTo(0,0);}
+function openView(name){document.querySelectorAll(".view").forEach(n=>n.classList.toggle("active",n.id===name));document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.view===name));$("current-view").textContent={overview:"Pipeline overview",workspace:"Account workbench",inbound:"Inbound routing",recovery:"Execution & recovery",proof:"Native & AI evidence"}[name];window.scrollTo(0,0);}
 document.querySelectorAll("[data-view]").forEach(n=>n.onclick=()=>openView(n.dataset.view));
 document.querySelectorAll("[data-open]").forEach(n=>n.onclick=()=>openView(n.dataset.open));
 function current(){return state.accounts.find(a=>a.id===selected);}
@@ -61,3 +61,28 @@ $("refresh").onclick=()=>task(async()=>{await load();message("Fresh local state 
 $("advance").onclick=()=>task(async()=>{const d=new Date(state.clock);d.setSeconds(d.getSeconds()+5);await api("clock",{at:d.toISOString().replace(".000Z","Z")});prepared=null;await load();message("Scenario clock advanced five seconds; current policy will be checked before a new write.");});
 $("inbound-form").onsubmit=e=>{e.preventDefault();task(async()=>{const a=state.accounts.find(a=>a.id===$("inbound-account").value);const result=await api("ingest",{version:"source/v1",source:"web",source_id:"interactive-form-"+crypto.randomUUID(),brand:a.brand,kind:"inbound",domain:a.domain,account_id:a.id,observed_at:state.clock,data:{email:"review@"+a.domain,request:$("inbound-request").value,consent:$("inbound-consent").checked}});$("inbound-result").textContent=pretty(result);await load();message("Inbound decision persisted: "+result.status+" · "+result.reason);});};
 task(async()=>{await load();message("Executed synthetic scenario · actual local HTTP effects · no native vendor execution or commercial uplift claimed.");});
+
+let recordedAI;
+function renderRecordedCase(){
+ const r=recordedAI.records[Number($("ai-case").value)];
+ $("ai-case-status").textContent=r.case_id+" · seed "+r.seed+" · "+(r.validation_error||"Exact quotations checked")+" · "+r.latency_seconds+"s";
+ $("ai-response").textContent=r.raw_response;
+ $("ai-policy").textContent=pretty(r.policy);
+ $("ai-context").textContent=pretty({context:r.context,citations:r.parsed?.citations,context_hash:r.context_hash,request_hash:r.request_hash,usage:r.usage,semantic_support:r.semantic_support});
+}
+async function loadRecordedEvidence(){
+ const [native,ai]=await Promise.all([api("evidence/salesforce"),api("evidence/ai")]);
+ const n=clear("native-proof");$("native-status").textContent=native.status||"Unavailable";
+ if(native.status==="passed"){
+  [["Environment",native.preflight.organization_type],["Authenticated requests",native.authenticated_requests],["Independent exact readback","Verified"],["Lost acknowledgement / duplicates","Recovered / rejected"],["New review cleanup",native.cleanup.new_review_status+" · retained audit record"]].forEach(([k,v])=>{const row=el("div",null,"assurance-item");row.append(el("span",k),el("b",v));n.append(row);});
+  n.append(el("p","Standard Account / Contact / Task access was unavailable. Existing permissions were preserved.","subtle"));
+ }else n.append(el("p","No successful native record is available in this checkout.","subtle"));
+ $("native-detail").textContent=pretty(native);
+ const a=clear("ai-proof");$("ai-status").textContent=ai.inferences_executed?ai.inferences_executed+" RESPONSES":"Unavailable";
+ if(ai.records){recordedAI=ai;
+  [["Executed model",ai.runtime.model],["Evaluation cases",new Set(ai.records.map(r=>r.case_id)).size],["Exact citation checks",ai.exact_citation_checks_passed+" / "+ai.inferences_executed],["Executable model prose","Never authorized"]].forEach(([k,v])=>{const row=el("div",null,"assurance-item");row.append(el("span",k),el("b",v));a.append(row);});
+  ai.records.forEach((r,i)=>{const option=el("option",r.case_id.replaceAll("_"," ")+" · seed "+r.seed);option.value=i;$("ai-case").append(option);});
+  $("ai-case").onchange=renderRecordedCase;renderRecordedCase();
+ }else a.append(el("p","No actual model responses are available in this checkout.","subtle"));
+}
+task(loadRecordedEvidence);
