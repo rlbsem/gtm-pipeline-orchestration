@@ -1,0 +1,15 @@
+# Executed local proof
+
+[Verification](verification.json) records the actual regression results, dependency versions, full executable source hashes and equality of two independent synthetic HTTP executions. [JUnit](tests.xml) preserves individual test results with the machine hostname removed. [Demo output](demo.json) includes actual approved payloads, attempts, receipts, routing records, source-linked outcome calculations and HTTP request counts. Runtime databases and raw logs stay private to the ignored workspace.
+
+The recorded fixture has 28 accounts: 24 assigned accounts, one existing customer, one unverified discovery and two unresolved CRM records sharing a domain. Ten assigned accounts are treatment and fourteen holdout. Seven enrollments have exact independent receipts, two actions are blocked after owner/consent changes, and one treatment account remains unactivated for browser review. The rate-limited enrollment required a second bounded write attempt. The lost-acknowledgement enrollment was reconciled after one POST.
+
+The synthetic outcomes produce five qualified meetings, five accepted opportunities and CAD28,000 in qualified pipeline. The treatment meeting rate is 20.0%; holdout is 21.4%. These outcomes were intentionally supplied by the fixture, not obtained from customers or estimated by an AI. There is no commercial uplift or significance claim.
+
+[Browser provenance](../images/provenance.json) records screenshots of the running application and a **separate fresh interactive enrollment** with exact approval, actual HTTP disconnect, one persisted write attempt, independent recovery and all three downstream feedback transitions. The three desktop screenshots show the original replay before that interactive mutation. The mobile screenshot is taken after interaction. Every image is hashed; no generated illustration or manual image editing is used.
+
+The regression suite includes a real dispatch-subprocess death after remote commit, duplicate key conflicts, consent/ownership changes, backoff exhaustion, a local SQLite restore mismatch, source-authority conflicts, invalid source references, cross-brand checks, stale inputs, experiment leakage, preexisting pipeline exclusion, late knowledge and separate-grain financial arithmetic. Local backup/recovery is **not** native cloud PITR.
+
+The model contract tests use named software responders. No fresh model inference or native Salesforce, Clay, sales-engagement, warehouse or cloud execution occurred for these records. Historical native evidence from other repositories is neither copied nor reclassified as acceptance here.
+
+Reproduce with the commands in the [README](../../README.md). CI reruns local tests, two independent HTTP demos, real browser interactions, evidence binding checks, and packaging on Linux and Windows. Its separate Linux container job builds the image and executes the demo. Use the actual GitHub run results to establish whether hosted checks have passed; this committed record is local evidence.

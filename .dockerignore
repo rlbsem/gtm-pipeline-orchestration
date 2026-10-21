@@ -1,0 +1,12 @@
+.git
+.local
+work
+dist
+.venv
+__pycache__
+*.sqlite*
+*.pem
+*.key
+.env
+docs
+tests

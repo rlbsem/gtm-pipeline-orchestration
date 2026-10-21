@@ -1,0 +1,20 @@
+{
+  "version": "qualification/v1",
+  "fit_min": 70,
+  "intent_min": 20,
+  "minimum_employees": 100,
+  "industries": ["software", "manufacturing", "financial_services"],
+  "employees_points": 50,
+  "industry_points": 30,
+  "territory_points": 20,
+  "intent_days": 30,
+  "enrichment_fresh_days": 30,
+  "crm_fresh_days": 365,
+  "signal_weights": {"pricing": 50, "research": 25, "inquiry": 70},
+  "owners": {"atlas:NA": "atlas-na", "atlas:EMEA": "atlas-emea", "harbor:NA": "harbor-na", "harbor:EMEA": "harbor-emea"},
+  "experiment": "pipeline-2026-01",
+  "salt": "pipeline-allocation/v1",
+  "window_days": 30,
+  "max_attempts": 3,
+  "approval_hours": 24
+}
