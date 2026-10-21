@@ -14,6 +14,8 @@ The primary enterprise B2B profile covers **120 accounts and USD $3.46M of synth
 
 *Captured from the running application. [Screenshot provenance and browser execution](docs/images/enterprise-usd/provenance.json).*
 
+**Engineering Evidence Lab:** [Published explorer](https://rlbsem.github.io/enterprise-revenue-systems-lab/) · [AI GTM investigation review](https://github.com/rlbsem/enterprise-revenue-systems-lab/pull/6). The fifth investigation provides a read-only browser view of these artifacts, with separate model, native CRM and synthetic pipeline provenance. Its deployment is pending approval.
+
 ## Run the complete loop
 
 Use Python **3.12** from the repository root:
