@@ -90,7 +90,8 @@ def create_app(engine, destination, worker):
     @app.get("/api/evidence/{lane}")
     def recorded_evidence(lane: str):
         names = {"ai": "native-ai/ai-evaluation.json", "salesforce": "native-ai/salesforce-acceptance.json",
-                 "salesforce-standard": "salesforce-standard/acceptance.json"}
+                 "salesforce-standard": "salesforce-standard/acceptance.json",
+                 "connected": "connected/preview.json", "connected-native": "connected/acceptance.json"}
         if lane not in names:
             return JSONResponse({"error": "not_found"}, status_code=404)
         path = WEB.parent / "docs/evidence" / names[lane]

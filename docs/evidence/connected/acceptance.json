@@ -1,0 +1,1291 @@
+{
+  "status": "passed",
+  "error": null,
+  "executed_at": "2026-10-22T00:54:55.944926+00:00",
+  "source_sha256": {
+    "salesforce/force-app/main/default/classes/GTMConnectedGateTest.cls": "0e28a8027ef1799ee234c9af77263a7f40b9cf9800f4bda0e0c84d6db2559f3b",
+    "salesforce/force-app/main/default/classes/GTMConnectedGateTest.cls-meta.xml": "0347267b36e4cd542616bb80997ae7c7634cf64ed063b5bd68dd2493c8fca3ea",
+    "salesforce/force-app/main/default/classes/GTMTaskGate.cls": "261eb5496bd02c3e28002dc110e7ab8532bd31c60345e85f180409585fcbd302",
+    "salesforce/force-app/main/default/classes/GTMTaskGate.cls-meta.xml": "b9166b7d90d9ff9c098ea35466ef6fac89dfb34175e8460d04b682a7ed72d265",
+    "salesforce/force-app/main/default/classes/GTMTaskGateTest.cls": "7517509acf498c4b3166579f400a79411636b94b3ccdea2d014fdb8f45707c33",
+    "salesforce/force-app/main/default/classes/GTMTaskGateTest.cls-meta.xml": "b9166b7d90d9ff9c098ea35466ef6fac89dfb34175e8460d04b682a7ed72d265",
+    "salesforce/force-app/main/default/customPermissions/GTM_Native_Writer.customPermission-meta.xml": "632054eade4126fd9c07c5fd8b6387ba4c3bc70a01beb8107e2be1b375f82988",
+    "salesforce/force-app/main/default/objects/Account/fields/GTM_Test_Active__c.field-meta.xml": "2f416c4b8e08dced3009da460b51ad7602cbde317644631e34566434ce5b4263",
+    "salesforce/force-app/main/default/objects/Account/fields/GTM_Test_Key__c.field-meta.xml": "cd95d84f112c2ba2a0a9c5c36ee3f8131647839a2878bbe3510219c4d3ba1427",
+    "salesforce/force-app/main/default/objects/Activity/fields/GTM_Action_Key__c.field-meta.xml": "09d7a69fad090d7c2f9ea8ed0254ee37e2fa4e135a072bb7ba1d1cb824ee4070",
+    "salesforce/force-app/main/default/objects/Contact/fields/GTM_Test_Key__c.field-meta.xml": "cd95d84f112c2ba2a0a9c5c36ee3f8131647839a2878bbe3510219c4d3ba1427",
+    "salesforce/force-app/main/default/objects/GTM_Task_Receipt__c/fields/Action_Key__c.field-meta.xml": "c451082f61f2ebaca46e6535d2743a3d4ec886dec04514c481124d651505b6f2",
+    "salesforce/force-app/main/default/objects/GTM_Task_Receipt__c/fields/Payload__c.field-meta.xml": "be633d635e75f6d5958e90a915f8cc365d9655a2c5293ca5011b97828f7d4a25",
+    "salesforce/force-app/main/default/objects/GTM_Task_Receipt__c/fields/Payload_Hash__c.field-meta.xml": "b5607cfa280343c379037b4614d3587b6849140935df1dfb5804437ca5f7bff1",
+    "salesforce/force-app/main/default/objects/GTM_Task_Receipt__c/fields/Task_Id__c.field-meta.xml": "83d49e6dcb7048668c6901197b47a7e0ecdfa29c239e0ef62c88f0eecf2192c2",
+    "salesforce/force-app/main/default/objects/GTM_Task_Receipt__c/GTM_Task_Receipt__c.object-meta.xml": "fde9c48a73a82f06f582f3cfad2450602401cd0702e7479904874f28964ac24a",
+    "salesforce/force-app/main/default/permissionsets/GTM_Standard_Integration.permissionset-meta.xml": "2eb9dbae52853bf3e1fc41be2a5d78d185ec499d31fb1b0cfde2c2810a0ddea2",
+    "salesforce/force-app/main/default/permissionsets/GTM_Standard_Observer.permissionset-meta.xml": "89b7b42f70d186bd2572e8f6bdbbc6185d1fa3ec323952f7d1cbecc177e79c5b",
+    "salesforce/force-app/main/default/permissionsets/GTM_Standard_Setup.permissionset-meta.xml": "a2e89d1856236422ebc93bc332129b50338b1b6369741249113d4ed6b70b1b64",
+    "salesforce/force-app/main/default/triggers/GTMReceiptBoundary.trigger": "7d211d13ba598aa18ae61ec72810af81356b68c5a8a45c575fd2c0f5df27fafc",
+    "salesforce/force-app/main/default/triggers/GTMReceiptBoundary.trigger-meta.xml": "017ab7f5f15ccbdb9d838d0e2ee785b5b468beaeaad05830295ff7807f54cf53",
+    "salesforce/force-app/main/default/triggers/GTMTaskBoundary.trigger": "caa073ed4cbefbad615d41fda029ebd2d8a9e7f1509b42ce8e6b3aacfe960d3b",
+    "salesforce/force-app/main/default/triggers/GTMTaskBoundary.trigger-meta.xml": "017ab7f5f15ccbdb9d838d0e2ee785b5b468beaeaad05830295ff7807f54cf53",
+    "salesforce/sfdx-project.json": "6f33b9b572769041120dd7db4024ae3916bdf13f07d8300d408b05c819ae2862",
+    "scripts/connected_prepare.py": "45f5a5abbc213e51578b229c99c83bec987d190a149125faaf44d7547496f94f",
+    "scripts/native_connected.py": "83661bd0275f9a01505227766d6ea8a7804cc9acd7f1e81eb36ca939b644fb24",
+    "scripts/native_salesforce.py": "e381f976f6259395f12452830750b72d96e49b90341d9016cbba4a6dcca7db55",
+    "scripts/native_standard.py": "e09e67e2a34524d40565bc3b696f2e93ea359dd843585521e0cb31c0df7d925c",
+    "scripts/publication.py": "276e9337a9e15254715fbb0bee3caf9d188b90a08622a71a00063f749263046b",
+    "src/gtm/__init__.py": "182abe06ec4fec1849ea7160382f0b4e4461b17c9a3c649d5ff62d5320a259ac",
+    "src/gtm/adapters.py": "daf415a8966cd03900132ead946fd02834652cb3dfa7d5ba61f4943ebdc25886",
+    "src/gtm/advice.py": "74e967f8354c67f7c815c715b2ca3b5d4bf903680da8a970dee4cfa41028b76b",
+    "src/gtm/api.py": "73649756c4a18c8511058c6cbf1c16b88c96f193704489f2f0115cbe92085ce3",
+    "src/gtm/cli.py": "2acb3f4f29917f6ffd518f5c2da9b7624ace0af0b0fc27477c7255b0d01c6823",
+    "src/gtm/commercial.py": "b0cd10638e770a020fd0057862047cf70ace75ebd027103afa836187c647d0d6",
+    "src/gtm/connected.py": "5524fca9a311b1ad7894d432a30f5fd56186a830780e9cb8f5706b306f36c10d",
+    "src/gtm/contracts.py": "10973a886a5f0d8adc426155624ae1536877f38d39976869b84339d3666c3914",
+    "src/gtm/currency.py": "0d2db41461999c4041f33adb64ccd77570142a374d0e4772122807044720dd8d",
+    "src/gtm/destination.py": "7a7c98f56510be03b4ad75ff998e2cf14cab66c4d9b44ffcb7828e73ccc9ba5a",
+    "src/gtm/engine.py": "b386b0b16f40beb548cdc06bddfdc94824decc0dbf30209d4151edbaafe28cb7",
+    "src/gtm/enterprise-scenario.json": "e5d144e835020a7acd3fbcb5ac78f41424749bd92aa4b439478e8a7fd5284cd8",
+    "src/gtm/enterprise.py": "f23478fdd8bbd34a2c8f2bdbe08094aa3133b4361be2194d8d1c2fef71d9c757",
+    "src/gtm/fixtures.py": "b356a1c2a17360729d3b0a147a72dcbf3eaf8cf021f52f25a20a3dd8b384ea1d",
+    "src/gtm/measurement.py": "ec5befdeba4a1a16715dc917309c5521164202a6f2a37598be18e890d9c04283",
+    "src/gtm/pipeline.sql": "dc6b55ea4a170a90a62425ef70760a95fad89df781d486fcaac9ce8d95d78fb3",
+    "src/gtm/policy.json": "ac8b8dde160296b37fd1e384cba9fa409372d3bdc5a4c01fd3740b774de331e7",
+    "src/gtm/salesforce.py": "0d7454a75c28db669144a7e0aa39cbc9bc820bfca9a003a142021800cbac2e18",
+    "src/gtm/schema.sql": "3ec3bbeef02d99075fb2acb7b7fdc73b1cf5483ff9ca324776bda165087cbfbb",
+    "src/gtm/standard_crm.py": "100d6cdb7efbfd1c8c4312a8e9b4f291044e5339c764a6d9203cb075198ddc39",
+    "src/gtm/store.py": "2d683ea48313273a56ecad8964925f07eb20fc761579992e935237de11ed8755",
+    "src/gtm/upgrade_cases.json": "2de37f8aaa6872bd6a793e30a7c2074bebc5caf9e69f277909b4d4292bace812",
+    "src/gtm/upgrade_scenarios.py": "2d8f7fafa07d72a826b3fbaa258151955c4468fddd89b83c81658bbeaa5c3673",
+    "src/gtm/worker.py": "cbceba8d42bb87195c00fda590d2ce08770ae12fda87e34e0a2d3bf2c756f668"
+  },
+  "preview_hash": "e75ccb2e37f0b05554e1589d7bb167f811e34ee7affaa371cbc1f0e4e0a94fa8",
+  "review_hash": "9357f749e235cbddf5d02ea8e0ece4bf25320a8360f43e8b0918457e562e8503",
+  "source_binding_scope": "Python package, Salesforce metadata and native controllers; browser/regression evidence binds the complete delivery separately.",
+  "checks": {
+    "exact_native_keys_identity_owner_and_eligibility": true,
+    "real_inference_exact_review_bound_to_native_payload": true,
+    "real_commit_ack_discard_and_restart_without_repost": true,
+    "server_duplicate_rollback_single_task": true,
+    "changed_owner_client": "standard_identity_or_owner_mismatch",
+    "changed_owner_server": true,
+    "revoked_consent_client": "standard_consent_or_scope_revoked",
+    "revoked_consent_server": true,
+    "unsupported_personalization_server_rejection": true,
+    "reviewer_effective_permission_and_rejected_post": true,
+    "historical_receipt_after_revoked_eligibility": true
+  },
+  "authenticated_requests": 128,
+  "requests": [
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:17.790607+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "999aa5817cef1b96735b652cbe1ef586a1ef213bc1831d81d499c9e3bace1502"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:17.898660+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "e5d802bd6ee7d69ac3de5ac374583045718e9a685ad2091bb45083b42a515cf4"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:18.072713+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "35d601fceb3e1972965dcfef872ef8698e843b74476e3fd267d4b39343e5f320"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:18.262573+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "d4895f8f4c4e5f553e75ad4f41ab5bcf5343fb8c4e868d0d9e15dc87f6155c2e"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:18.418827+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "4190d17a645caf07dbd7760a6e75a3ecf708b249e9036699183afd5856b68dd6"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:18.530484+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "ea8e8a04a3dac89912519887fcd822f2617b5f8eefc545db329d4b3a322337cc"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:18.624375+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "c3ebed9e94f4c8baa0f891fc332d5e4e1c116fc526d82e3fdcf443a44bd80ad0"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:18.714403+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:18.818413+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1283ca49667e013cf52b131465a2def8b0ac3842f33291cab0430a24695f6fb2"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:18.910432+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "POST",
+      "http": 201,
+      "at": "2026-10-22T00:54:19.317629+00:00",
+      "resource": "PermissionSetLicenseAssign",
+      "error_codes": [],
+      "response_sha256": "8f43f9ff924fd14b2ffaef6f73c5eda9511bb8139e2b0a54dfcbf606b6f9a309"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:19.435747+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "b7c83677fdb13851a9b9b7d05dc5ea42c74f2b3b3df00670323109f56eb3409b"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:19.551809+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "POST",
+      "http": 201,
+      "at": "2026-10-22T00:54:19.994828+00:00",
+      "resource": "PermissionSetAssignment",
+      "error_codes": [],
+      "response_sha256": "518801c461d2ce700bcfd35a3b7a2d694dd6ea7a0a2575628c18e77e408d6d4c"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:20.158854+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "b85c20b64f7b4245ec9b31a25ee62344c28da5ec63718d2c131f7635d5923b13"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:20.271944+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "POST",
+      "http": 201,
+      "at": "2026-10-22T00:54:20.610801+00:00",
+      "resource": "PermissionSetAssignment",
+      "error_codes": [],
+      "response_sha256": "3b49262dc841a8183224701322907dec1a05b66686f94d7b51f243778ca49edc"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:20.751818+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "eb3b4f70dba6a98632a1249cc546b0f27be48ae269ba9e4a0e1d968382875e21"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:20.868844+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "POST",
+      "http": 201,
+      "at": "2026-10-22T00:54:21.378972+00:00",
+      "resource": "PermissionSetAssignment",
+      "error_codes": [],
+      "response_sha256": "32e68c8fcc640409bc7936756dcea205392f871727c8737335bd720e3c02cc03"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:22.755612+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "0344f537f8643573c21fadbefc851e7945fb2d29f7079fbc988e67cd10847a39"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:23.063667+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "a53ed798b72a00f665480ef32d7a329e89a44a9c6b5caf3a94e0c42ad8100b28"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:23.316788+00:00",
+      "resource": "Opportunity",
+      "error_codes": [],
+      "response_sha256": "755e42771e85c8effbed3ca4c01ca5c80ec2961c4710cd8f56b3d01ad1f832eb"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:23.536865+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "1f9f103627ded9de432a2437bb18bb70d5ce42b3d28c1d48d38ab632d4b77fd7"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:23.722829+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "43a07f04b8598b19edaacc1955698e6e1ae6ed61cbb3cafb37cbe541c7a1eab9"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:24.011571+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "e0b118eb5f0386f1cd666c54aa8698dc9155a44cf0ea1e056c4139848da339f7"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:24.184644+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "13c09e5e44e290164e710fd12024207f19b51b3623ba076477a9552502e7163d"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:24.337664+00:00",
+      "resource": "Opportunity",
+      "error_codes": [],
+      "response_sha256": "755e42771e85c8effbed3ca4c01ca5c80ec2961c4710cd8f56b3d01ad1f832eb"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:24.477699+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "06499c2b0c4e7b669af3b4bb6ea9fa0943d6ccac1fa78f08e566598126da9cbb"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:24.654746+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "43a07f04b8598b19edaacc1955698e6e1ae6ed61cbb3cafb37cbe541c7a1eab9"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:24.777808+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "999aa5817cef1b96735b652cbe1ef586a1ef213bc1831d81d499c9e3bace1502"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:24.899879+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "35d601fceb3e1972965dcfef872ef8698e843b74476e3fd267d4b39343e5f320"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:25.068952+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "0344f537f8643573c21fadbefc851e7945fb2d29f7079fbc988e67cd10847a39"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:25.240522+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "a53ed798b72a00f665480ef32d7a329e89a44a9c6b5caf3a94e0c42ad8100b28"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:25.429474+00:00",
+      "resource": "Opportunity",
+      "error_codes": [],
+      "response_sha256": "755e42771e85c8effbed3ca4c01ca5c80ec2961c4710cd8f56b3d01ad1f832eb"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:25.571509+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "1f9f103627ded9de432a2437bb18bb70d5ce42b3d28c1d48d38ab632d4b77fd7"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:25.715574+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "43a07f04b8598b19edaacc1955698e6e1ae6ed61cbb3cafb37cbe541c7a1eab9"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:25.842624+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "d4895f8f4c4e5f553e75ad4f41ab5bcf5343fb8c4e868d0d9e15dc87f6155c2e"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:26.001328+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "e0b118eb5f0386f1cd666c54aa8698dc9155a44cf0ea1e056c4139848da339f7"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:26.199932+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "13c09e5e44e290164e710fd12024207f19b51b3623ba076477a9552502e7163d"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:26.349474+00:00",
+      "resource": "Opportunity",
+      "error_codes": [],
+      "response_sha256": "755e42771e85c8effbed3ca4c01ca5c80ec2961c4710cd8f56b3d01ad1f832eb"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:26.478688+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "06499c2b0c4e7b669af3b4bb6ea9fa0943d6ccac1fa78f08e566598126da9cbb"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:27.599855+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "43a07f04b8598b19edaacc1955698e6e1ae6ed61cbb3cafb37cbe541c7a1eab9"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:27.749902+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "43a07f04b8598b19edaacc1955698e6e1ae6ed61cbb3cafb37cbe541c7a1eab9"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:27.871944+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "999aa5817cef1b96735b652cbe1ef586a1ef213bc1831d81d499c9e3bace1502"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:28.016001+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "e5d802bd6ee7d69ac3de5ac374583045718e9a685ad2091bb45083b42a515cf4"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:28.143695+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "43176af52c23fb39c46fbbd00279f5281dbe4370a5cfa0ab5b966c0ad3cdb235"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:28.572681+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "f86b21d2e5b34990e5c5bfbded1952cb12f8bdbde02d539bf9b3689dfea10081"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:28.888714+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "36a64827d7a4742534c17b260d5daf68aca681b5e11801ddb094bf4b6d2a8623"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:29.017782+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:29.159787+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "407d174d48e8780588a17319a582b3aeec95e6cd5f0878713b2e0582989d2fec"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:29.287880+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "6c1c869bab1aec0952f6428cacec21801ee793be99e5673cc15e0b77effd20f3"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:29.455905+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "999aa5817cef1b96735b652cbe1ef586a1ef213bc1831d81d499c9e3bace1502"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:29.591065+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "35d601fceb3e1972965dcfef872ef8698e843b74476e3fd267d4b39343e5f320"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:29.742654+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "0344f537f8643573c21fadbefc851e7945fb2d29f7079fbc988e67cd10847a39"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:29.924690+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "a53ed798b72a00f665480ef32d7a329e89a44a9c6b5caf3a94e0c42ad8100b28"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:30.066705+00:00",
+      "resource": "Opportunity",
+      "error_codes": [],
+      "response_sha256": "755e42771e85c8effbed3ca4c01ca5c80ec2961c4710cd8f56b3d01ad1f832eb"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:30.217585+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "1f9f103627ded9de432a2437bb18bb70d5ce42b3d28c1d48d38ab632d4b77fd7"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:30.392624+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "43a07f04b8598b19edaacc1955698e6e1ae6ed61cbb3cafb37cbe541c7a1eab9"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:30.519640+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "d4895f8f4c4e5f553e75ad4f41ab5bcf5343fb8c4e868d0d9e15dc87f6155c2e"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:30.694678+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "e0b118eb5f0386f1cd666c54aa8698dc9155a44cf0ea1e056c4139848da339f7"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:30.891715+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "13c09e5e44e290164e710fd12024207f19b51b3623ba076477a9552502e7163d"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:31.064764+00:00",
+      "resource": "Opportunity",
+      "error_codes": [],
+      "response_sha256": "755e42771e85c8effbed3ca4c01ca5c80ec2961c4710cd8f56b3d01ad1f832eb"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:31.251822+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "06499c2b0c4e7b669af3b4bb6ea9fa0943d6ccac1fa78f08e566598126da9cbb"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:31.418883+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "43a07f04b8598b19edaacc1955698e6e1ae6ed61cbb3cafb37cbe541c7a1eab9"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:31.592918+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "43a07f04b8598b19edaacc1955698e6e1ae6ed61cbb3cafb37cbe541c7a1eab9"
+    },
+    {
+      "role": "administrator",
+      "method": "PATCH",
+      "http": 204,
+      "at": "2026-10-22T00:54:31.949525+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "administrator",
+      "method": "PATCH",
+      "http": 204,
+      "at": "2026-10-22T00:54:32.216853+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:32.379086+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "e80454fad884e6cc51310aa003c783854260998b931c6cdfab021ca0ba7caf63"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:33.562894+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "313e0083e76f2bba138b6d3445b9ebe4c13512267f974fa337f67fc022884cfc"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:33.738932+00:00",
+      "resource": "User",
+      "error_codes": [],
+      "response_sha256": "eeefb3b697ca80e67bc28798c503dbf400879ac5216af76ea456e141f6009a4a"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:33.905503+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 404,
+      "at": "2026-10-22T00:54:34.170586+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [
+        "NOT_FOUND"
+      ],
+      "response_sha256": "7a45ae5ed2279a4ba01f08066e8946d91ea11460996262848845c2100d3431b3"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:34.364855+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "43a07f04b8598b19edaacc1955698e6e1ae6ed61cbb3cafb37cbe541c7a1eab9"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:34.511893+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "e80454fad884e6cc51310aa003c783854260998b931c6cdfab021ca0ba7caf63"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:34.688467+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "313e0083e76f2bba138b6d3445b9ebe4c13512267f974fa337f67fc022884cfc"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:34.849518+00:00",
+      "resource": "User",
+      "error_codes": [],
+      "response_sha256": "eeefb3b697ca80e67bc28798c503dbf400879ac5216af76ea456e141f6009a4a"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:35.001585+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "integration",
+      "method": "POST",
+      "http": 201,
+      "at": "2026-10-22T00:54:35.773774+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "6ed4ed12ff363d4c3b8cf84cc9f24cd9076adff0153a0f66d38a210955c6ae54"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:35.985572+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "a95408223b644b7be9f47fe232c6dad05576379252c6f885d746fd781ffbf159"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:36.201825+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "9b5446f84f3ca9ac81e9e04054ca11dad45bc99999be3d44a0cf1066ee71c8d1"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:36.339571+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "d5d3274060fd7e0b8799d9ea0920d6fd9b543e441ef080fda4e6ed929e8cdc00"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:36.502620+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "a95408223b644b7be9f47fe232c6dad05576379252c6f885d746fd781ffbf159"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:36.699687+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "4ce5732d9df73d9580795512b01a42edf4aa28bf9fdf70193a0dc766ae448090"
+    },
+    {
+      "role": "integration",
+      "method": "POST",
+      "http": 400,
+      "at": "2026-10-22T00:54:37.087837+00:00",
+      "resource": "Task",
+      "error_codes": [
+        "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY"
+      ],
+      "response_sha256": "a9fdd8a8eac82527f3d50788af204d7fa88a4fb620fbb5cfbaa3255d284722f4"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:37.253869+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "a95408223b644b7be9f47fe232c6dad05576379252c6f885d746fd781ffbf159"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:37.434767+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "9b5446f84f3ca9ac81e9e04054ca11dad45bc99999be3d44a0cf1066ee71c8d1"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:37.622572+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "d5d3274060fd7e0b8799d9ea0920d6fd9b543e441ef080fda4e6ed929e8cdc00"
+    },
+    {
+      "role": "administrator",
+      "method": "PATCH",
+      "http": 204,
+      "at": "2026-10-22T00:54:46.643935+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:46.905630+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "8295370ea5c735fd8bc8849240e44d9187698b36e1b638f0ae0ab91e97fbe711"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:47.074833+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "313e0083e76f2bba138b6d3445b9ebe4c13512267f974fa337f67fc022884cfc"
+    },
+    {
+      "role": "integration",
+      "method": "POST",
+      "http": 400,
+      "at": "2026-10-22T00:54:47.321990+00:00",
+      "resource": "Task",
+      "error_codes": [
+        "FIELD_CUSTOM_VALIDATION_EXCEPTION"
+      ],
+      "response_sha256": "01b4dcfdae3ed598273c8500775fdb07356b0d808ee165cb89793b333dba0744"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:47.490593+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:47.667638+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "PATCH",
+      "http": 204,
+      "at": "2026-10-22T00:54:48.029609+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "administrator",
+      "method": "PATCH",
+      "http": 204,
+      "at": "2026-10-22T00:54:49.268597+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:49.443681+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "e80454fad884e6cc51310aa003c783854260998b931c6cdfab021ca0ba7caf63"
+    },
+    {
+      "role": "integration",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:49.590659+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "cf28f0a6cd23910aec799f9ab15e3bbd977f3141487a96117b7e0e17329a98a5"
+    },
+    {
+      "role": "integration",
+      "method": "POST",
+      "http": 400,
+      "at": "2026-10-22T00:54:49.771719+00:00",
+      "resource": "Task",
+      "error_codes": [
+        "FIELD_CUSTOM_VALIDATION_EXCEPTION"
+      ],
+      "response_sha256": "01b4dcfdae3ed598273c8500775fdb07356b0d808ee165cb89793b333dba0744"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:49.920822+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:50.078895+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "PATCH",
+      "http": 204,
+      "at": "2026-10-22T00:54:50.346510+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "integration",
+      "method": "POST",
+      "http": 400,
+      "at": "2026-10-22T00:54:50.513554+00:00",
+      "resource": "Task",
+      "error_codes": [
+        "FIELD_CUSTOM_VALIDATION_EXCEPTION"
+      ],
+      "response_sha256": "01b4dcfdae3ed598273c8500775fdb07356b0d808ee165cb89793b333dba0744"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:50.635491+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:50.817541+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:51.070661+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "06499c2b0c4e7b669af3b4bb6ea9fa0943d6ccac1fa78f08e566598126da9cbb"
+    },
+    {
+      "role": "reviewer",
+      "method": "POST",
+      "http": 400,
+      "at": "2026-10-22T00:54:51.233733+00:00",
+      "resource": "Task",
+      "error_codes": [
+        "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY"
+      ],
+      "response_sha256": "c28b7a481de8e531e433d2c067f5938fb70ad2caf9f1c28cd7821f3ee2d182eb"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:51.367792+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:51.520843+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "PATCH",
+      "http": 204,
+      "at": "2026-10-22T00:54:51.723917+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:51.866452+00:00",
+      "resource": "GTM_Task_Receipt__c",
+      "error_codes": [],
+      "response_sha256": "a95408223b644b7be9f47fe232c6dad05576379252c6f885d746fd781ffbf159"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:52.064521+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "9b5446f84f3ca9ac81e9e04054ca11dad45bc99999be3d44a0cf1066ee71c8d1"
+    },
+    {
+      "role": "reviewer",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:52.241594+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "d5d3274060fd7e0b8799d9ea0920d6fd9b543e441ef080fda4e6ed929e8cdc00"
+    },
+    {
+      "role": "administrator",
+      "method": "PATCH",
+      "http": 204,
+      "at": "2026-10-22T00:54:52.519491+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "administrator",
+      "method": "PATCH",
+      "http": 204,
+      "at": "2026-10-22T00:54:52.757775+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "administrator",
+      "method": "PATCH",
+      "http": 204,
+      "at": "2026-10-22T00:54:52.997890+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:53.150920+00:00",
+      "resource": "Task",
+      "error_codes": [],
+      "response_sha256": "7000b436e0327288c15777a79e303cc5414ff04c6e4dfd46f535cefbf3531be7"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:53.305963+00:00",
+      "resource": "Contact",
+      "error_codes": [],
+      "response_sha256": "c386d54f127645b24564091134b7b47c69b31fb970f06aa065f28c4467aad29b"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:53.445545+00:00",
+      "resource": "Account",
+      "error_codes": [],
+      "response_sha256": "9583d6563938a15c6cfe557339e0195bbe4afbbc200f98286f3f9d7fa01ddfda"
+    },
+    {
+      "role": "administrator",
+      "method": "DELETE",
+      "http": 204,
+      "at": "2026-10-22T00:54:53.826872+00:00",
+      "resource": "PermissionSetAssignment",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "administrator",
+      "method": "DELETE",
+      "http": 204,
+      "at": "2026-10-22T00:54:54.276516+00:00",
+      "resource": "PermissionSetAssignment",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "administrator",
+      "method": "DELETE",
+      "http": 204,
+      "at": "2026-10-22T00:54:54.706799+00:00",
+      "resource": "PermissionSetAssignment",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "administrator",
+      "method": "DELETE",
+      "http": 204,
+      "at": "2026-10-22T00:54:55.184477+00:00",
+      "resource": "PermissionSetLicenseAssign",
+      "error_codes": [],
+      "response_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:55.308528+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "4190d17a645caf07dbd7760a6e75a3ecf708b249e9036699183afd5856b68dd6"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:55.436861+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "ea8e8a04a3dac89912519887fcd822f2617b5f8eefc545db329d4b3a322337cc"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:55.581492+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "c3ebed9e94f4c8baa0f891fc332d5e4e1c116fc526d82e3fdcf443a44bd80ad0"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:55.733819+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    },
+    {
+      "role": "administrator",
+      "method": "GET",
+      "http": 200,
+      "at": "2026-10-22T00:54:55.893400+00:00",
+      "resource": "scoped_query_or_identity",
+      "error_codes": [],
+      "response_sha256": "1754cc805683f2e1c93d3bf21e307dbff1f555eb5800a020e6aa5b5beaf3a77a"
+    }
+  ],
+  "receipt": {
+    "task_id_hash": "1ea474829f3f2426b59add8be46da3f5b802c184c27814fda62513a20f22f20b",
+    "receipt_id_hash": "cd5513e9e54a98d7fec4c3d8d6636f5be03e26884e3d1ddf13d0f6eaa7a4d5b2",
+    "payload_hash": "3f5b7c393cea3e733e3b91336aca1377d8bb24d6d6aed88dde560777c9764153",
+    "exact_content": true,
+    "task_count": 1
+  },
+  "content": {
+    "message": "Synthetic job-posting evidence: \"We are hiring a Network Infrastructure Engineer to support a second regional data center.\"\nA job posting does not establish budget, purchase intent or timing.\nSuggested outreach for seller review only: Would a conversation about the infrastructure planning described in this posting be useful?",
+    "signal_hash": "28cb31707604f0633ab5330d6530c44f9230689afe17b86ea442819674c042b1",
+    "model_hash": "626ea3c74df3ac31b83de368ce9d3bc308cce513fbd86f1e5c6479d7ca9c838e",
+    "review_hash": "9357f749e235cbddf5d02ea8e0ece4bf25320a8360f43e8b0918457e562e8503",
+    "payload_hash": "3f5b7c393cea3e733e3b91336aca1377d8bb24d6d6aed88dde560777c9764153"
+  },
+  "relationships": {
+    "account_hash": "346a843bee23e0617521b40c7730640e70d61703e6f3bebf1e4e8a82ea5620d1",
+    "contact_account_hash": "346a843bee23e0617521b40c7730640e70d61703e6f3bebf1e4e8a82ea5620d1",
+    "task_account_hash": "346a843bee23e0617521b40c7730640e70d61703e6f3bebf1e4e8a82ea5620d1",
+    "contact_hash": "3041cab87f8b198db76d30d48c3a6f91740c54204cffd13636d02273b3333983",
+    "task_contact_hash": "3041cab87f8b198db76d30d48c3a6f91740c54204cffd13636d02273b3333983",
+    "owner_hash": "906c4463e297a9d7b514a1db775d7d686c6a1b5e0d03714308cf23a3ec3d117f",
+    "task_owner_hash": "906c4463e297a9d7b514a1db775d7d686c6a1b5e0d03714308cf23a3ec3d117f",
+    "reader_hash": "906c4463e297a9d7b514a1db775d7d686c6a1b5e0d03714308cf23a3ec3d117f",
+    "task_created_by_hash": "746bfdcb73a6f8cec8195a6b0fa9551db04eacb757e336182d6148ca82c968c9",
+    "writer_hash": "746bfdcb73a6f8cec8195a6b0fa9551db04eacb757e336182d6148ca82c968c9",
+    "task_description_hash": "3f5b7c393cea3e733e3b91336aca1377d8bb24d6d6aed88dde560777c9764153"
+  },
+  "cleanup": {
+    "temporary_assignments_removed": 4,
+    "original_assignments_restored": true,
+    "retained_new_synthetic_records": {
+      "account": "346a843bee23e0617521b40c7730640e70d61703e6f3bebf1e4e8a82ea5620d1",
+      "contact": "3041cab87f8b198db76d30d48c3a6f91740c54204cffd13636d02273b3333983",
+      "other_account": "30f105020623f5af5d6e5486a1627c48af0152f8dc03b6dbfb7e3de36105588d",
+      "task": "1ea474829f3f2426b59add8be46da3f5b802c184c27814fda62513a20f22f20b"
+    },
+    "readback_verified": {
+      "task": true,
+      "contact": true,
+      "account": true
+    },
+    "task_status": "Completed",
+    "contact_opted_out": true,
+    "account_disabled": true,
+    "metadata_retained_unassigned": true
+  },
+  "boundary": "One real Qwen inference connected to one synthetic internal Salesforce Task. No outreach delivery or commercial pipeline.",
+  "outreach_salesloft": "not_executed_no_approved_test_environment"
+}
