@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-22T01:09:09.296039+00:00",
+  "captured_at": "2026-10-22T01:16:56.765411+00:00",
   "method": "actual Chromium / local UI and APIs",
   "desktop_viewport": {
     "width": 1440,
@@ -80,7 +80,7 @@
   "source_sha256": {
     ".dockerignore": "9bd22550983d20248e9d730576c421b8066d51557d6c54b966c6fad3c34336d8",
     ".gitattributes": "93699a1108fd9da226b06f84ee12e317f4ea4d2f18a8fd05260443fd1bf2faef",
-    ".github/workflows/verify.yml": "9553f19f71cba12be5e3a01741d4efb87357167474ee2e278692324ccf253aa8",
+    ".github/workflows/verify.yml": "511e535cfa7a9308428ef95b7b0ebbcbd41e4f40a19b62a3247518d1db4f440f",
     ".gitignore": "3b80f413d943a09f82f992d93d8cfd93d4a9227186159d550f849990bfa1ccb4",
     "compose.yml": "88f545a317a14de56e6f06640468f2848598535c5cc1becb3097a20f5f60a9d7",
     "Dockerfile": "4c0873fd6ab5064a8f0a78dad682945ab81d91e9d58db1a309a853d606b4426d",
