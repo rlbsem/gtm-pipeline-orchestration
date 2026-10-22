@@ -155,6 +155,20 @@ def test_api_timeout_has_bounded_retries_and_no_new_action(connected):
     assert p.posts == 3
 
 
+def test_contact_owner_change_alone_blocks_new_task(connected):
+    p, _, dispatcher, key = approved(connected)
+    original = p.handle
+    def changed_owner(role, request):
+        response = original(role, request)
+        if "/Contact/GTM_Test_Key__c/" in request.url.path:
+            return httpx.Response(200, json=response.json() | {"OwnerId": WRITER})
+        return response
+    p.handle = changed_owner
+    result = dispatcher.dispatch(key, NOW)
+    assert result["status"] == "blocked" and result["error"] == "standard_identity_or_owner_mismatch"
+    assert p.posts == 0
+
+
 def test_mutated_review_cannot_prepare_new_native_payload(connected):
     _, crm, _, key = approved(connected)
     crm.review["message"] = "different"

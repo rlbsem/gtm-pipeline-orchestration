@@ -14,6 +14,7 @@ ENTERPRISE = "9f13ea79977dda1b56f25df5ca5c4060ffaf345f"
 STANDARD = "c54503f00e65ad4195a74c0bacf2ce003add091c"
 CLEANUP = "36fd314015812f2114d5e96a0cbbaee24b17b2e4"
 CAD_UI = "62e48215a3609ba136f4ce581f98cc893e2378d9"
+USD_UI = "6da3603a8e447dacfdbde25a8aab5c5fa3721328"
 
 
 def blob(revision, path):
@@ -66,11 +67,24 @@ def check():
         for path in paths:
             assert (ROOT / path).read_bytes() == blob(CAD_UI, path), "native_or_cad_history_rewritten:" + path
     browser(ROOT / "docs/images/salesforce-standard/provenance.json", False, CAD_UI)
-    current = json.loads((ROOT / "docs/evidence/enterprise-usd/verification.json").read_text())
+    for folder in ("docs/evidence/enterprise-usd", "docs/images/enterprise-usd"):
+        paths = subprocess.run(["git", "ls-tree", "-r", "--name-only", USD_UI, folder], cwd=ROOT,
+                               capture_output=True, text=True, check=True).stdout.splitlines()
+        for path in paths:
+            assert (ROOT / path).read_bytes() == blob(USD_UI, path), "usd_history_rewritten:" + path
+    historical(json.loads((ROOT / "docs/evidence/enterprise-usd/verification.json").read_text()), USD_UI)
+    browser(ROOT / "docs/images/enterprise-usd/provenance.json", False, USD_UI)
+    current = json.loads((ROOT / "docs/evidence/connected/local/verification.json").read_text())
     assert current["source_sha256"] == source_hashes(), "current_executed_source_mismatch"
     assert current["tests"]["tests"] >= 163 and current["independent_demo_runs"] == 4
     assert all(current["tests"][k] == 0 for k in ("failures", "errors", "skipped"))
-    browser(ROOT / "docs/images/enterprise-usd/provenance.json", True)
+    browser(ROOT / "docs/images/connected/provenance.json", True)
+    connected_browser = json.loads((ROOT / "docs/images/connected/provenance.json").read_text())
+    connected_preview = json.loads((ROOT / "docs/evidence/connected/preview.json").read_text())
+    assert connected_browser["connected_execution"]["preview_hash"] == digest(connected_preview)
+    assert connected_browser["connected_execution"]["review_hash"] == connected_preview["review_hash"]
+    assert connected_browser["connected_execution"]["native_status"] == "passed"
+    assert all(connected_browser["connected_layout_checks"].values())
     usd = json.loads((ROOT / "docs/evidence/enterprise-usd/demo.json").read_text())
     assert usd["scenario"]["currency"] == usd["measurement"]["currency"] == usd["financial_audit"]["currency"] == "USD"
     assert usd["scenario"]["locale"] == "en-US"
@@ -139,6 +153,8 @@ def check():
     assert rel["account_owner_hash"] == rel["contact_owner_hash"] == rel["task_owner_hash"] == rel["independent_reader_hash"]
     assert rel["task_created_by_hash"] != rel["independent_reader_hash"]
     assert details["apex_deployment"]["tests_completed"] == 3 and details["apex_deployment"]["tests_failed"] == 0
+    from check_connected import check as check_connected
+    check_connected()
     print("Historical and native/model executions match pinned Git bytes; current tests, UI and images match source.")
 
 

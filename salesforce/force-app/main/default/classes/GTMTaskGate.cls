@@ -27,7 +27,7 @@ public without sharing class GTMTaskGate {
         }
         if (scoped.isEmpty()) return;
         Map<Id,Account> aa = new Map<Id,Account>([SELECT Id, OwnerId, Website, GTM_Test_Key__c, GTM_Test_Active__c FROM Account WHERE Id IN :accounts FOR UPDATE]);
-        Map<Id,Contact> cc = new Map<Id,Contact>([SELECT Id, AccountId, Email, HasOptedOutOfEmail, GTM_Test_Key__c FROM Contact WHERE Id IN :contacts FOR UPDATE]);
+        Map<Id,Contact> cc = new Map<Id,Contact>([SELECT Id, AccountId, OwnerId, Email, HasOptedOutOfEmail, GTM_Test_Key__c FROM Contact WHERE Id IN :contacts FOR UPDATE]);
         Set<Id> openAccounts = new Set<Id>();
         for (Opportunity opp : [SELECT AccountId FROM Opportunity WHERE AccountId IN :accounts AND IsClosed=false]) openAccounts.add(opp.AccountId);
         for (Task row : scoped) {
@@ -47,7 +47,7 @@ public without sharing class GTMTaskGate {
                     a != null && c != null && a.GTM_Test_Active__c && a.OwnerId == row.OwnerId &&
                     a.GTM_Test_Key__c == run + '/account-a' && c.GTM_Test_Key__c == run + '/contact-a' &&
                     a.Website == 'https://account-04.example' && c.Email == 'review+' + run + '@account-04.example' &&
-                    c.AccountId == a.Id && !c.HasOptedOutOfEmail && !openAccounts.contains(a.Id) &&
+                    c.AccountId == a.Id && c.OwnerId == row.OwnerId && !c.HasOptedOutOfEmail && !openAccounts.contains(a.Id) &&
                     row.Status == 'Not Started' && row.Priority == 'Normal' && row.IsReminderSet == false;
                 if (!valid) row.addError('GTM_SCOPE_OR_AUTHORITY_REJECTED');
             } catch (Exception e) { row.addError('GTM_INVALID_ENVELOPE'); }

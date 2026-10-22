@@ -1,6 +1,7 @@
 @IsTest
 private class GTMConnectedGateTest {
     @IsTest static void connectedAtomicReceipt() {
+        Id originalUser = UserInfo.getUserId();
         User u = new User(Alias='gtmconn', Email='test@example.invalid', EmailEncodingKey='UTF-8',
             LastName='Synthetic GTM Connected', LanguageLocaleKey='en_US', LocaleSidKey='en_US',
             TimeZoneSidKey='America/Toronto', ProfileId=UserInfo.getProfileId(),
@@ -30,6 +31,13 @@ private class GTMConnectedGateTest {
             Task duplicate=t.clone(false,true,false,false);
             System.assertEquals(false,Database.insert(duplicate,false).isSuccess());
             System.assertEquals(1,[SELECT count() FROM Task]);
+            c.OwnerId=originalUser; update c;
+            p.put('action_key','f'.repeat(64));
+            duplicate.GTM_Action_Key__c='f'.repeat(64); duplicate.Description=JSON.serialize(p);
+            Database.SaveResult changedOwner=Database.insert(duplicate,false);
+            System.assertEquals(false,changedOwner.isSuccess());
+            System.assert(changedOwner.getErrors()[0].getMessage().contains('GTM_SCOPE_OR_AUTHORITY_REJECTED'));
+            c.OwnerId=u.Id; update c;
             p.put('version','gtm-standard-v1'); p.put('action_key','e'.repeat(64));
             duplicate.GTM_Action_Key__c='e'.repeat(64); duplicate.Description=JSON.serialize(p);
             System.assertEquals(false,Database.insert(duplicate,false).isSuccess());

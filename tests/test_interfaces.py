@@ -34,6 +34,12 @@ def test_real_operator_api_security_and_review(ready):
         assert client.get("/api/evidence/runtime.json").status_code == 404
         assert client.post("/api/evidence/salesforce", headers=headers).status_code == 405
         assert client.post("/api/evidence/salesforce-standard", headers=headers).status_code == 405
+        connected = client.get("/api/evidence/connected").json()
+        continuation = client.get("/api/evidence/connected-native").json()
+        assert connected["inference"]["inference"] == "executed"
+        assert continuation["status"] == "passed" and continuation["review_hash"] == connected["review_hash"]
+        assert client.post("/api/evidence/connected", headers=headers).status_code == 405
+        assert client.post("/api/evidence/connected-native", headers=headers).status_code == 405
 
 
 @pytest.mark.parametrize("url", ["https://vendor.example", "http://10.0.0.1", "http://127.0.0.1@evil.example",

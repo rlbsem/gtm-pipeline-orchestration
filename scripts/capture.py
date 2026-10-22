@@ -12,6 +12,7 @@ from playwright.sync_api import sync_playwright
 
 from gtm.api import create_app
 from gtm.cli import build
+from gtm.store import digest
 from publication import source_hashes
 
 
@@ -112,12 +113,45 @@ def capture(workspace, output):
             page.locator("#ai-case").select_option("8")
             page.locator("#ai-case-status").filter(has_text="citation_not_exact").wait_for()
             assert '"prepare_allowed": false' in page.locator("#ai-policy").inner_text()
+            page.locator('[data-view="connected"]').click()
+            page.locator("#connected-model").filter(has_text="Network Infrastructure Engineer").wait_for()
+            assert "budget, purchase intent or timing" in page.locator("#connected-draft").inner_text()
+            connected = page.request.get(url + "/api/evidence/connected").json()
+            native_connected = page.request.get(url + "/api/evidence/connected-native").json()
+            page.get_by_text("Source, model and exact-review hashes", exact=True).click()
+            assert page.locator("#connected-lineage").is_visible()
+            assert connected["review_hash"] in page.locator("#connected-lineage").inner_text()
+            page.get_by_text("Source, model and exact-review hashes", exact=True).click()
+            assert connected["inference"]["raw_response"] == page.locator("#connected-model").inner_text()
+            if native_connected.get("status") == "passed":
+                assert "INDEPENDENT READBACK VERIFIED" in page.locator("#connected-receipt").inner_text()
+                assert native_connected["receipt"]["payload_hash"] in page.locator("#connected-receipt").inner_text()
+            else:
+                assert "NOT EXECUTED" in page.locator("#connected-receipt").inner_text()
+            page.set_viewport_size({"width": 1440, "height": 1480})
+            page.evaluate("() => window.scrollTo(0,0)")
+            page.screenshot(path=output / "connected-sdr.png")
+            page.get_by_text("Exact prompt, CRM context and model provenance", exact=True).click()
+            assert page.locator("#connected-request").is_visible()
+            assert page.locator("#connected-request").inner_text().find("untrusted evidence") >= 0
+            page.get_by_text("Exact prompt, CRM context and model provenance", exact=True).click()
+            page.get_by_text("Native continuation and rejection results", exact=True).click()
+            assert page.locator("#connected-native").is_visible()
+            page.get_by_text("Native continuation and rejection results", exact=True).click()
+            assert page.get_by_role("link", name="Inspect recorded source JSON").get_attribute("href") == "/api/evidence/connected"
             mobile_checks = {}
             page.set_viewport_size({"width": 390, "height": 844})
-            for name in ("overview", "workspace", "inbound", "recovery", "proof", "commercial"):
+            for name in ("overview", "workspace", "inbound", "recovery", "proof", "commercial", "connected"):
                 page.locator(f'[data-view="{name}"]').click()
                 mobile_checks[name] = page.evaluate("() => document.documentElement.scrollWidth <= innerWidth")
                 assert mobile_checks[name], "mobile_overflow:" + name
+            page.screenshot(path=output / "mobile-connected.png", full_page=True)
+            connected_layout = {}
+            for width in (320, 390, 768, 1024, 1440):
+                page.set_viewport_size({"width": width, "height": 900})
+                connected_layout[str(width)] = page.evaluate("() => document.documentElement.scrollWidth <= innerWidth")
+                assert connected_layout[str(width)], "connected_layout_overflow:" + str(width)
+            page.set_viewport_size({"width": 390, "height": 844})
             page.locator('[data-view="workspace"]').click()
             page.screenshot(path=output / "mobile-workbench.png", full_page=True)
             browser.close()
@@ -126,13 +160,19 @@ def capture(workspace, output):
         result = {"captured_at": datetime.now(timezone.utc).isoformat(), "method": "actual Chromium / local UI and APIs",
                   "desktop_viewport": {"width": 1440, "height": 1120}, "mobile_viewport": {"width": 390, "height": 844},
                   "account_workbench_viewport": {"width": 1440, "height": 1320},
+                  "connected_viewport": {"width": 1440, "height": 1480},
+                  "connected_layout_checks": connected_layout,
+                  "connected_execution": {"preview_hash": digest(connected), "review_hash": connected["review_hash"],
+                                           "native_status": native_connected.get("status", "not_executed"),
+                                           "viewing_triggers_vendor_or_model_execution": False},
                   "profile": "enterprise", "currency": baseline["scenario"]["currency"], "locale": baseline["scenario"]["locale"],
                   "baseline_pipeline_cents": total,
                   "after_interaction_pipeline_cents": after_pipeline,
                   "interactive_crm_opportunity_cents": interactive_value,
                   "screenshot_phases": {"before_interaction": ["pipeline-overview.png", "commercial-scenario.png",
                                         "mobile-commercial.png", "account-workbench.png", "execution-recovery.png"],
-                                        "after_interaction": ["native-ai-evidence.png", "mobile-workbench.png"]},
+                                        "after_interaction": ["native-ai-evidence.png", "mobile-workbench.png",
+                                                              "connected-sdr.png", "mobile-connected.png"]},
                   "no_page_overflow": mobile_checks, "page_errors": errors,
                   "browser_flow": ["prepare", "exact_approval", "real_lost_ack", "independent_receipt_recovery",
                                    "positive_reply", "qualified_meeting", "accepted_opportunity", "inbound_service_route",
@@ -152,6 +192,6 @@ def capture(workspace, output):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--workspace", type=Path, required=True)
-    parser.add_argument("--output", type=Path, default=Path("docs/images/enterprise-usd"))
+    parser.add_argument("--output", type=Path, default=Path("docs/images/connected"))
     args = parser.parse_args()
     print(json.dumps(capture(args.workspace, args.output), indent=2))

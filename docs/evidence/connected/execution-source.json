@@ -1,0 +1,9 @@
+{
+  "native_revision": "01a3fea6a104ab0a99d06bbeba7cd766266f240a",
+  "acceptance_hash": "b9204eb7b19b21e0441678262c764836e9f2bb475b753f45031cba5b91c3e38a",
+  "post_execution_hardened_files": [
+    "salesforce/force-app/main/default/classes/GTMTaskGate.cls",
+    "salesforce/force-app/main/default/classes/GTMConnectedGateTest.cls"
+  ],
+  "change": "The 128-request native continuation used the pinned revision. The final gate additionally checks Contact.OwnerId under lock; a separate five-test native Apex deployment verifies that tightening. No claim of rerunning the persistent Task with the later gate."
+}
