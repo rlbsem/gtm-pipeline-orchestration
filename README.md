@@ -4,11 +4,17 @@
 
 Prospecting, qualification, CRM routing and engagement often operate in separate tools. This engine connects them in one inspectable SDR workflow: discover an account, resolve identity, explain fit and intent, route an inquiry, review an action, enroll it safely, and follow reply, meeting and opportunity feedback into an account-level experiment.
 
-The Python application and independent HTTP engagement destination **execute locally** with durable databases. All companies, contacts, requests and outcomes are synthetic. A **connected native acceptance run** takes a versioned buying signal and actual Salesforce context through fresh Qwen3 inference, exact operator review, one internal SDR Task and independent readback. Earlier Salesforce acceptance and the sixteen-response model evaluation remain separately inspectable. No lane sends prospect communications or establishes commercial uplift.
+The Python application and independent HTTP engagement destination **execute locally** with durable databases. All sales-workflow companies, contacts, requests and outcomes are synthetic; the public job API sample is a separate read-only archive. A **connected native acceptance run** takes a versioned buying signal and actual Salesforce context through fresh Qwen3 inference, exact operator review, one internal SDR Task and independent readback. Earlier Salesforce acceptance and the sixteen-response model evaluation remain separately inspectable. No lane sends prospect communications or establishes commercial uplift.
 
 The primary enterprise B2B profile covers **120 accounts and USD $3.46M of synthetic accepted-opportunity pipeline**, calculated from five CRM outcome events. The original small deterministic CAD scenario remains available for regression and recovery tests. Enterprise amounts are newly generated synthetic USD estimates, not converted historical CAD or real-world revenue.
 
-**Executed proof:** [Current regression and four independent HTTP demos](docs/evidence/connected/local/verification.json) · [Connected model-to-Task execution: 128 native requests](docs/evidence/connected/acceptance.json) · [140 native standard-object requests](docs/evidence/salesforce-standard/acceptance.json) · [20 independent post-cleanup checks](docs/evidence/salesforce-standard/post-cleanup.json) · [16 actual model responses](docs/evidence/native-ai/ai-evaluation.json). The original [73-test](docs/evidence/verification.json), [127-test enterprise](docs/evidence/enterprise/verification.json) and [29-request custom-review](docs/evidence/native-ai/salesforce-acceptance.json) evidence remains unchanged.
+**Account intelligence desk:** prioritize six synthetic accounts, inspect dated multi-source evidence and enrichment conflicts, compare actual Qwen3 research, edit an opening and record an exact local seller decision. Forty recorded responses across three prompt approaches retain citation failures, stale-signal mistakes and conservative abstentions. Rich research remains separate from the earlier native Task and commercial measurement runs. [Research architecture, evaluation and limits](docs/account-intelligence.md) · [Actual responses](docs/evidence/research/evaluation.json) · [Reviewer assessment](docs/evidence/research/reviewer-assessment.json).
+
+![Actual account intelligence desk with explainable priorities, source-grounded research and seller controls](docs/images/research/account-intelligence.png)
+
+*Captured from the running application; [desktop/mobile execution and screenshot hashes](docs/images/research/provenance.json).*
+
+**Executed proof:** [Current regression and four independent HTTP demos](docs/evidence/research/local/verification.json) · [Connected model-to-Task execution: 128 native requests](docs/evidence/connected/acceptance.json) · [140 native standard-object requests](docs/evidence/salesforce-standard/acceptance.json) · [20 independent post-cleanup checks](docs/evidence/salesforce-standard/post-cleanup.json) · [16 actual model responses](docs/evidence/native-ai/ai-evaluation.json). The original [73-test](docs/evidence/verification.json), [127-test enterprise](docs/evidence/enterprise/verification.json) and [29-request custom-review](docs/evidence/native-ai/salesforce-acceptance.json) evidence remains unchanged.
 
 ![Running connected investigation: synthetic buying signal, actual Qwen3 response, reviewed internal Task and independent receipt](docs/images/connected/connected-sdr.png)
 
@@ -44,6 +50,7 @@ Open **http://127.0.0.1:8560/**. The demo writes real HTTP requests and separate
 7. Open **Native & AI evidence** to inspect recorded Salesforce checks, actual model text, source context and rejected citations. Viewing evidence never calls a vendor or model.
 8. Open **Commercial scenario** to trace the five enterprise opportunity values to their scope assumptions, CRM sources and account segments.
 9. Open **AI signal → SDR review** to inspect the fresh connected Qwen3-to-Salesforce run, exact reviewed content, independent receipt and rejection results. This view is read-only.
+10. Open **Account intelligence** to compare actual research approaches, inspect supporting sources, edit a draft, and approve or dismiss locally. These decisions cannot create Salesforce Tasks or send communications.
 
 The operator clock starts January 21, after the scenario's previously recorded feedback. The mature comparison separately reports through February 2. Future source events are rejected at admission; reporting also checks outcome time and receipt/knowledge cutoffs. Both dates are synthetic scenario coordinates.
 
@@ -146,11 +153,13 @@ The Qwen3-14B evaluation records eight cases at two seeds: ordinary inbound, pro
 python -m playwright install chromium
 python scripts/verify.py --output work/review-evidence
 python scripts/capture.py --workspace work/browser-review --output work/review-images
+python scripts/browser_audit_tools.py
+python scripts/capture_research.py --workspace work/browser-research --audit-tools work/audit-tools
 python scripts/check_evidence.py
 python scripts/publication.py --package
 ```
 
-Use a fresh workspace for each browser reproduction. Verification runs regression tests and four independent end-to-end HTTP demos (two per profile), compares the complete output, checks source hashes, audits public content and checks local Markdown targets. The package is reopened and each file hash verified. Historical source attestation requires a full Git clone; ordinary local verification needs no vendor credentials or model. [Current verification](docs/evidence/connected/local/verification.json) · [JUnit results](docs/evidence/connected/local/tests.xml) · [Hosted CI](https://github.com/rlbsem/gtm-pipeline-orchestration/actions).
+Use a fresh workspace for each browser reproduction. Verification runs regression tests and four independent end-to-end HTTP demos (two per profile), compares the complete output, checks source hashes, audits public content and checks local Markdown targets. The package is reopened and each file hash verified. Historical source attestation requires a full Git clone; ordinary local verification needs no vendor credentials or model. [Current verification](docs/evidence/research/local/verification.json) · [JUnit results](docs/evidence/research/local/tests.xml) · [Hosted CI](https://github.com/rlbsem/gtm-pipeline-orchestration/actions).
 
 | Boundary | Status |
 |---|---|

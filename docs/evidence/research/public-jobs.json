@@ -1,0 +1,34 @@
+{
+  "version": "public-jobs-snapshot/v1",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/cloudflare/jobs",
+  "http_status": 200,
+  "fetched_at": "2026-10-22T02:23:54.413856+00:00",
+  "response_sha256": "6a02f36280b906bbe7603418e3325b7a02fc2c178b17ea616854cb8074282e16",
+  "method": "one unauthenticated GET; selected exact job metadata only",
+  "company": "Cloudflare",
+  "crm_identity": "none; real company is not a synthetic CRM target",
+  "published_at": null,
+  "publication_date_limit": "API updated_at is not a publication date and does not establish a new hiring event.",
+  "records": [
+    {
+      "id": 7736431,
+      "title": "Data Center Infrastructure Management (DCIM) Administrator - Infrastructure Operations",
+      "updated_at": "2026-10-21T14:43:01-04:00",
+      "absolute_url": "https://boards.greenhouse.io/cloudflare/jobs/7736431?gh_jid=7736431"
+    },
+    {
+      "id": 8074364,
+      "title": "Data Center Engineer",
+      "updated_at": "2026-10-21T14:43:01-04:00",
+      "absolute_url": "https://boards.greenhouse.io/cloudflare/jobs/8074364?gh_jid=8074364"
+    },
+    {
+      "id": 8187634,
+      "title": "Senior Program Manager, Data Center Delivery & Site Readiness",
+      "updated_at": "2026-10-21T14:43:01-04:00",
+      "absolute_url": "https://boards.greenhouse.io/cloudflare/jobs/8187634?gh_jid=8187634"
+    }
+  ],
+  "permission_reference": "https://docs.greenhouse.io/job-board",
+  "applicant_data": "not_requested"
+}

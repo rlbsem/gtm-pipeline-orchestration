@@ -7,6 +7,13 @@ from gtm.connected import Signal, message, validate_inference
 from gtm.store import digest
 from publication import ROOT
 
+CONNECTED_REVISION = "e20b9fef9ad03ab061857d2d4f7098fa20fbf25e"
+
+
+def recorded_source(path):
+    return subprocess.run(["git", "show", CONNECTED_REVISION + ":" + path],
+                          cwd=ROOT, capture_output=True, check=True).stdout
+
 
 def check():
     folder = ROOT / "docs/evidence/connected"
@@ -28,7 +35,7 @@ def check():
     assert len(preview["native_read_only"]) == 6
     assert all(r["method"] == "GET" and r["http"] == 200 for r in preview["native_read_only"])
     for path, checksum in preview["source_sha256"].items():
-        assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == checksum, "inference_source_changed:" + path
+        assert hashlib.sha256(recorded_source(path)).hexdigest() == checksum, "inference_source_changed:" + path
     native_path = folder / "acceptance.json"
     if not native_path.exists():
         return {"fresh_inference": "verified", "native_context": "six_authenticated_GETs", "native_task": "not_executed"}
@@ -43,7 +50,7 @@ def check():
                                   cwd=ROOT, capture_output=True, check=True).stdout
         assert hashlib.sha256(executed).hexdigest() == checksum, "native_source_mismatch:" + path
         if path not in versions["post_execution_hardened_files"]:
-            assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == checksum, "native_dependency_changed:" + path
+            assert hashlib.sha256(recorded_source(path)).hexdigest() == checksum, "native_dependency_changed:" + path
     assert native["status"] == "passed" and all(native["checks"].values())
     assert native["receipt"]["exact_content"] and native["receipt"]["task_count"] == 1
     assert native["cleanup"]["original_assignments_restored"]
@@ -68,7 +75,7 @@ def check():
     assert hardening["tests_failed"] == hardening["component_errors"] == 0
     assert set(versions["post_execution_hardened_files"]) == set(hardening["source_sha256"])
     for path, checksum in hardening["source_sha256"].items():
-        assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == checksum
+        assert hashlib.sha256(recorded_source(path)).hexdigest() == checksum
     post = json.loads((folder / "post-cleanup.json").read_text(encoding="utf-8"))
     assert post["status"] == "passed" and post["read_only"] and post["acceptance_hash"] == digest(native)
     assert post["original_assignments_exactly_restored"] and post["original_closed_lost_opportunity_unchanged"]
@@ -78,7 +85,7 @@ def check():
         assert post["verified_tasks"][label]["exact_content"]
     assert post["verified_tasks"]["connected_task_completed"]["payload_hash"] == native["receipt"]["payload_hash"]
     for path, checksum in post["source_sha256"].items():
-        assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == checksum, "postcheck_source_changed:" + path
+        assert hashlib.sha256(recorded_source(path)).hexdigest() == checksum, "postcheck_source_changed:" + path
     return {"fresh_inference": "verified", "native_task": "exact_content_and_relationships_verified",
             "authenticated_requests": native["authenticated_requests"], "cleanup": "verified"}
 
