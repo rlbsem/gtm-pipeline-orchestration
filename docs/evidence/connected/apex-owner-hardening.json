@@ -1,0 +1,18 @@
+{
+  "status": "Succeeded",
+  "tests_completed": 5,
+  "tests_failed": 0,
+  "component_errors": 0,
+  "test_names": [
+    "GTMConnectedGateTest.connectedAtomicReceipt",
+    "GTMConnectedGateTest.finiteContentContract",
+    "GTMTaskGateTest.atomicReceiptAndImmutableAction",
+    "GTMTaskGateTest.authorityAndScopeRejection",
+    "GTMTaskGateTest.ordinaryTasksUnaffectedAndForgeryRejected"
+  ],
+  "source_sha256": {
+    "salesforce/force-app/main/default/classes/GTMTaskGate.cls": "308a91d8a3003603f5399e11e844651d8f22d2c2ab68026e849e74b0443d5c1b",
+    "salesforce/force-app/main/default/classes/GTMConnectedGateTest.cls": "76bee5c38064f2536e8e742bf8a17e454891382ab9e65e45992dc8e76df71c41"
+  },
+  "boundary": "Actual native Apex rerun adds Contact-owner rejection under the row lock. Test records roll back; the persistent connected Task was not replayed."
+}

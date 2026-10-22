@@ -89,3 +89,7 @@ Enterprise amounts are integer-cent annual opportunity estimates in actual synth
 
 
 The featured enterprise v2 currency and locale are pinned from the versioned scenario before source generation. All enterprise outcomes carry that denomination; admission, SQL and independent reconciliation reject mismatches. API and browser labels derive from the same snapshot. Existing CAD enterprise workspaces require a fresh directory, so existing amounts cannot acquire a new currency label. The archived small fixture retains its original implicit CAD contract and complete output.
+
+## Connected signal-to-SDR execution
+
+The opt-in [connected lane](connected-sdr.md) adds versioned synthetic job-source admission, actual CRM-context inference and exact-review binding to the existing engine and native Task dispatcher. Its finite versioned envelope carries source/model/review digests and a reviewed question; the old fixed-message contract is unchanged. Apex rejects arbitrary personalization and rechecks current synthetic scope and ownership. Separate reviewer readback checks the entire Task and atomic receipt. The executed continuation is linked to its immutable pre-approval model preview; the older native/model evaluations and enterprise outcome scenario remain separate evidence sets.

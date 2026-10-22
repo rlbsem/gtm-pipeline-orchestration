@@ -83,6 +83,6 @@ def verify(output):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=Path("docs/evidence/enterprise-usd"))
+    parser.add_argument("--output", type=Path, default=Path("docs/evidence/connected/local"))
     args = parser.parse_args()
     verify(args.output)

@@ -1,0 +1,14 @@
+{
+  "status": "Succeeded",
+  "tests_completed": 5,
+  "tests_failed": 0,
+  "component_errors": 0,
+  "test_names": [
+    "GTMConnectedGateTest.connectedAtomicReceipt",
+    "GTMConnectedGateTest.finiteContentContract",
+    "GTMTaskGateTest.atomicReceiptAndImmutableAction",
+    "GTMTaskGateTest.authorityAndScopeRejection",
+    "GTMTaskGateTest.ordinaryTasksUnaffectedAndForgeryRejected"
+  ],
+  "boundary": "Actual Salesforce metadata deployment and Apex execution; no test records persist."
+}

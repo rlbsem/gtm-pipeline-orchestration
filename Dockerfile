@@ -8,6 +8,7 @@ COPY src ./src
 COPY web ./web
 COPY docs/evidence/native-ai/ai-evaluation.json docs/evidence/native-ai/salesforce-acceptance.json ./docs/evidence/native-ai/
 COPY docs/evidence/salesforce-standard/acceptance.json ./docs/evidence/salesforce-standard/
+COPY docs/evidence/connected/preview.json docs/evidence/connected/acceptance.json ./docs/evidence/connected/
 RUN pip install --no-cache-dir --no-deps --no-build-isolation -e . && useradd --user-group --uid 10001 --create-home gtmrunner && mkdir .local && chown gtmrunner .local
 USER gtmrunner
 EXPOSE 8560

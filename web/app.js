@@ -10,7 +10,7 @@ function chip(text){return el("span",text,"tag "+text);}
 function message(text,error=false){$("notice").textContent=text;$("notice").className="notice"+(error?" error":"");}
 async function api(path,body){const options=body===undefined?{}:{method:"POST",headers:{"Content-Type":"application/json","X-Demo-Intent":"operator"},body:JSON.stringify(body)};const r=await fetch("/api/"+path,options);const data=await r.json();if(!r.ok)throw Error(data.error||"Request failed");return data;}
 async function task(fn){try{await fn();}catch(error){message(error.message,true);}}
-function openView(name){document.querySelectorAll(".view").forEach(n=>n.classList.toggle("active",n.id===name));document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.view===name));$("current-view").textContent={overview:"Pipeline overview",workspace:"Account workbench",inbound:"Inbound routing",recovery:"Execution & recovery",proof:"Native & AI evidence",commercial:"Commercial scenario"}[name];window.scrollTo(0,0);}
+function openView(name){if(name==="connected")message("Recorded evidence only. This view makes no Salesforce or model requests.");document.querySelectorAll(".view").forEach(n=>n.classList.toggle("active",n.id===name));document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.view===name));$("current-view").textContent={overview:"Pipeline overview",workspace:"Account workbench",inbound:"Inbound routing",recovery:"Execution & recovery",proof:"Native & AI evidence",commercial:"Commercial scenario",connected:"AI signal → SDR review"}[name];window.scrollTo(0,0);}
 document.querySelectorAll("[data-view]").forEach(n=>n.onclick=()=>openView(n.dataset.view));
 document.querySelectorAll("[data-open]").forEach(n=>n.onclick=()=>openView(n.dataset.open));
 function current(){return state.accounts.find(a=>a.id===selected);}
@@ -101,3 +101,23 @@ function renderCommercial(){
  const mix=clear("segment-mix");["mid_market","enterprise","strategic","unverified"].forEach(label=>{const count=assigned.filter(a=>a.segment===label).length;if(!count)return;const row=el("div",null,"assurance-item");row.append(el("span",label.replaceAll("_"," ")),el("b",count+" accounts"));mix.append(row);});
  $("commercial-sources").textContent=pretty({scenario:state.scenario,crm_opportunity_events:state.sources.filter(s=>s.kind==="outcome"&&JSON.parse(s.payload).data.kind==="opportunity_accepted").map(s=>({source_key:s.source_key,received_at:s.received_at,payload:JSON.parse(s.payload)}))});
 }
+
+async function loadConnected(){
+ const [proof,native]=await Promise.all([api("evidence/connected"),api("evidence/connected-native")]);
+ if(!proof.inference){$("connected-boundary").textContent="Connected execution evidence is not available in this checkout.";return;}
+ const passed=native.status==="passed",review=proof.review;
+ $("connected-boundary").textContent=passed?"Connected native execution recorded: fresh Qwen3 advice → exact review → one internal Salesforce Task → independent receipt. No prospect communication or pipeline outcome.":"Fresh Qwen3 inference and read-only Salesforce context executed. Exact seller review and the native Task continuation are pending; no connected Task success is claimed.";
+ clear("connected-metrics").append(metric("Synthetic buying signal","1","Versioned source · reserved domain"),metric("Fresh model response","1",proof.inference.model+" · exact contract checked"),metric(passed?"Native REST checks":"Native context reads",passed?native.authenticated_requests:proof.native_read_only.length,"Actual authenticated requests"),metric("Connected internal Task",passed?native.receipt.task_count:"Pending",passed?"Exact independent readback":"Requires reviewed live continuation"));
+ const stages=clear("connected-stages");[["01","Signal ingested",proof.signal_ingestion.classification],["02","CRM identity checked","Visible standard fields"],["03","Qwen3 finding checked","Exact quote + finite question"],["04",passed?"Review bound":"Review prepared",passed?"Exact approved digest":"Awaiting authorization"],["05",passed?"Task verified":"Task pending",passed?"Recovered without repost":"No connected write recorded"]].forEach(([number,title,note])=>{const stage=el("div");stage.append(el("small",number),el("strong",title),el("span",note));stages.append(stage);});
+ $("connected-account").textContent=proof.signal.domain+" · existing synthetic Developer Edition Account · assigned owner verified by hash. Source is fictional, not a live job posting.";
+ $("connected-signal").textContent=proof.signal.quote;
+ $("connected-source").textContent=proof.signal.title+" · observed "+proof.signal.observed_at+" · "+proof.signal.source_key;
+ $("connected-model").textContent=proof.inference.raw_response;
+ $("connected-request").textContent=pretty({request:proof.inference.request,usage:proof.inference.usage,latency_seconds:proof.inference.latency_seconds,runtime:proof.runtime,grounding:proof.inference.grounding});
+ $("connected-draft").textContent=review?.message||"Model response rejected; no action can be approved.";
+ $("connected-review-status").textContent=passed?"Recorded exact-content approval. Task is internal only; the source/model/review digests bind the independently checked contents.":"Prepared for exact-content review. The model cannot approve its own action. Hidden scope and eligibility fields must be checked after authorized temporary test access.";
+ $("connected-receipt").textContent=passed?"INDEPENDENT READBACK VERIFIED\nOne Task / one immutable receipt\nPayload SHA-256: "+native.receipt.payload_hash:"NATIVE TASK NOT EXECUTED\nPreview does not establish delivery, permission or a recovery pass.";
+ $("connected-native").textContent=pretty(native);
+ $("connected-lineage").textContent=pretty({signal_hash:proof.signal_ingestion.source_hash,model_request_hash:proof.inference.request_hash,model_hash:review?.model_hash,review_hash:proof.review_hash,execution_source_sha256:proof.source_sha256});
+}
+task(loadConnected);
