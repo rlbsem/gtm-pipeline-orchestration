@@ -22,4 +22,9 @@ docs/evidence/salesforce-standard/*
 docs/evidence/connected/*
 !docs/evidence/connected/preview.json
 !docs/evidence/connected/acceptance.json
+!docs/evidence/research
+docs/evidence/research/*
+!docs/evidence/research/evaluation.json
+!docs/evidence/research/public-jobs.json
+!docs/evidence/research/reviewer-assessment.json
 tests

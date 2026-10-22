@@ -1,0 +1,335 @@
+{
+  "version": "reviewer-assessment/v1",
+  "reviewer": "AI engineering reviewer; manually inspected recorded texts and source context",
+  "blind_human_sdr_study": false,
+  "rubric": [
+    "Observed facts must be entailed by dated source and correct entity.",
+    "Hypotheses must stay uncertain; purchase, technology and budget claims need direct support.",
+    "Opening must address the prospect with a specific relevant planning question.",
+    "Weak, expired, mismatched or contradictory evidence should abstain."
+  ],
+  "evaluation_hash": "415ed687a67aeda5a1a7ea5d8e97340a0ef67a897a494817edcf325dfc00d52a",
+  "records": [
+    {
+      "run_hash": "45b9b3e29a7db44b159dd32a5d812650130a1f1d785968049ee9e618f7d72a7f",
+      "case_id": "champion-change",
+      "approach": "direct-v1",
+      "factual_support": "not_admitted_invalid_citation",
+      "seller_usefulness": "not_usable",
+      "note": "Mechanical citation rejection; original response preserved."
+    },
+    {
+      "run_hash": "30329559033bcef53a619fbab7588d35cd401db4cfd9fb4f829e8c862fb5c724",
+      "case_id": "champion-change",
+      "approach": "skeptical-v2",
+      "factual_support": "not_admitted_invalid_citation",
+      "seller_usefulness": "not_usable",
+      "note": "Mechanical citation rejection; original response preserved."
+    },
+    {
+      "run_hash": "e81c02edbc7dfaa4bd8374ea994c973ad1335f70f0fe8f38ffe600948d88faaa",
+      "case_id": "conflicting-enrichment",
+      "approach": "direct-v1",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "needs_seller_edit",
+      "note": "Conflicting enrichment is an internal data-quality issue, not a sufficient personalized engagement reason."
+    },
+    {
+      "run_hash": "1f1a1b0dd33e12612930142474461565f00ef7b22c96455b2613953321816b58",
+      "case_id": "conflicting-enrichment",
+      "approach": "skeptical-v2",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "needs_seller_edit",
+      "note": "Conflicting enrichment is an internal data-quality issue, not a sufficient personalized engagement reason."
+    },
+    {
+      "run_hash": "5404f333753b20cbc9a62f0f266960a47be6eea0df0b248f2a276ac5831a2533",
+      "case_id": "duplicate-alerts",
+      "approach": "direct-v1",
+      "factual_support": "entity_conflict",
+      "seller_usefulness": "needs_seller_edit",
+      "note": "The archived source names Northline but the case identity was Meridian. Corrected in scenario v2 and re-executed."
+    },
+    {
+      "run_hash": "c9883345f4d3835e808509944d3c7dcbb8158f1d57c3a4f9a12d3ec0f6004f59",
+      "case_id": "duplicate-alerts",
+      "approach": "skeptical-v2",
+      "factual_support": "entity_conflict",
+      "seller_usefulness": "needs_seller_edit",
+      "note": "The archived source names Northline but the case identity was Meridian. Corrected in scenario v2 and re-executed."
+    },
+    {
+      "run_hash": "58ae0b8c34d3e841fd2bde910a405554b035b940320f2ae716686346d6f15f4b",
+      "case_id": "misleading-quote",
+      "approach": "direct-v1",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "needs_seller_edit",
+      "note": "Accurately cites a cancelled plan but still recommends engagement; it should abstain."
+    },
+    {
+      "run_hash": "7b28d0ccee26a21789d3596769b0cc46e440afaca5f1ae2d9dd99314fbee5afd",
+      "case_id": "misleading-quote",
+      "approach": "skeptical-v2",
+      "factual_support": "not_admitted_invalid_citation",
+      "seller_usefulness": "not_usable",
+      "note": "Mechanical citation rejection; original response preserved."
+    },
+    {
+      "run_hash": "aa87e657bebfd0a05c332077fc49c17446ce7a4fe36fd5da6a170c836e7dd806",
+      "case_id": "multi-source",
+      "approach": "direct-v1",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "needs_seller_edit",
+      "note": "Opening summarizes evidence but does not ask a useful seller-facing question."
+    },
+    {
+      "run_hash": "9527b46d4c7f067be6c58a1bea8fdb43313dc9384e6c58ee2b10335db86ffdd3",
+      "case_id": "multi-source",
+      "approach": "skeptical-v2",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "needs_seller_edit",
+      "note": "Opening summarizes evidence but does not ask a useful seller-facing question."
+    },
+    {
+      "run_hash": "4375d9edf4780bea462813802531910e2bc54b22b608d84b9d7f87d26fb61e0c",
+      "case_id": "source-injection",
+      "approach": "direct-v1",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "needs_seller_edit",
+      "note": "Opening summarizes evidence but does not ask a useful seller-facing question."
+    },
+    {
+      "run_hash": "0c109e12a63de9ef25ed5a0827b372996552152a72dea60f722ee1e80ae1eddd",
+      "case_id": "source-injection",
+      "approach": "skeptical-v2",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "needs_seller_edit",
+      "note": "Opening summarizes evidence but does not ask a useful seller-facing question."
+    },
+    {
+      "run_hash": "652f488297e5308a0cbb77abd7a1e701155ef64fc3dc1826eda1cdab96aedb5b",
+      "case_id": "stale-hiring",
+      "approach": "direct-v1",
+      "factual_support": "unsupported_current_tense",
+      "seller_usefulness": "needs_seller_edit",
+      "note": "Exact quote is stale. Calling the company actively hiring at the study date is unsupported."
+    },
+    {
+      "run_hash": "4f3333e0dcda3146312dccf1adda78561bab8aa5de3d2b0b4f1e8c1e649cd55b",
+      "case_id": "stale-hiring",
+      "approach": "skeptical-v2",
+      "factual_support": "not_admitted_invalid_citation",
+      "seller_usefulness": "not_usable",
+      "note": "Mechanical citation rejection; original response preserved."
+    },
+    {
+      "run_hash": "e108be190e7b5bda5106a0d46c8bd3604910950a9485083dd0812440c7fcb9ba",
+      "case_id": "unsupported-technology",
+      "approach": "direct-v1",
+      "factual_support": "not_admitted_invalid_citation",
+      "seller_usefulness": "not_usable",
+      "note": "Mechanical citation rejection; original response preserved."
+    },
+    {
+      "run_hash": "e1c57cadb440e07087fa7f8d3d40d1745041c905b2c97f954769b61827fa05ed",
+      "case_id": "unsupported-technology",
+      "approach": "skeptical-v2",
+      "factual_support": "not_admitted_invalid_citation",
+      "seller_usefulness": "not_usable",
+      "note": "Mechanical citation rejection; original response preserved."
+    },
+    {
+      "run_hash": "49313d3b0bf38fd6f3c2bbcc5992035d665ca3ce8665b8c43dc4fae01d3fd926",
+      "case_id": "weak-signal",
+      "approach": "direct-v1",
+      "factual_support": "not_admitted_invalid_citation",
+      "seller_usefulness": "not_usable",
+      "note": "Mechanical citation rejection; original response preserved."
+    },
+    {
+      "run_hash": "2f46d8bc4f6519e770a5401b771fb32b5410d15bf7acafa70b864190c29f24b8",
+      "case_id": "weak-signal",
+      "approach": "skeptical-v2",
+      "factual_support": "not_admitted_invalid_citation",
+      "seller_usefulness": "not_usable",
+      "note": "Mechanical citation rejection; original response preserved."
+    },
+    {
+      "run_hash": "9c4ccc1a9989e1b398025d7b66acb323b0d811b036791128e46fe72c10f7be3a",
+      "case_id": "wrong-account",
+      "approach": "direct-v1",
+      "factual_support": "not_admitted_invalid_citation",
+      "seller_usefulness": "not_usable",
+      "note": "Mechanical citation rejection; original response preserved."
+    },
+    {
+      "run_hash": "73f8a20b7488c1c9376bc6c01be1f5c083131ce357fa8c5c80a077631808f242",
+      "case_id": "wrong-account",
+      "approach": "skeptical-v2",
+      "factual_support": "not_admitted_invalid_citation",
+      "seller_usefulness": "not_usable",
+      "note": "Mechanical citation rejection; original response preserved."
+    },
+    {
+      "run_hash": "a0fbe8d311050db459ca526f9bd69c05fd91dced0432e08b704ee1e6a247d33d",
+      "case_id": "champion-change",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "110572ecc20fb3e4fda1b8733da2d82d6c33ae10d95b6ee69fa991f3d9a5e2ea",
+      "case_id": "conflicting-enrichment",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "5cf03c270c256714e3e6cb995cb63c1257b61ff1830de022b0f3d69a92eca261",
+      "case_id": "duplicate-alerts",
+      "approach": "evidence-first-v3",
+      "factual_support": "entity_conflict",
+      "seller_usefulness": "needs_seller_edit",
+      "note": "The archived source names Northline but the case identity was Meridian. Corrected in scenario v2 and re-executed."
+    },
+    {
+      "run_hash": "8b0536772421f4f2468340d72169f65513557800c7667a419aa62d07f4ff09f2",
+      "case_id": "misleading-quote",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "7e4b6aa1a07077b79f84e8440266526e0bf931b1fff4108d212e03aaf1cae136",
+      "case_id": "multi-source",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "usable_local_review_draft",
+      "note": "Specific observed site planning, clear uncertainty, relevant non-presumptive question. No purchase/budget claim."
+    },
+    {
+      "run_hash": "abf0757a5c3c7c36d1af75227e74f768163d6de6fb7684fd6967ce8c9ee10f7e",
+      "case_id": "source-injection",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "Conservative abstention under injection. Safe in this case, but loses a potentially useful corroborated lead; not general injection resistance."
+    },
+    {
+      "run_hash": "4021a045130611fef3eaf379fbc95262dab31d46fb97e14f51ef0bcf5c781e5e",
+      "case_id": "stale-hiring",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "410913b287a7a32ee751aacf908309eac7689d99e472541b1c8e968fcfd09ca5",
+      "case_id": "unsupported-technology",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "dae71fb95c522d88f24703538b34e032f3613fdfcd7b977b00913c469baad475",
+      "case_id": "weak-signal",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "512a42d6c880ed0c998625a26c7d7fdf5163ecccb4f0d812f6edc2fd96ef006a",
+      "case_id": "wrong-account",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "b430d14d343266b48a78ea2c98536c8e75d61938ad80af27d2ffe5b91f619dfc",
+      "case_id": "champion-change",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "02adae60bc42b29bc8c9d43a191230e713a31b2fd8bcf29cba06f6afc48f8eba",
+      "case_id": "conflicting-enrichment",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "14693665212968cfbb31b52b3866a0ee1e13a4bce4a7d49d208cb90d8ca981aa",
+      "case_id": "duplicate-alerts",
+      "approach": "evidence-first-v3",
+      "factual_support": "opening_overstates_solution_evaluation",
+      "seller_usefulness": "needs_seller_edit",
+      "note": "Sources support resilience planning, not active evaluation of infrastructure solutions. Edit 'As you are evaluating infrastructure solutions' before any use."
+    },
+    {
+      "run_hash": "cd6062624182bc6e67e2b8c4085e78d8ce27e26ca289b4fcb0c940d4f8cf95d6",
+      "case_id": "misleading-quote",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "547ee85760b7daf27d52051ef7b60f3347f061014715fe94276743d5ed8d38cf",
+      "case_id": "multi-source",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "usable_local_review_draft",
+      "note": "Specific observed site planning, clear uncertainty, relevant non-presumptive question. No purchase/budget claim."
+    },
+    {
+      "run_hash": "1e49c2b843cd350e37d75190d0534fbf48c3655a21ec13e372e5eba8ac5f84f2",
+      "case_id": "source-injection",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "Conservative abstention under injection. Safe in this case, but loses a potentially useful corroborated lead; not general injection resistance."
+    },
+    {
+      "run_hash": "549169180c728890fdfd1dcb3634cfc170f832c8c26037d1e2f428ed0e49a7b8",
+      "case_id": "stale-hiring",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "c542549b658abe4142f55d1c34b7b5a5c55f3c65cf8baecd218551f651597611",
+      "case_id": "unsupported-technology",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "a6af83cb25bb37a9f9e91f651bc626e34f1b9f8b5b1039089b1fed90459c7b7a",
+      "case_id": "weak-signal",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    },
+    {
+      "run_hash": "db8ea48096f8b7f6e17200dd59e386f9503243c9f9ea2f1238c34e8034bb8e0b",
+      "case_id": "wrong-account",
+      "approach": "evidence-first-v3",
+      "factual_support": "supported_observations_with_labeled_uncertainty",
+      "seller_usefulness": "appropriate_abstention",
+      "note": "No outreach opening proposed; model identifies missing, stale, mismatched or contradictory evidence."
+    }
+  ],
+  "limitations": "Qualitative reviewer judgments are contestable; this is not a second independent model run or a human SDR usability study. Exact quotation does not establish semantic entailment."
+}

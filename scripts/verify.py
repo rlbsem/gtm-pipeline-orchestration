@@ -37,7 +37,7 @@ def verify(output):
     tree = ET.parse(test_xml)
     suites = list(tree.getroot())
     totals = {key: sum(int(s.get(key, "0")) for s in suites) for key in ("tests", "failures", "errors", "skipped")}
-    assert totals["tests"] >= 163 and not any(totals[k] for k in ("failures", "errors", "skipped")), totals
+    assert totals["tests"] >= 199 and not any(totals[k] for k in ("failures", "errors", "skipped")), totals
     for suite in suites:
         suite.attrib.pop("hostname", None)
     tree.write(output / "tests.xml", encoding="utf-8", xml_declaration=True)
@@ -83,6 +83,6 @@ def verify(output):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=Path("docs/evidence/connected/local"))
+    parser.add_argument("--output", type=Path, default=Path("docs/evidence/research/local"))
     args = parser.parse_args()
     verify(args.output)

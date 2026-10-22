@@ -15,6 +15,7 @@ STANDARD = "c54503f00e65ad4195a74c0bacf2ce003add091c"
 CLEANUP = "36fd314015812f2114d5e96a0cbbaee24b17b2e4"
 CAD_UI = "62e48215a3609ba136f4ce581f98cc893e2378d9"
 USD_UI = "6da3603a8e447dacfdbde25a8aab5c5fa3721328"
+CONNECTED_UI = "e20b9fef9ad03ab061857d2d4f7098fa20fbf25e"
 
 
 def blob(revision, path):
@@ -74,11 +75,18 @@ def check():
             assert (ROOT / path).read_bytes() == blob(USD_UI, path), "usd_history_rewritten:" + path
     historical(json.loads((ROOT / "docs/evidence/enterprise-usd/verification.json").read_text()), USD_UI)
     browser(ROOT / "docs/images/enterprise-usd/provenance.json", False, USD_UI)
-    current = json.loads((ROOT / "docs/evidence/connected/local/verification.json").read_text())
+    for folder in ("docs/evidence/connected", "docs/images/connected"):
+        paths = subprocess.run(["git", "ls-tree", "-r", "--name-only", CONNECTED_UI, folder], cwd=ROOT,
+                               capture_output=True, text=True, check=True).stdout.splitlines()
+        for path in paths:
+            assert (ROOT / path).read_bytes() == blob(CONNECTED_UI, path), "connected_history_rewritten:" + path
+    historical(json.loads((ROOT / "docs/evidence/connected/local/verification.json").read_text()), CONNECTED_UI)
+    browser(ROOT / "docs/images/connected/provenance.json", False, CONNECTED_UI)
+    current = json.loads((ROOT / "docs/evidence/research/local/verification.json").read_text())
     assert current["source_sha256"] == source_hashes(), "current_executed_source_mismatch"
-    assert current["tests"]["tests"] >= 163 and current["independent_demo_runs"] == 4
+    assert current["tests"]["tests"] >= 199 and current["independent_demo_runs"] == 4
     assert all(current["tests"][k] == 0 for k in ("failures", "errors", "skipped"))
-    browser(ROOT / "docs/images/connected/provenance.json", True)
+    browser(ROOT / "docs/images/research/regression/provenance.json", True)
     connected_browser = json.loads((ROOT / "docs/images/connected/provenance.json").read_text())
     connected_preview = json.loads((ROOT / "docs/evidence/connected/preview.json").read_text())
     assert connected_browser["connected_execution"]["preview_hash"] == digest(connected_preview)
@@ -155,6 +163,8 @@ def check():
     assert details["apex_deployment"]["tests_completed"] == 3 and details["apex_deployment"]["tests_failed"] == 0
     from check_connected import check as check_connected
     check_connected()
+    from check_research import check as check_research
+    check_research()
     print("Historical and native/model executions match pinned Git bytes; current tests, UI and images match source.")
 
 

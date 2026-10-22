@@ -60,7 +60,7 @@ def create_app(engine, destination, worker):
 
     @app.get("/assets/{name}")
     def asset(name: str):
-        if name not in {"app.js", "style.css"}:
+        if name not in {"app.js", "style.css", "research.js"}:
             return JSONResponse({"error": "not_found"}, status_code=404)
         return FileResponse(WEB / name)
 
@@ -91,7 +91,9 @@ def create_app(engine, destination, worker):
     def recorded_evidence(lane: str):
         names = {"ai": "native-ai/ai-evaluation.json", "salesforce": "native-ai/salesforce-acceptance.json",
                  "salesforce-standard": "salesforce-standard/acceptance.json",
-                 "connected": "connected/preview.json", "connected-native": "connected/acceptance.json"}
+                 "connected": "connected/preview.json", "connected-native": "connected/acceptance.json",
+                 "research": "research/evaluation.json", "public-jobs": "research/public-jobs.json",
+                 "research-assessment": "research/reviewer-assessment.json"}
         if lane not in names:
             return JSONResponse({"error": "not_found"}, status_code=404)
         path = WEB.parent / "docs/evidence" / names[lane]
@@ -162,5 +164,26 @@ def create_app(engine, destination, worker):
             a = engine.account(db, account_id)
         return engine.ingest(record("web", "interactive-optout-" + account_id, a["brand"], "consent", a["domain"],
                              {"allowed": False}, app.state.clock, account_id), app.state.clock)
+
+    # Lazy initialization preserves the original fixture replay and audit oracle exactly.
+    @app.get("/api/research")
+    def research_catalog():
+        from .research import research_workspace
+        return research_workspace(engine).catalog(app.state.clock)
+
+    @app.post("/api/research/review")
+    def research_review(body: dict):
+        from .research import research_workspace
+        if set(body) != {"run_hash", "opening", "decision", "context_hash"}:
+            raise DomainError("closed_research_review_envelope")
+        return research_workspace(engine).review(body["run_hash"], body["opening"], body["decision"],
+                                           body["context_hash"], app.state.clock)
+
+    @app.post("/api/research/ingest")
+    def research_ingest(body: dict):
+        from .research import research_workspace
+        if set(body) != {"case_id", "source"} or not isinstance(body["source"], dict):
+            raise DomainError("closed_research_admission_envelope")
+        return {"status": research_workspace(engine).admit(body["case_id"], body["source"], app.state.clock)}
 
     return app

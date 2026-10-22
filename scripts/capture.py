@@ -192,6 +192,6 @@ def capture(workspace, output):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--workspace", type=Path, required=True)
-    parser.add_argument("--output", type=Path, default=Path("docs/images/connected"))
+    parser.add_argument("--output", type=Path, default=Path("docs/images/research/regression"))
     args = parser.parse_args()
     print(json.dumps(capture(args.workspace, args.output), indent=2))
