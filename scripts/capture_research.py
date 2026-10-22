@@ -45,8 +45,13 @@ def capture(workspace, output, audit_tools=None):
             assert "Northline" in page.locator("#research-opening").input_value()
             page.screenshot(path=output / "account-intelligence.png")
             page.locator("#research-opening").fill("I noticed your second regional site plan. How are you approaching failover planning between sites?")
-            page.locator("#research-approve").click()
-            page.locator("#notice").filter(has_text="Local seller decision recorded").wait_for()
+            # The shared notification can be replaced by the initial pipeline load.
+            # Verify the business transaction and durable review, not transient banner timing.
+            with page.expect_response(lambda response: response.url.endswith("/api/research/review")
+                                      and response.request.method == "POST") as approval_response:
+                page.locator("#research-approve").click()
+            assert approval_response.value.status == 200, approval_response.value.text()
+            page.locator("#research-decisions").filter(has_text='"decision": "approve"').wait_for()
             page.wait_for_function("() => document.getElementById('research-approve').disabled")
             assert page.locator("#research-opening").input_value() == "I noticed your second regional site plan. How are you approaching failover planning between sites?"
             assert page.locator("#research-opening").is_disabled()

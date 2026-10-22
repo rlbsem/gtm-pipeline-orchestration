@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-22T02:47:24.244600+00:00",
+  "captured_at": "2026-10-22T04:55:57.698297+00:00",
   "method": "actual Chromium / running local application",
   "source_sha256": {
     ".dockerignore": "7fea3255e6274f895d8cb1cb5e1d4628380f954615ee0c6f463a32d0a9b02695",
@@ -37,7 +37,7 @@
     "salesforce/sfdx-project.json": "6f33b9b572769041120dd7db4024ae3916bdf13f07d8300d408b05c819ae2862",
     "scripts/browser_audit_tools.py": "1dd2ce4dac0e369855132eb31e65fddfb81a4d0118565db2b2826db9b5c932bb",
     "scripts/capture.py": "3cd64f180b48abe0e8ebf31b59ae4bec27a5431cac4bd2494f8b87f811c43c6d",
-    "scripts/capture_research.py": "d1339056f7282a1c6b7498a2d77b1b1dc945e25930b5fd1f80e372674cff99e8",
+    "scripts/capture_research.py": "45f3a342de533fae91ec4bb4f04be43ee2555a458b8a2d4fe536ff0fe7e6af89",
     "scripts/check_connected.py": "8a546e1220981ba618aabb82d107d8e7806d8d46b958344e087c9fa5ed0f44ef",
     "scripts/check_evidence.py": "3521c277d6d0f6862f1bc2a46d5d5d5203cfd72ba8bd4ac023debb5510ce1cf7",
     "scripts/check_research.py": "bbd1e4ad2e2b24822e9ab3849a8c8644935d41ad11ac5cd1515a1bac1137e0c3",
@@ -178,7 +178,7 @@
   ],
   "audit_scope": "new research section; automated WCAG 2 A/AA and 2.1 AA, not full conformance certification",
   "image_sha256": {
-    "account-intelligence.png": "85c9e397a4bdbbb740dfdc26311ff550f9bc0b4ffcaa7c2760b95e1526b98e38",
+    "account-intelligence.png": "77426354dcb874810a9ff0e9becd9b3ec3ec7365370b25b6819460655af5de40",
     "mobile-intelligence.png": "71d9ee2a96739c968cac74045b5af4385e997baa4fa02ffd28ea53fef30523e6",
     "seller-research-review.png": "212c0569f52c2dc1043d38b93a3a450ed4d172472bad6767075299411a811650"
   }
