@@ -1,6 +1,6 @@
 # GTM Pipeline Orchestration
 
-**Connect account intelligence to an owned sales action—and trace what happens afterward.**
+**Connect account intelligence to an owned sales action, then trace what happens afterward.**
 
 Prospecting, qualification, CRM routing and engagement often operate in separate tools. This engine connects them in one inspectable SDR workflow: discover an account, resolve identity, explain fit and intent, route an inquiry, review an action, enroll it safely, and follow reply, meeting and opportunity feedback into an account-level experiment.
 
@@ -56,7 +56,7 @@ The operator clock starts January 21, after the scenario's previously recorded f
 
 ## From a buying signal to a verified internal Task
 
-A fictional infrastructure job posting suggests a reason for an SDR to ask a question—not proof of buying intent. The connected lane matches an existing pinned synthetic Salesforce Account/Contact, retrieves its actual visible CRM context, invokes Qwen3, validates its exact quotation and bounded question, and binds the operator-approved brief to one native internal Task.
+A fictional infrastructure job posting suggests a reason for an SDR to ask a question, not proof of buying intent. The connected lane matches an existing pinned synthetic Salesforce Account/Contact, retrieves its actual visible CRM context, invokes Qwen3, validates its exact quotation and bounded question, and binds the operator-approved brief to one native internal Task.
 
 **What actually ran:** six read-only context requests, fresh Qwen3-14B inference, five native Apex tests and a 128-request Salesforce continuation. Independent reviewer readback verified the Task contents, Account/Contact association, owner, creator and immutable receipt. A deliberately lost acknowledgement recovered without reposting. Duplicate, unsupported-content, owner-change, opt-out and reviewer-create probes were rejected. Cleanup completed the Task, restored the original disabled/opted-out flags and removed four temporary grants.
 
@@ -143,7 +143,7 @@ The standard-object Salesforce lane resolves exact synthetic Account and Contact
 
 Three native Apex tests and the REST run verify the guard and access boundaries. Cleanup retains the completed Task, opts out the Contact, disables the Account and closes the synthetic blocker Opportunity. Three temporary permission-set assignments and one integration entitlement assignment are removed. A separate read-only run confirms original access is restored and Task content and relationships remain intact. [Relationships, exact rejected responses and permissions](docs/evidence/salesforce-standard/native-details.json) · [Native procedure and limitations](docs/native-standard-crm.md).
 
-The earlier 404s were traced to missing integration entitlement, object grants, Access Activities and field permissions—not unsupported Salesforce objects. The original restricted custom-review roles are preserved. Native runs use the original small fixture; the USD $3.46M enterprise pipeline remains an independently measured local synthetic scenario. The earlier [custom-review and model execution](docs/native-ai.md) is preserved separately. No native Outreach, Salesloft, prospect delivery or commercial result is claimed.
+The earlier 404s were traced to missing integration entitlement, object grants, Access Activities and field permissions, not unsupported Salesforce objects. The original restricted custom-review roles are preserved. Native runs use the original small fixture; the USD $3.46M enterprise pipeline remains an independently measured local synthetic scenario. The earlier [custom-review and model execution](docs/native-ai.md) is preserved separately. No native Outreach, Salesloft, prospect delivery or commercial result is claimed.
 
 The Qwen3-14B evaluation records eight cases at two seeds: ordinary inbound, prompt injection, unsupported personalization, conflicting enrichment, stale intent, revoked consent and two post-approval authority changes. **10 of 16 responses passed exact-quotation validation; six were rejected and preserved.** This is a mechanical citation result, not a semantic-grounding or usefulness score. Actual responses, contexts, latency, token usage and model/runtime hashes are inspectable. Arbitrary model wording cannot replace the finite approved message, and policy blocks stale or unauthorized execution independently of model advice. [Executed evidence and limitations](docs/evidence/native-ai/README.md).
 
