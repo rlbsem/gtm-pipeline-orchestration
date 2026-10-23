@@ -96,7 +96,3 @@ Automated axe-core checks cover the new research section at mobile and desktop w
 ## Native continuation boundary
 
 The previously verified Salesforce Task implementation and evidence are preserved. Rich free-text research is not admitted into its finite Apex message contract. A next native experiment requires explicit approval of the selected brief, exact Task payload, pinned existing test records, temporary scoped grants and cleanup. Do not rerun the prior finished journal or quietly expand the gate. The current release makes no new Salesforce calls or permission changes; a richer native payload would require a separately reviewed versioned contract and tests. [Bounded continuation proposal](research-native-continuation.md).
-
-## Short explanation
-
-“I built a source-grounded SDR research desk that shows why an account deserves attention, where the model is uncertain, and what the seller actually approved. I evaluated real model responses, retained the failures, and kept research advice separate from CRM authority and pipeline measurement.”
