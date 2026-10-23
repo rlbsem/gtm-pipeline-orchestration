@@ -22,9 +22,11 @@ The primary enterprise B2B profile covers **120 accounts and USD $3.46M of synth
 
 **Engineering Evidence Lab:** [Published explorer](https://rlbsem.github.io/enterprise-revenue-systems-lab/) · [AI GTM investigation review](https://github.com/rlbsem/enterprise-revenue-systems-lab/pull/6). The fifth investigation provides a read-only browser view of these artifacts, with separate model, native CRM and synthetic pipeline provenance. The connected model-to-Task run below is a new evidence set; a focused Lab enhancement is proposed in the [execution notes](docs/connected-sdr.md#relation-to-the-portfolio).
 
-## Run the complete loop
+## Run the complete loop locally
 
-Use Python **3.12** from the repository root:
+**No-install option:** [Explore the recorded GTM and AI evidence in the hosted Engineering Evidence Lab](https://rlbsem.github.io/enterprise-revenue-systems-lab/). It is a public, read-only presentation of saved runs, not a live instance of this application.
+
+To run the interactive application on your own computer, use Python **3.12** from the repository root:
 
 ```text
 python -m venv .venv
@@ -39,7 +41,7 @@ gtm demo --profile enterprise --workspace .local/enterprise-usd-v2
 gtm serve --profile enterprise --workspace .local/enterprise-usd-v2
 ```
 
-Open **http://127.0.0.1:8560/**. The demo writes real HTTP requests and separate control/engagement databases. Existing workspaces are preserved. Legacy enterprise workspaces are rejected rather than relabeled; use the fresh USD v2 directory above. Use a fresh workspace name to reproduce the scenario; interactive changes remain in the workspace you use.
+Once `gtm serve` is running, open `http://127.0.0.1:8560/` in a browser on the **same computer**. This is the locally running operator interface, not a publicly hosted site. The demo writes real HTTP requests and separate control/engagement databases. Existing workspaces are preserved. Legacy enterprise workspaces are rejected rather than relabeled; use the fresh USD v2 directory above. Use a fresh workspace name to reproduce the scenario; interactive changes remain in the workspace you use.
 
 1. Inspect an account's sources, score contributions, owner and cohort.
 2. In **Account workbench**, choose the eligible treatment account marked **not enrolled**.
