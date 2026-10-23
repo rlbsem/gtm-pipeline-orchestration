@@ -20,7 +20,7 @@ The primary enterprise B2B profile covers **120 accounts and USD $3.46M of synth
 
 *Captured from the running application. [Screenshot provenance and browser execution](docs/images/connected/provenance.json).*
 
-**Engineering Evidence Lab:** [Published explorer](https://rlbsem.github.io/enterprise-revenue-systems-lab/) · [AI GTM investigation review](https://github.com/rlbsem/enterprise-revenue-systems-lab/pull/6). The fifth investigation provides a read-only browser view of these artifacts, with separate model, native CRM and synthetic pipeline provenance. The connected model-to-Task run below is a new evidence set; a focused Lab enhancement is proposed in the [execution notes](docs/connected-sdr.md#relation-to-the-portfolio).
+**Engineering Evidence Lab:** [Explore the recorded SDR research](https://rlbsem.github.io/enterprise-revenue-systems-lab/?case=gtm-research) · [Inspect the synthetic qualified-pipeline case](https://rlbsem.github.io/enterprise-revenue-systems-lab/?case=gtm-enterprise) · [Review the Lab source](https://github.com/rlbsem/enterprise-revenue-systems-lab). These read-only investigations preserve separate provenance for the research desk, native Salesforce acceptance and synthetic opportunity measurement. The connected Qwen3-to-native-Task run is documented below and in [execution evidence](docs/connected-sdr.md).
 
 ## Run the complete loop locally
 
