@@ -1,4 +1,4 @@
-# Proposed native research handoff — not executed
+# Proposed native research handoff (not executed)
 
 The richer desk currently ends at a durable **local** seller decision. The previous connected native Task remains genuine historical evidence. Neither the new research review nor that historical approval authorizes another Salesforce write.
 
