@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-26T12:32:43.324808+00:00",
+  "captured_at": "2026-10-26T13:00:19.058470+00:00",
   "method": "actual Chromium / local UI and APIs",
   "desktop_viewport": {
     "width": 1440,
@@ -80,7 +80,7 @@
   "source_sha256": {
     ".dockerignore": "7fea3255e6274f895d8cb1cb5e1d4628380f954615ee0c6f463a32d0a9b02695",
     ".gitattributes": "93699a1108fd9da226b06f84ee12e317f4ea4d2f18a8fd05260443fd1bf2faef",
-    ".github/workflows/verify.yml": "0bdd118587ba96b9268b4f809234697556e05566f485cf09c6791f947e3bc85c",
+    ".github/workflows/verify.yml": "7667fca23db3c855c88063b874e9a99ef4ae5efc625c55e0e8a36e099aa2e40a",
     ".gitignore": "3b80f413d943a09f82f992d93d8cfd93d4a9227186159d550f849990bfa1ccb4",
     "compose.yml": "88f545a317a14de56e6f06640468f2848598535c5cc1becb3097a20f5f60a9d7",
     "Dockerfile": "899d9bc9f08da52e46d123f7b08e2329b12bc0dbbfc26e1a397cc359b21a099a",
@@ -115,8 +115,8 @@
     "scripts/capture.py": "3cd64f180b48abe0e8ebf31b59ae4bec27a5431cac4bd2494f8b87f811c43c6d",
     "scripts/capture_research.py": "45f3a342de533fae91ec4bb4f04be43ee2555a458b8a2d4fe536ff0fe7e6af89",
     "scripts/check_connected.py": "8a546e1220981ba618aabb82d107d8e7806d8d46b958344e087c9fa5ed0f44ef",
-    "scripts/check_evidence.py": "3521c277d6d0f6862f1bc2a46d5d5d5203cfd72ba8bd4ac023debb5510ce1cf7",
-    "scripts/check_research.py": "bbd1e4ad2e2b24822e9ab3849a8c8644935d41ad11ac5cd1515a1bac1137e0c3",
+    "scripts/check_evidence.py": "f549e53cd5f821dc96fc57f52426e2c280bceb7969ae75635a42a3f5d573260a",
+    "scripts/check_research.py": "8f73fd04514808df29b58bce44847b428b10731b90d08167f794b1e248e85ee1",
     "scripts/connected_postcheck.py": "16b1197d0e8f3dc5c79a518daa323810a7eb63b6f1f42a63fc5b51dd7ddb9ca3",
     "scripts/connected_prepare.py": "45f5a5abbc213e51578b229c99c83bec987d190a149125faaf44d7547496f94f",
     "scripts/evaluate_ai.py": "ddcb9d1e1197e052e4f00fb9b9843056c8a0f2c79408d493d02e2529ed4c05da",

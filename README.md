@@ -10,9 +10,9 @@ The primary enterprise B2B profile covers **120 accounts and USD $3.46M of synth
 
 **Account intelligence desk:** prioritize six synthetic accounts, inspect dated multi-source evidence and enrichment conflicts, compare actual Qwen3 research, edit an opening and record an exact local seller decision. Forty recorded responses across three prompt approaches retain citation failures, stale-signal mistakes and conservative abstentions. Rich research remains separate from the earlier native Task and commercial measurement runs. [Research architecture, evaluation and limits](docs/account-intelligence.md) · [Actual responses](docs/evidence/research/evaluation.json) · [Reviewer assessment](docs/evidence/research/reviewer-assessment.json).
 
-![Actual account intelligence desk with explainable priorities, source-grounded research and seller controls](docs/images/research/account-intelligence.png)
+![Actual account intelligence desk with explainable priorities, source-grounded research and seller controls](docs/images/current-research/account-intelligence.png)
 
-*Captured from the running application; [desktop/mobile execution and screenshot hashes](docs/images/research/provenance.json).*
+*Captured from the running application; [desktop/mobile execution and screenshot hashes](docs/images/current-research/provenance.json).*
 
 **Executed proof:** [Current regression and four independent HTTP demos](docs/evidence/research/local/verification.json) · [Connected model-to-Task execution: 128 native requests](docs/evidence/connected/acceptance.json) · [140 native standard-object requests](docs/evidence/salesforce-standard/acceptance.json) · [20 independent post-cleanup checks](docs/evidence/salesforce-standard/post-cleanup.json) · [16 actual model responses](docs/evidence/native-ai/ai-evaluation.json). The original [73-test](docs/evidence/verification.json), [127-test enterprise](docs/evidence/enterprise/verification.json) and [29-request custom-review](docs/evidence/native-ai/salesforce-acceptance.json) evidence remains unchanged.
 
@@ -156,12 +156,12 @@ python -m playwright install chromium
 python scripts/verify.py --output work/review-evidence
 python scripts/capture.py --workspace work/browser-review --output work/review-images
 python scripts/browser_audit_tools.py
-python scripts/capture_research.py --workspace work/browser-research --audit-tools work/audit-tools
-python scripts/check_evidence.py
+python scripts/capture_research.py --workspace work/browser-research --output work/review-research-images --audit-tools work/audit-tools
+python scripts/check_evidence.py --verification-record work/review-evidence/verification.json --browser-record work/review-images/provenance.json --research-images work/review-research-images
 python scripts/publication.py --package
 ```
 
-Use a fresh workspace for each browser reproduction. Verification runs regression tests and four independent end-to-end HTTP demos (two per profile), compares the complete output, checks source hashes, audits public content and checks local Markdown targets. The package is reopened and each file hash verified. Historical source attestation requires a full Git clone; ordinary local verification needs no vendor credentials or model. [Current verification](docs/evidence/research/local/verification.json) · [JUnit results](docs/evidence/research/local/tests.xml) · [Hosted CI](https://github.com/rlbsem/gtm-pipeline-orchestration/actions).
+Use a fresh workspace for each browser reproduction. Verification runs regression tests and four independent end-to-end HTTP demos (two per profile), compares the complete output, checks source hashes, audits public content and checks local Markdown targets. The package is reopened and each file hash verified. Historical source attestation requires a full Git clone; ordinary local verification needs no vendor credentials or model. [Current verification](docs/evidence/current-presentation/local/verification.json) · [JUnit results](docs/evidence/current-presentation/local/tests.xml) · [Hosted CI](https://github.com/rlbsem/gtm-pipeline-orchestration/actions).
 
 | Boundary | Status |
 |---|---|

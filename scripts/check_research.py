@@ -8,7 +8,7 @@ from publication import ROOT, source_hashes
 from research_evaluate import contract_assessment
 
 
-def check():
+def check(images=None):
     folder = ROOT / "docs/evidence/research"
     combined = json.loads((folder / "evaluation.json").read_text())
     records = []
@@ -51,7 +51,7 @@ def check():
     validate_brief(operator["record"]["raw_response"], operator["record"]["context"])
     for path, checksum in operator["source_sha256"].items():
         assert hashlib.sha256(operator["source_snapshots"][path].encode()).hexdigest() == checksum
-    images = ROOT / "docs/images/research"
+    images = images or ROOT / "docs/images/current-research"
     provenance = json.loads((images / "provenance.json").read_text())
     assert provenance["source_sha256"] == source_hashes() and not provenance["page_errors"]
     assert all(provenance["layout_checks"].values()) and provenance["external_browser_requests"] == 0
