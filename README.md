@@ -10,15 +10,15 @@ The primary enterprise B2B profile covers **120 accounts and USD $3.46M of synth
 
 **Account intelligence desk:** prioritize six synthetic accounts, inspect dated multi-source evidence and enrichment conflicts, compare actual Qwen3 research, edit an opening and record an exact local seller decision. Forty recorded responses across three prompt approaches retain citation failures, stale-signal mistakes and conservative abstentions. Rich research remains separate from the earlier native Task and commercial measurement runs. [Research architecture, evaluation and limits](docs/account-intelligence.md) · [Actual responses](docs/evidence/research/evaluation.json) · [Reviewer assessment](docs/evidence/research/reviewer-assessment.json).
 
-![Actual account intelligence desk with explainable priorities, source-grounded research and seller controls](docs/images/research/account-intelligence.png)
+![Actual account intelligence desk with explainable priorities, source-grounded research and seller controls](docs/images/current-research/account-intelligence.png)
 
-*Captured from the running application; [desktop/mobile execution and screenshot hashes](docs/images/research/provenance.json).*
+*Captured from the running application; [desktop/mobile execution and screenshot hashes](docs/images/current-research/provenance.json).*
 
 **Executed proof:** [Current regression and four independent HTTP demos](docs/evidence/research/local/verification.json) · [Connected model-to-Task execution: 128 native requests](docs/evidence/connected/acceptance.json) · [140 native standard-object requests](docs/evidence/salesforce-standard/acceptance.json) · [20 independent post-cleanup checks](docs/evidence/salesforce-standard/post-cleanup.json) · [16 actual model responses](docs/evidence/native-ai/ai-evaluation.json). The original [73-test](docs/evidence/verification.json), [127-test enterprise](docs/evidence/enterprise/verification.json) and [29-request custom-review](docs/evidence/native-ai/salesforce-acceptance.json) evidence remains unchanged.
 
-![Running connected investigation: synthetic buying signal, actual Qwen3 response, reviewed internal Task and independent receipt](docs/images/connected/connected-sdr.png)
+![Running connected investigation: synthetic buying signal, actual Qwen3 response, reviewed internal Task and independent receipt](docs/images/current-presentation/connected-sdr.png)
 
-*Captured from the running application. [Screenshot provenance and browser execution](docs/images/connected/provenance.json).*
+*Captured from the running application. [Current screenshot provenance and browser execution](docs/images/current-presentation/provenance.json). Earlier captures remain unchanged..*
 
 **Engineering Evidence Lab:** [Explore the recorded SDR research](https://rlbsem.github.io/enterprise-revenue-systems-lab/?case=gtm-research) · [Inspect the synthetic qualified-pipeline case](https://rlbsem.github.io/enterprise-revenue-systems-lab/?case=gtm-enterprise) · [Review the Lab source](https://github.com/rlbsem/enterprise-revenue-systems-lab). These read-only investigations preserve separate provenance for the research desk, native Salesforce acceptance and synthetic opportunity measurement. The connected Qwen3-to-native-Task run is documented below and in [execution evidence](docs/connected-sdr.md).
 
@@ -66,7 +66,7 @@ The model selects from a finite question catalog; it does not perform unrestrict
 
 ## One action, with evidence at every boundary
 
-![Actual account research, exact review, independent receipt and downstream feedback](docs/images/enterprise-usd/account-workbench.png)
+![Actual account research, exact review, independent receipt and downstream feedback](docs/images/current-presentation/account-workbench.png)
 
 The enterprise fixture routes six pricing inquiries to their existing CRM owners. Its verified brand/account reference and synthetic contact resolve to the existing CRM owner. Separate fit and intent rules qualify it. The seller approves one finite discovery sequence. One independent destination request commits enrollment, then deliberately closes its HTTP connection before acknowledging it. A fresh worker reads back the original content and receipt rather than sending again. Subsequent synthetic reply, meeting and accepted-opportunity events retain that action lineage.
 
@@ -96,7 +96,7 @@ The primary enterprise demonstration has **120 synthetic accounts**: 48 mid-mark
 
 The five synthetic CRM outcomes carry annual contract value estimates of **USD $180,000, USD $450,000, USD $1,000,000, USD $630,000 and USD $1,200,000**. Their illustrative site scopes and unit assumptions are [versioned fixture inputs](src/gtm/enterprise-scenario.json). Amounts enter actual `source/v1` CRM outcome events, cross the local feedback HTTP boundary and pass through the existing SQL measurement engine. A separate Python source-event traversal independently reconciles amounts, counts and readback. [Executed source events, financial audit and lineage](docs/evidence/enterprise-usd/demo.json).
 
-![Actual enterprise opportunity ledger and explicit synthetic scope assumptions](docs/images/enterprise-usd/commercial-scenario.png)
+![Actual enterprise opportunity ledger and explicit synthetic scope assumptions](docs/images/current-presentation/commercial-scenario.png)
 
 | Mature 30-day comparison | Treatment | Holdout |
 |---|---:|---:|
@@ -133,13 +133,13 @@ Its complete output is compared against the [original recorded fixture](docs/evi
 | Receiver rate limits | Persist exponential backoff and a three-attempt write budget |
 | Remote effect survives loss of local intent | Independent reconciliation returns `remote_ahead_missing_intent`, `safe_to_resume=false` |
 
-![Actual recovery console and durable action journal](docs/images/enterprise-usd/execution-recovery.png)
+![Actual recovery console and durable action journal](docs/images/current-presentation/execution-recovery.png)
 
 These controls assume a trusted local operator, received CRM authority and the receiver's idempotent-content contract. They do not guarantee global exactly-once delivery or discover source-system changes that have not arrived. [Architecture and trust boundaries](docs/architecture.md).
 
 ## Advice and a native SDR handoff, independently verified
 
-![Running evidence interface with Salesforce acceptance and actual model responses](docs/images/enterprise-usd/native-ai-evidence.png)
+![Running evidence interface with Salesforce acceptance and actual model responses](docs/images/current-presentation/native-ai-evidence.png)
 
 The standard-object Salesforce lane resolves exact synthetic Account and Contact keys, preserves their owner and association, checks consent and open opportunities, and creates one internal SDR Task. An Apex guard creates its unique receipt in the same native transaction. After deliberately discarding the successful acknowledgement, a restarted dispatcher recovers the Task through the independent reviewer without another POST. An explicit duplicate probe rolls back the additional Task. Changed owner, revoked consent, wrong contact association and an open opportunity each reject new actions on both client and server.
 
@@ -156,12 +156,12 @@ python -m playwright install chromium
 python scripts/verify.py --output work/review-evidence
 python scripts/capture.py --workspace work/browser-review --output work/review-images
 python scripts/browser_audit_tools.py
-python scripts/capture_research.py --workspace work/browser-research --audit-tools work/audit-tools
-python scripts/check_evidence.py
+python scripts/capture_research.py --workspace work/browser-research --output work/review-research-images --audit-tools work/audit-tools
+python scripts/check_evidence.py --verification-record work/review-evidence/verification.json --browser-record work/review-images/provenance.json --research-images work/review-research-images
 python scripts/publication.py --package
 ```
 
-Use a fresh workspace for each browser reproduction. Verification runs regression tests and four independent end-to-end HTTP demos (two per profile), compares the complete output, checks source hashes, audits public content and checks local Markdown targets. The package is reopened and each file hash verified. Historical source attestation requires a full Git clone; ordinary local verification needs no vendor credentials or model. [Current verification](docs/evidence/research/local/verification.json) · [JUnit results](docs/evidence/research/local/tests.xml) · [Hosted CI](https://github.com/rlbsem/gtm-pipeline-orchestration/actions).
+Use a fresh workspace for each browser reproduction. Verification runs regression tests and four independent end-to-end HTTP demos (two per profile), compares the complete output, checks source hashes, audits public content and checks local Markdown targets. The package is reopened and each file hash verified. Historical source attestation requires a full Git clone; ordinary local verification needs no vendor credentials or model. [Current verification](docs/evidence/current-presentation/local/verification.json) · [JUnit results](docs/evidence/current-presentation/local/tests.xml) · [Hosted CI](https://github.com/rlbsem/gtm-pipeline-orchestration/actions).
 
 | Boundary | Status |
 |---|---|

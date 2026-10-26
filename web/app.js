@@ -2,7 +2,7 @@
 const $ = id => document.getElementById(id);
 let state, selected, prepared;
 const money = cents => state.scenario.currency+" "+new Intl.NumberFormat(state.scenario.locale, {style:"currency",currency:state.scenario.currency,maximumFractionDigits:0}).format(cents/100);
-const percent = value => value == null ? "—" : (value*100).toFixed(1)+"%";
+const percent = value => value == null ? "N/A" : (value*100).toFixed(1)+"%";
 const pretty = value => JSON.stringify(value,null,2);
 function el(tag, text, cls) {const n=document.createElement(tag);if(text!=null)n.textContent=String(text);if(cls)n.className=cls;return n;}
 function clear(id){const node=$(id);node.replaceChildren();return node;}
@@ -48,7 +48,7 @@ async function renderAccount(){
 function renderRoutes(){const r=clear("routes");state.routes.forEach(route=>{const n=el("div",null,"evidence-item");n.append(chip(route.status),el("p",route.reason),el("small",route.owner||"No owner assigned"),el("small",route.source_key),el("small",route.action_key?"Linked action: "+route.action_key:"No approved enrollment linked"));r.append(n);});}
 function renderRecovery(){
  $("reconciliation").textContent=pretty(state.reconciliation);$("clock").textContent=state.clock;
- const journal=clear("journal");state.actions.forEach(a=>{const tr=el("tr"),account=state.accounts.find(x=>x.id===a.account_id);let td=el("td");td.append(el("strong",account?.name),el("small",a.action_key));tr.append(td);td=el("td");td.append(chip(a.status));tr.append(td,el("td",a.attempts+" / 3"),el("td",a.last_error||"Exact receipt verified"),el("td",a.receipt?JSON.parse(a.receipt).receipt_id:"—"));journal.append(tr);});
+ const journal=clear("journal");state.actions.forEach(a=>{const tr=el("tr"),account=state.accounts.find(x=>x.id===a.account_id);let td=el("td");td.append(el("strong",account?.name),el("small",a.action_key));tr.append(td);td=el("td");td.append(chip(a.status));tr.append(td,el("td",a.attempts+" / 3"),el("td",a.last_error||"Exact receipt verified"),el("td",a.receipt?JSON.parse(a.receipt).receipt_id:"N/A"));journal.append(tr);});
  const audit=clear("audit");[...state.audit].reverse().slice(0,35).forEach(a=>{const n=el("div",null,"audit-row");n.append(el("time",a.at),el("strong",a.event),el("span",a.subject));audit.append(n);});
 }
 async function load(){state=await api("state");if(!selected)selected=state.actions.find(a=>a.receipt)?.account_id||state.accounts[0].id;for(const id of ["account-select","inbound-account"]){const node=clear(id);state.accounts.forEach(a=>{const option=el("option",a.name+" · "+a.brand);option.value=a.id;node.append(option);});}$("account-select").value=selected;renderOverview();await renderAccount();renderRoutes();renderRecovery();renderCommercial();}

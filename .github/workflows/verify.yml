@@ -36,7 +36,7 @@ jobs:
       - run: python scripts/capture.py --workspace work/ci-browser --output work/ci-images
       - run: python scripts/browser_audit_tools.py
       - run: python scripts/capture_research.py --workspace work/ci-research-browser --output work/ci-research-images --audit-tools work/audit-tools
-      - run: python scripts/check_evidence.py
+      - run: python scripts/check_evidence.py --verification-record work/ci-evidence/verification.json --browser-record work/ci-images/provenance.json --research-images work/ci-research-images
       - run: python scripts/publication.py --package
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()

@@ -1,4 +1,5 @@
 """Verify immutable historical executions and current regression/browser evidence separately."""
+import argparse
 import hashlib
 import json
 import subprocess
@@ -16,6 +17,7 @@ CLEANUP = "36fd314015812f2114d5e96a0cbbaee24b17b2e4"
 CAD_UI = "62e48215a3609ba136f4ce581f98cc893e2378d9"
 USD_UI = "6da3603a8e447dacfdbde25a8aab5c5fa3721328"
 CONNECTED_UI = "e20b9fef9ad03ab061857d2d4f7098fa20fbf25e"
+RESEARCH_UI = "b4add9209283e55b095d50f1457ad48e9305b165"
 
 
 def blob(revision, path):
@@ -40,7 +42,7 @@ def browser(path, current, revision=BASELINE):
     assert provenance["new_action_attempts"] == 1 and provenance["new_action_status"] == "reconciled"
 
 
-def check():
+def check(current_record=None, current_browser=None, research_images=None):
     # Full history is intentional: a ZIP runs the core verifier; history attestation needs a clone.
     report = json.loads((ROOT / "docs/evidence/verification.json").read_text())
     historical(report, BASELINE)
@@ -82,11 +84,23 @@ def check():
             assert (ROOT / path).read_bytes() == blob(CONNECTED_UI, path), "connected_history_rewritten:" + path
     historical(json.loads((ROOT / "docs/evidence/connected/local/verification.json").read_text()), CONNECTED_UI)
     browser(ROOT / "docs/images/connected/provenance.json", False, CONNECTED_UI)
-    current = json.loads((ROOT / "docs/evidence/research/local/verification.json").read_text())
+    archived = ROOT / "docs/evidence/research/local/verification.json"
+    historical(json.loads(archived.read_text()), RESEARCH_UI)
+    assert archived.read_bytes() == blob(RESEARCH_UI, archived.relative_to(ROOT).as_posix())
+    browser(ROOT / "docs/images/research/regression/provenance.json", False, RESEARCH_UI)
+    archived_images = ROOT / "docs/images/research"
+    archived_proof = archived_images / "provenance.json"
+    archived_research = json.loads(archived_proof.read_text())
+    historical(archived_research, RESEARCH_UI)
+    assert archived_proof.read_bytes() == blob(RESEARCH_UI, archived_proof.relative_to(ROOT).as_posix())
+    for name, expected in archived_research["image_sha256"].items():
+        assert hashlib.sha256((archived_images / name).read_bytes()).hexdigest() == expected
+    current_record = current_record or ROOT / "docs/evidence/current-presentation/local/verification.json"
+    current = json.loads(current_record.read_text())
     assert current["source_sha256"] == source_hashes(), "current_executed_source_mismatch"
     assert current["tests"]["tests"] >= 199 and current["independent_demo_runs"] == 4
     assert all(current["tests"][k] == 0 for k in ("failures", "errors", "skipped"))
-    browser(ROOT / "docs/images/research/regression/provenance.json", True)
+    browser(current_browser or ROOT / "docs/images/current-presentation/provenance.json", True)
     connected_browser = json.loads((ROOT / "docs/images/connected/provenance.json").read_text())
     connected_preview = json.loads((ROOT / "docs/evidence/connected/preview.json").read_text())
     assert connected_browser["connected_execution"]["preview_hash"] == digest(connected_preview)
@@ -164,9 +178,15 @@ def check():
     from check_connected import check as check_connected
     check_connected()
     from check_research import check as check_research
-    check_research()
+    check_research(research_images)
     print("Historical and native/model executions match pinned Git bytes; current tests, UI and images match source.")
 
 
 if __name__ == "__main__":
-    check()
+    from pathlib import Path
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--verification-record", type=Path)
+    parser.add_argument("--browser-record", type=Path)
+    parser.add_argument("--research-images", type=Path)
+    args = parser.parse_args()
+    check(args.verification_record, args.browser_record, args.research_images)
